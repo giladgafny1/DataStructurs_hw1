@@ -9,8 +9,20 @@ class Node {
 
 public:
     Node(int key, T data) : key(key), data(data), parent(nullptr), right(nullptr), left(nullptr), h(0) {}
+    Node(Node &node) = default;
 
     ~Node() = default;
+
+    //good?
+    Node &operator=(const Node &node) = default;
+
+    //good?
+    bool &operator == (Node const &node)
+    {
+        if (node->key==this->key)
+            return true;
+        return false;
+    }
 
     void setKey(int key)
     {
@@ -54,20 +66,19 @@ public:
         return this->right;
     }
 
-    void setLeft(Node<T> *right) {
+    void setLeft(Node<T> *left) {
         this->left = left;
     }
 
     Node<T> *getLeft() {
         return this->left;
     }
-
-    bool hasParent() {
-        if (this->parent == nullptr)
+    bool hasParent()
+    {
+        if(this->parent==nullptr)
             return false;
         return true;
     }
-
     bool hasRight() {
         if (this->right == nullptr)
             return false;
@@ -78,6 +89,19 @@ public:
         if (this->left == nullptr)
             return false;
         return true;
+    }
+
+    bool isRight()
+    {
+        if(this->parent->right->key==this->key)
+            return true;
+        return false;
+    }
+    bool isLeft()
+    {
+        if(this->parent->left->key==this->key)
+            return true;
+        return false;
     }
     int getBF()
     {
@@ -112,15 +136,37 @@ public:
 
 
 };
+
+template<class T>
+Node<T>* Avltree<T>::findKey(int key)
+{
+    Node<T>* iterator = root;
+    while (iterator!=nullptr)
+    {
+        if (iterator->getKey()==key)
+            return iterator;
+        if (iterator->getKey()<key)
+        {
+            iterator=iterator->getRight();
+            continue;
+        }
+        if (iterator->getKey()>key)
+        {
+            iterator=iterator->getLeft();
+        }
+    }
+    return nullptr;
+}
+
 template<class T>
 int Avltree<T>::insert(Node<T>* node){
-    if (root== nullptr)
+    if (root == nullptr)
     {
         root = node;
         return 1;
     }
     int key = node->getKey();
-    if (this->findKey(node->getKey()) == nullptr)
+    if (this->findKey(node->getKey()) != nullptr)
         return -1;
     Node<T>* iterator = root;
     while (iterator!=nullptr)
@@ -130,6 +176,7 @@ int Avltree<T>::insert(Node<T>* node){
             if (!(iterator->hasRight()))
                 break;
             iterator=iterator->getRight();
+            continue;
         }
         if (iterator->getKey()>key)
         {
@@ -148,15 +195,15 @@ int Avltree<T>::insert(Node<T>* node){
     //balancing:
     while (iterator!=root)
     {
-        Node<T> p = iterator->getParent();
+        Node<T>* p = iterator->getParent();
         int it_height = iterator->getHeight();
-        int p_height = p.getHeight();
+        int p_height = p->getHeight();
         if (p_height>=it_height+1)
             return 1;
-        p.setHeight(it_height+1);
-        if (p.getBF()>=2 || p.getBF()<=-2)
+        p->setHeight(it_height+1);
+        if (p->getBF()>=2 || p->getBF()<=-2)
         {
-            roll(iterator, p.getBF());
+            roll(p, p->getBF());
             return 1;
         }
         iterator = p;
@@ -192,7 +239,74 @@ void Avltree<T>::roll(Node<T>* node, int bf) {
 template<class T>
 void Avltree<T>::llRoll(Node<T>* node)
 {
-    Node<T> temp = node->getLeft();
+    Node<T>* temp = node->getLeft();
     node->setLeft(temp->getRight());
     temp->setRight(node);
+    //you need, right?
+    if(node->hasParent())
+    {
+        if(node->isLeft())
+            node->getParent()->setLeft(temp);
+        if(node->isRight())
+            node->getParent()->setRight(temp);
+    }
+    node->setParent(temp);
+
+}
+
+template<class T>
+void Avltree<T>::lrRoll(Node<T>* node)
+{
+    Node<T>* temp1 = node->getLeft();
+    Node<T>* temp2 = node->getLeft()->getRight();
+    node->setLeft(temp2->getRight());
+    temp2->getRight()->setParent(node);
+    temp1->setRight(temp2->getLeft());
+    temp2->getLeft()->setParent(temp1);
+    temp2->setLeft(temp1);
+    temp1->setParent(temp2);
+    temp2->setRight(node);
+    if(node==root)
+    {
+        root = temp2;
+    }
+    node->setParent(temp1);
+
+
+}
+template<class T>
+void Avltree<T>::rrRoll(Node<T>* node)
+{
+    //need to test
+    Node<T>* temp = node->getRight();
+    node->setRight(temp->getLeft());
+    if(node->hasParent())
+    {
+        if(node->isLeft())
+            node->getParent()->setLeft(temp);
+        if(node->isRight())
+            node->getParent()->setRight(temp);
+    }
+    temp->setLeft(node);
+    node->setParent(temp);
+}
+
+template<class T>
+void Avltree<T>::rlRoll(Node<T>* node)
+{
+    //need to test
+    Node<T>* temp1 = node->getRight();
+    Node<T>* temp2 = node->getRight()->getLeft();
+    node->setRight(temp2->getLeft());
+    temp2->getLeft()->setParent(node);
+    temp1->setLeft(temp2->getRight());
+    temp2->getRight()->setParent(temp1);
+    temp2->setRight(temp1);
+    temp1->setParent(temp2);
+    temp2->setLeft(node);
+    if(node==root)
+    {
+        root = temp2;
+    }
+    node->setParent(temp1);
 }
