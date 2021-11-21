@@ -3,11 +3,12 @@ template <class T>
 class Node {
     int key;
     T data;
+    Node<T> *parent;
     Node<T> *right;
     Node<T> *left;
 
 public:
-    Node(int key, T data) : key(key), data(data), right(nullptr), left(nullptr) {}
+    Node(int key, T data) : key(key), data(data),parent(nullptr), right(nullptr), left(nullptr) {}
 
     ~Node() = default;
 
@@ -27,6 +28,14 @@ public:
 
     T getData() {
         return this->data;
+    }
+
+    void setParent(Node<T> *parent) {
+        this->parent = parent;
+    }
+
+    Node<T> *getParent() {
+        return this->parent;
     }
 
     void setRight(Node<T> *right) {
