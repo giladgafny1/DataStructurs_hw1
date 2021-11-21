@@ -3,4 +3,4 @@ project(DataStructurs_hw1)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(DataStructurs_hw1 main.cpp avl.cpp libary1.h)
+add_executable(DataStructurs_hw1 main1.cpp avl.cpp library1.h main1.cpp)

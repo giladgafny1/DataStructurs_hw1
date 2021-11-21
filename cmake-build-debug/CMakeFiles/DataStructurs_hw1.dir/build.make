@@ -76,18 +76,18 @@ include CMakeFiles/DataStructurs_hw1.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/DataStructurs_hw1.dir/flags.make
 
-CMakeFiles/DataStructurs_hw1.dir/main.cpp.obj: CMakeFiles/DataStructurs_hw1.dir/flags.make
-CMakeFiles/DataStructurs_hw1.dir/main.cpp.obj: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Gilad\CLionProjects\DataStructurs_hw1\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/DataStructurs_hw1.dir/main.cpp.obj"
-	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\DataStructurs_hw1.dir\main.cpp.obj -c C:\Users\Gilad\CLionProjects\DataStructurs_hw1\main.cpp
+CMakeFiles/DataStructurs_hw1.dir/main1.cpp.obj: CMakeFiles/DataStructurs_hw1.dir/flags.make
+CMakeFiles/DataStructurs_hw1.dir/main1.cpp.obj: ../main1.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Gilad\CLionProjects\DataStructurs_hw1\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/DataStructurs_hw1.dir/main1.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\DataStructurs_hw1.dir\main1.cpp.obj -c C:\Users\Gilad\CLionProjects\DataStructurs_hw1\main1.cpp
 
-CMakeFiles/DataStructurs_hw1.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DataStructurs_hw1.dir/main.cpp.i"
-	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Gilad\CLionProjects\DataStructurs_hw1\main.cpp > CMakeFiles\DataStructurs_hw1.dir\main.cpp.i
+CMakeFiles/DataStructurs_hw1.dir/main1.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DataStructurs_hw1.dir/main1.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Gilad\CLionProjects\DataStructurs_hw1\main1.cpp > CMakeFiles\DataStructurs_hw1.dir\main1.cpp.i
 
-CMakeFiles/DataStructurs_hw1.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DataStructurs_hw1.dir/main.cpp.s"
-	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Gilad\CLionProjects\DataStructurs_hw1\main.cpp -o CMakeFiles\DataStructurs_hw1.dir\main.cpp.s
+CMakeFiles/DataStructurs_hw1.dir/main1.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DataStructurs_hw1.dir/main1.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Gilad\CLionProjects\DataStructurs_hw1\main1.cpp -o CMakeFiles\DataStructurs_hw1.dir\main1.cpp.s
 
 CMakeFiles/DataStructurs_hw1.dir/avl.cpp.obj: CMakeFiles/DataStructurs_hw1.dir/flags.make
 CMakeFiles/DataStructurs_hw1.dir/avl.cpp.obj: ../avl.cpp
@@ -104,13 +104,13 @@ CMakeFiles/DataStructurs_hw1.dir/avl.cpp.s: cmake_force
 
 # Object files for target DataStructurs_hw1
 DataStructurs_hw1_OBJECTS = \
-"CMakeFiles/DataStructurs_hw1.dir/main.cpp.obj" \
+"CMakeFiles/DataStructurs_hw1.dir/main1.cpp.obj" \
 "CMakeFiles/DataStructurs_hw1.dir/avl.cpp.obj"
 
 # External object files for target DataStructurs_hw1
 DataStructurs_hw1_EXTERNAL_OBJECTS =
 
-DataStructurs_hw1.exe: CMakeFiles/DataStructurs_hw1.dir/main.cpp.obj
+DataStructurs_hw1.exe: CMakeFiles/DataStructurs_hw1.dir/main1.cpp.obj
 DataStructurs_hw1.exe: CMakeFiles/DataStructurs_hw1.dir/avl.cpp.obj
 DataStructurs_hw1.exe: CMakeFiles/DataStructurs_hw1.dir/build.make
 DataStructurs_hw1.exe: CMakeFiles/DataStructurs_hw1.dir/linklibs.rsp
