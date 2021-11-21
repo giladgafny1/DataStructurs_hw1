@@ -142,6 +142,33 @@ DataStructurs_hw1/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\DataStructurs_hw1.dir\build.make CMakeFiles/DataStructurs_hw1.dir/build
 .PHONY : DataStructurs_hw1/fast
 
+avl.obj: avl.cpp.obj
+
+.PHONY : avl.obj
+
+# target to build an object file
+avl.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DataStructurs_hw1.dir\build.make CMakeFiles/DataStructurs_hw1.dir/avl.cpp.obj
+.PHONY : avl.cpp.obj
+
+avl.i: avl.cpp.i
+
+.PHONY : avl.i
+
+# target to preprocess a source file
+avl.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DataStructurs_hw1.dir\build.make CMakeFiles/DataStructurs_hw1.dir/avl.cpp.i
+.PHONY : avl.cpp.i
+
+avl.s: avl.cpp.s
+
+.PHONY : avl.s
+
+# target to generate assembly for a file
+avl.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DataStructurs_hw1.dir\build.make CMakeFiles/DataStructurs_hw1.dir/avl.cpp.s
+.PHONY : avl.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -178,6 +205,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... DataStructurs_hw1
+	@echo ... avl.obj
+	@echo ... avl.i
+	@echo ... avl.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

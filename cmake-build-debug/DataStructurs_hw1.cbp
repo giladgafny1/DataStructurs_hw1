@@ -80,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/Gilad/CLionProjects/DataStructurs_hw1/avl.cpp">
+			<Option target="DataStructurs_hw1"/>
+		</Unit>
+		<Unit filename="C:/Users/Gilad/CLionProjects/DataStructurs_hw1/libary1.h">
+			<Option target="DataStructurs_hw1"/>
+		</Unit>
 		<Unit filename="C:/Users/Gilad/CLionProjects/DataStructurs_hw1/main.cpp">
 			<Option target="DataStructurs_hw1"/>
 		</Unit>

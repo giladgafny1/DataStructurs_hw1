@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/DataStructurs_hw1.dir/avl.cpp.obj"
   "CMakeFiles/DataStructurs_hw1.dir/main.cpp.obj"
   "DataStructurs_hw1.exe"
   "DataStructurs_hw1.exe.manifest"
