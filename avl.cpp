@@ -54,6 +54,12 @@ public:
         return this->left;
     }
 
+    bool hasParent() {
+        if (this->parent == nullptr)
+            return false;
+        return true;
+    }
+
     bool hasRight() {
         if (this->right == nullptr)
             return false;
