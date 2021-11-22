@@ -126,7 +126,7 @@ public:
 
     int insert(Node<T>* node);
     void remove(Node<T>* node);
-    void inorder(Node<T>* root);
+    int inorder(Node<T> *root, T *order, int count);
     void preorder(Node<T>* root);
 
     void postorder(Node<T>* root);
@@ -314,4 +314,21 @@ void Avltree<T>::rlRoll(Node<T>* node)
     node->setParent(temp1);
 }
 
-#endif AVL_H
+template<class T>
+        int Avltree<T>::inorder(Node<T> *root, T *order, int count) {
+            if(*root== nullptr){
+                return 0;
+            }
+            int tmp;
+            tmp = inorder(*root->getLeft(),*order,count);
+            if(tmp!=0)
+                count=tmp;
+            order[count]=*root;
+            count++;
+            tmp =inorder(*root->getRight(),*order,count);
+            if(tmp!=0)
+                count=tmp;
+            return count;
+        }
+
+#endif

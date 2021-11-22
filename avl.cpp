@@ -310,3 +310,20 @@ void Avltree<T>::rlRoll(Node<T>* node)
     }
     node->setParent(temp1);
 }
+
+template<class T>
+        int Avltree<T>::inorder(Node<T> *root, T *order, int count) {
+            if(*root== nullptr){
+                return 0;
+            }
+            int tmp;
+            tmp = inorder(*root->getLeft(),*order,count);
+            if(tmp!=0)
+                count=tmp;
+            order[count]=*root;
+            count++;
+            tmp =inorder(*root->getRight(),*order,count);
+            if(tmp!=0)
+                count=tmp;
+            return count;
+        }
