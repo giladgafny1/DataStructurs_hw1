@@ -19,7 +19,7 @@
 #include <string.h>
 #include "library1.h"
 #include <iostream>
-#include "avl.cpp"
+#include "avl.h"
 using namespace std;
 
 
@@ -69,6 +69,12 @@ int main(int argc, const char**argv) {
     tree.insert(&node_4);
     tree.insert(&node_8);
     tree.insert(&node_11);
+    int arr[12];
+    tree.inorder(tree.getRoot(), arr, 0);
+    for (int i=0;i<12;i++)
+    {
+        cout<<arr[i] <<endl;
+    }
 
 
 

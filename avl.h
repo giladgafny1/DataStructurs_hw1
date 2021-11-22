@@ -19,14 +19,6 @@ public:
     //good?
     Node &operator=(const Node &node) = default;
 
-    //good?
-    bool &operator == (Node const &node)
-    {
-        if (node->key==this->key)
-            return true;
-        return false;
-    }
-
     void setKey(int key)
     {
         this->key=key;
@@ -136,10 +128,16 @@ public:
     void rrRoll(Node<T>* node);
     void rlRoll(Node<T>* node);
     Node<T>* findKey(int key);
+    Node<T>* getRoot();
 
 
 };
 
+template<class T>
+Node<T>* Avltree<T>::getRoot()
+{
+    return root;
+}
 template<class T>
 Node<T>* Avltree<T>::findKey(int key)
 {
@@ -269,7 +267,7 @@ void Avltree<T>::lrRoll(Node<T>* node)
     temp2->setLeft(temp1);
     temp1->setParent(temp2);
     temp2->setRight(node);
-    if(node==root)
+    if(node->getKey()==root->getKey())
     {
         root = temp2;
     }
@@ -307,7 +305,7 @@ void Avltree<T>::rlRoll(Node<T>* node)
     temp2->setRight(temp1);
     temp1->setParent(temp2);
     temp2->setLeft(node);
-    if(node==root)
+    if(node->getKey()==root->getKey())
     {
         root = temp2;
     }
@@ -315,20 +313,20 @@ void Avltree<T>::rlRoll(Node<T>* node)
 }
 
 template<class T>
-        int Avltree<T>::inorder(Node<T> *root, T *order, int count) {
-            if(*root== nullptr){
-                return 0;
-            }
-            int tmp;
-            tmp = inorder(*root->getLeft(),*order,count);
-            if(tmp!=0)
-                count=tmp;
-            order[count]=*root;
-            count++;
-            tmp =inorder(*root->getRight(),*order,count);
-            if(tmp!=0)
-                count=tmp;
-            return count;
-        }
+int Avltree<T>::inorder(Node<T> *root, T *order, int count) {
+    if(!root){
+        return 0;
+    }
+    int tmp;
+    tmp = this->inorder(root->getLeft(),order,count);
+    if(tmp!=0)
+        count=tmp;
+    order[count]=root->getData();
+    count++;
+    tmp = this->inorder(root->getRight(),order,count);
+    if(tmp!=0)
+        count=tmp;
+    return count;
+}
 
 #endif
