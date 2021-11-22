@@ -83,6 +83,9 @@
 		<Unit filename="C:/Users/Gilad/CLionProjects/DataStructurs_hw1/avl.cpp">
 			<Option target="DataStructurs_hw1"/>
 		</Unit>
+		<Unit filename="C:/Users/Gilad/CLionProjects/DataStructurs_hw1/avl.h">
+			<Option target="DataStructurs_hw1"/>
+		</Unit>
 		<Unit filename="C:/Users/Gilad/CLionProjects/DataStructurs_hw1/library1.h">
 			<Option target="DataStructurs_hw1"/>
 		</Unit>
