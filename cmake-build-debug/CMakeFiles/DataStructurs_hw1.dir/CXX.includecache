@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/Gilad/CLionProjects/DataStructurs_hw1/avl.cpp
+
+C:/Users/Gilad/CLionProjects/DataStructurs_hw1/library1.h
+
+C:/Users/Gilad/CLionProjects/DataStructurs_hw1/main1.cpp
+assert.h
+-
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+library1.h
+C:/Users/Gilad/CLionProjects/DataStructurs_hw1/library1.h
+iostream
+-
+avl.cpp
+C:/Users/Gilad/CLionProjects/DataStructurs_hw1/avl.cpp
+

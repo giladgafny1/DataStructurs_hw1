@@ -125,8 +125,8 @@ public:
     void remove(Node<T>* node);
     void inorder(Node<T>* root);
     void preorder(Node<T>* root);
-    void postorder(Node<T>* root);
 
+    void postorder(Node<T>* root);
     void roll(Node<T>* node, int bf);
     void llRoll(Node<T>* node);
     void lrRoll(Node<T>* node);
