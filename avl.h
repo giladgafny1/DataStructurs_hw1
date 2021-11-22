@@ -4,6 +4,7 @@
 template <class T>
 class Node {
     int key;
+    int sec_key;
     T data;
     Node<T> *parent;
     Node<T> *right;
