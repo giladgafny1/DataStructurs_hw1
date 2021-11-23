@@ -64,6 +64,11 @@ public:
         return this->right;
     }
 
+    bool IsLeaf()
+    {
+        return this->hasLeft()== nullptr && this->hasRight()== nullptr;
+    }
+
     void setLeft(Node<T, C> *left) {
         this->left = left;
     }
@@ -101,6 +106,17 @@ public:
             return true;
         return false;
     }
+
+    Node<T, C> HasOnePlayer()
+    {
+        if(this->right== nullptr && this->left!= nullptr)
+            return this->left;
+        if(this->right!= nullptr && this->left== nullptr)
+            return this->right;
+        return nullptr;
+
+    }
+
     int getBF()
     {
         int h_r = -1, h_l = -1;
@@ -123,6 +139,9 @@ public:
     int insert(Node<T, C>* node);
 
     void remove(Node<T, C>* node);
+    Node<T, C>* removebinary(Node<T,C> * node);
+    Node<T, C>* getNextLeft(Node<T,C> * node);
+
     int inorder(Node<T, C> *root, T *order, int count);
     void preorder(Node<T, C>* root);
 
@@ -336,5 +355,78 @@ int Avltree<T,C>::inorder(Node<T, C> *root, T *order, int count) {
         count=tmp;
     return count;
 }
+
+template<class T,class C>
+Node<T,C>* Avltree<T, C>::removebinary(Node<T, C> *node) {
+    if (node->IsLeaf())
+    {
+        if(node->isRight())
+        {
+            node->getParent()->setRight(nullptr);
+        }
+        else
+        {
+            node->getParent()->setRight(nullptr);
+        }
+        Node<T,C>* parent= node->getParent();
+        delete node;
+        return parent;
+    }
+    if(node->HasOnePlayer()!= nullptr)
+    {
+        if(node->isLeft())
+        {
+            node->getParent()->setLeft(node->HasOnePlayer());
+        }
+        else
+            node->getParent()->setRight(node->HasOnePlayer());
+        Node<T,C>* parent= node->getParent();
+        delete node;
+        return parent;
+    }
+    Node<T,C>* new_root= getNextLeft(node);
+    Node<T,C>* tmp_p=new_root->getParent();
+    Node<T,C>* tmp_R=new_root->getRight();
+    new_root->setParent(node->getParent());
+    new_root->setRight(node->getRight());
+    new_root->setLeft(node->getLeft());
+    node->getLeft()->setParent(new_root);
+    node->getRight()->setParent(new_root);
+    tmp_p->setLeft(nullptr);
+    tmp_p->setRight(tmp_R);
+    delete node;
+    return tmp_p;
+}
+
+template<class T,class C>
+void Avltree<T, C>::remove(Node<T, C> *node_to_remove) {
+    Node<T,C>* node= removebinary(node_to_remove);
+    if(node->getRight()->getHeight()>node->getLeft()->getHeight())
+    {
+        node->setHeight(1+node->getRight()->getHeight());
+    } else
+    {
+        node->setHeight(1+node->getLeft()->getHeight());
+    }
+    int height=node->getHeight();
+    roll(node,node->getBF());
+    while (node!=root)
+    {
+        node=node->getParent();
+        roll(node);
+    }
+
+}
+
+template<class T,class C>
+Node<T, C> *Avltree<T, C>::getNextLeft(Node<T, C> *node) {
+    Node<C,T>* node_next=node->getRight();
+    while (node_next->hasLeft())
+    {
+        node_next=node_next->getLeft();
+    }
+    return node_next;
+}
+
 
 #endif

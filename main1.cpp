@@ -56,7 +56,7 @@ int main(int argc, const char**argv) {
     tree.insert(&node_18);
 */
     //testing right roll
-    tree.insert(&node_15);
+    tree.insert(node_15);
     tree.insert(&node_10);
     tree.insert(&node_20);
     tree.insert(&node_19);
