@@ -16,7 +16,6 @@ typedef Avltree<Player, int> PlayersTree;
 typedef Avltree<Player, LevelIdKey> PlayersTreeByLevel;
 //typedef Avltree<Group, int> GroupsTree;
 
-
 class SquidSystem {
 private:
     PlayersTree p_tree;

@@ -24,21 +24,21 @@ using namespace std;
 
 
 int main(int argc, const char**argv) {
-    Avltree<int> tree;
-    Node<int> node_12(12,12);
-    Node<int> node_8(8,8);
-    Node<int> node_15(15,15);
-    Node<int> node_6(6,6);
-    Node<int> node_10(10,10);
-    Node<int> node_14(14,14);
-    Node<int> node_24(24, 24);
-    Node<int> node_4(4,4);
-    Node<int> node_11(11,11);
-    Node<int> node_13(13,13);
-    Node<int> node_20(20,20);
-    Node<int> node_29(29,29);
-    Node<int> node_19(19,19);
-    Node<int> node_18(18,18);
+    Avltree<int, int> tree;
+    Node<int, int> node_12(12, 12);
+    Node<int, int> node_8(8,8);
+    Node<int, int> node_15(15,15);
+    Node<int, int> node_6(6,6);
+    Node<int, int> node_10(10,10);
+    Node<int, int> node_14(14,14);
+    Node<int, int> node_24(24, 24);
+    Node<int, int> node_4(4,4);
+    Node<int, int> node_11(11,11);
+    Node<int, int> node_13(13,13);
+    Node<int, int> node_20(20,20);
+    Node<int, int> node_29(29,29);
+    Node<int, int> node_19(19,19);
+    Node<int, int> node_18(18,18);
     //testing left roll
     /*tree.insert(&node_12);
     tree.insert(&node_8);
