@@ -1,11 +1,12 @@
 #ifndef AVL_H
 #define AVL_H
 
+#include <iostream>
+#include <memory>
 
 template <class T, class C>
 class Node {
     C key;
-  //  int sec_key;
     T data;
     Node<T,C> *parent;
     Node<T,C> *right;
@@ -13,7 +14,7 @@ class Node {
     int h;
 
 public:
-    Node(C key, T data) : key(key), data(data), parent(nullptr), right(nullptr), left(nullptr), h(0) {}
+    Node(T data, C key) : key(key), data(data), parent(nullptr), right(nullptr), left(nullptr), h(0) {}
     Node(Node &node) = default;
 
     ~Node() = default;
@@ -114,7 +115,7 @@ public:
 template <class T,class C>
 class Avltree {
 public:
-    Node<T, C>* root;
+    std::shared_ptr<Node<T, C>> root;
 
     Avltree(): root(nullptr){}
 
