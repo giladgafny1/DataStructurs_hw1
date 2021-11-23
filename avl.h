@@ -1,18 +1,19 @@
 #ifndef AVL_H
 #define AVL_H
 
-template <class T>
+
+template <class T, class C>
 class Node {
-    int key;
-    int sec_key;
+    C key;
+  //  int sec_key;
     T data;
-    Node<T> *parent;
-    Node<T> *right;
-    Node<T> *left;
+    Node<T,C> *parent;
+    Node<T,C> *right;
+    Node<T,C> *left;
     int h;
 
 public:
-    Node(int key, T data) : key(key), data(data), parent(nullptr), right(nullptr), left(nullptr), h(0) {}
+    Node(C key, T data) : key(key), data(data), parent(nullptr), right(nullptr), left(nullptr), h(0) {}
     Node(Node &node) = default;
 
     ~Node() = default;
@@ -20,7 +21,7 @@ public:
     //good?
     Node &operator=(const Node &node) = default;
 
-    void setKey(int key)
+    void setKey(C key)
     {
         this->key=key;
     }
@@ -46,27 +47,27 @@ public:
         return this->h;
     }
 
-    void setParent(Node<T> *parent) {
+    void setParent(Node<T,C> *parent) {
         this->parent = parent;
     }
 
-    Node<T> *getParent() {
+    Node<T, C> *getParent() {
         return this->parent;
     }
 
-    void setRight(Node<T> *right) {
+    void setRight(Node<T, C> *right) {
         this->right = right;
     }
 
-    Node<T> *getRight() {
+    Node<T, C> *getRight() {
         return this->right;
     }
 
-    void setLeft(Node<T> *left) {
+    void setLeft(Node<T, C> *left) {
         this->left = left;
     }
 
-    Node<T> *getLeft() {
+    Node<T, C> *getLeft() {
         return this->left;
     }
     bool hasParent()
@@ -110,39 +111,44 @@ public:
     }
 };
 
-template <class T>
+template <class T,class C>
 class Avltree {
 public:
-    Node<T>* root;
+    Node<T, C>* root;
 
     Avltree(): root(nullptr){}
 
-    int insert(Node<T>* node);
-    void remove(Node<T>* node);
-    int inorder(Node<T> *root, T *order, int count);
-    void preorder(Node<T>* root);
 
-    void postorder(Node<T>* root);
-    void roll(Node<T>* node, int bf);
-    void llRoll(Node<T>* node);
-    void lrRoll(Node<T>* node);
-    void rrRoll(Node<T>* node);
-    void rlRoll(Node<T>* node);
-    Node<T>* findKey(int key);
-    Node<T>* getRoot();
+    int insert(Node<T, C>* node);
+
+    void remove(Node<T, C>* node);
+    int inorder(Node<T, C> *root, T *order, int count);
+    void preorder(Node<T, C>* root);
+
+    void postorder(Node<T, C>* root);
+    void roll(Node<T, C>* node, int bf);
+    void llRoll(Node<T, C>* node);
+    void lrRoll(Node<T, C>* node);
+    void rrRoll(Node<T, C>* node);
+    void rlRoll(Node<T, C>* node);
+    Node<T, C>* findKey(C key);
+    Node<T, C>* getRoot();
+
+
 
 
 };
 
-template<class T>
-Node<T>* Avltree<T>::getRoot()
+template<class T ,class C>
+Node<T, C>* Avltree<T,C>::getRoot()
 {
     return root;
 }
-template<class T>
-Node<T>* Avltree<T>::findKey(int key)
+
+template<class T ,class C>
+Node<T, C>* Avltree<T,C>::findKey(C key)
 {
-    Node<T>* iterator = root;
+    Node<T, C>* iterator = root;
     while (iterator!=nullptr)
     {
         if (iterator->getKey()==key)
@@ -160,17 +166,17 @@ Node<T>* Avltree<T>::findKey(int key)
     return nullptr;
 }
 
-template<class T>
-int Avltree<T>::insert(Node<T>* node){
+template<class T ,class C>
+int Avltree<T,C>::insert(Node<T, C>* node){
     if (root == nullptr)
     {
         root = node;
         return 1;
     }
-    int key = node->getKey();
+    C key = node->getKey();
     if (this->findKey(node->getKey()) != nullptr)
         return -1;
-    Node<T>* iterator = root;
+    Node<T, C>* iterator = root;
     while (iterator!=nullptr)
     {
         if (iterator->getKey()<key)
@@ -197,7 +203,7 @@ int Avltree<T>::insert(Node<T>* node){
     //balancing:
     while (iterator!=root)
     {
-        Node<T>* p = iterator->getParent();
+        Node<T, C>* p = iterator->getParent();
         int it_height = iterator->getHeight();
         int p_height = p->getHeight();
         if (p_height>=it_height+1)
@@ -214,8 +220,8 @@ int Avltree<T>::insert(Node<T>* node){
     return 1;
 }
 
-template<class T>
-void Avltree<T>::roll(Node<T>* node, int bf) {
+template<class T ,class C>
+void Avltree<T,C>::roll(Node<T, C>* node, int bf) {
     if (bf == 2 && node->hasLeft()) {
         if (node->getLeft()->getBF() >= 0) {
             llRoll(node);
@@ -238,10 +244,10 @@ void Avltree<T>::roll(Node<T>* node, int bf) {
     }
 }
 
-template<class T>
-void Avltree<T>::llRoll(Node<T>* node)
+template<class T ,class C>
+void Avltree<T,C>::llRoll(Node<T, C>* node)
 {
-    Node<T>* temp = node->getLeft();
+    Node<T, C>* temp = node->getLeft();
     node->setLeft(temp->getRight());
     temp->setRight(node);
     //you need, right?
@@ -256,11 +262,11 @@ void Avltree<T>::llRoll(Node<T>* node)
 
 }
 
-template<class T>
-void Avltree<T>::lrRoll(Node<T>* node)
+template<class T ,class C>
+void Avltree<T,C>::lrRoll(Node<T, C>* node)
 {
-    Node<T>* temp1 = node->getLeft();
-    Node<T>* temp2 = node->getLeft()->getRight();
+    Node<T, C>* temp1 = node->getLeft();
+    Node<T, C>* temp2 = node->getLeft()->getRight();
     node->setLeft(temp2->getRight());
     temp2->getRight()->setParent(node);
     temp1->setRight(temp2->getLeft());
@@ -276,11 +282,11 @@ void Avltree<T>::lrRoll(Node<T>* node)
 
 
 }
-template<class T>
-void Avltree<T>::rrRoll(Node<T>* node)
+template<class T ,class C>
+void Avltree<T,C>::rrRoll(Node<T, C>* node)
 {
     //need to test
-    Node<T>* temp = node->getRight();
+    Node<T, C>* temp = node->getRight();
     node->setRight(temp->getLeft());
     if(node->hasParent())
     {
@@ -293,12 +299,12 @@ void Avltree<T>::rrRoll(Node<T>* node)
     node->setParent(temp);
 }
 
-template<class T>
-void Avltree<T>::rlRoll(Node<T>* node)
+template<class T ,class C>
+void Avltree<T,C>::rlRoll(Node<T, C>* node)
 {
     //need to test
-    Node<T>* temp1 = node->getRight();
-    Node<T>* temp2 = node->getRight()->getLeft();
+    Node<T, C>* temp1 = node->getRight();
+    Node<T, C>* temp2 = node->getRight()->getLeft();
     node->setRight(temp2->getLeft());
     temp2->getLeft()->setParent(node);
     temp1->setLeft(temp2->getRight());
@@ -313,8 +319,8 @@ void Avltree<T>::rlRoll(Node<T>* node)
     node->setParent(temp1);
 }
 
-template<class T>
-int Avltree<T>::inorder(Node<T> *root, T *order, int count) {
+template<class T ,class C>
+int Avltree<T,C>::inorder(Node<T, C> *root, T *order, int count) {
     if(!root){
         return 0;
     }

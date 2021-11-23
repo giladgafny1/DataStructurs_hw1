@@ -24,7 +24,6 @@ using namespace std;
 
 
 int main(int argc, const char**argv) {
-
     Avltree<int> tree;
     Node<int> node_12(12,12);
     Node<int> node_8(8,8);
