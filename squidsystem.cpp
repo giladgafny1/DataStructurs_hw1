@@ -9,7 +9,7 @@ StatusType SquidSystem::AddGroup(int GroupID) {
     return SUCCESS;
 }
 
-
+/*
 StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
     //what about null ss?
     if (player_id<=0 || group_id<=0 || level<0)
@@ -37,7 +37,8 @@ StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
     pl_tree.insert(new_player_level_id_node)
     //here insert to group level tree
 }
-
+*/
+/*
 StatusType SquidSystem::IncreaseLevel(int PlayerID, int LevelIncrease) {
 
     if(PlayerID<=0 || LevelIncrease<=0)
@@ -51,4 +52,4 @@ StatusType SquidSystem::IncreaseLevel(int PlayerID, int LevelIncrease) {
     }
     player->getData().setLevel(player->getData().getLevel()+LevelIncrease);
 }
-
+*/

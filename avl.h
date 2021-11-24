@@ -8,9 +8,9 @@ template <class T, class C>
 class Node {
     C key;
     T data;
-    Node<T,C> *parent;
-    Node<T,C> *right;
-    Node<T,C> *left;
+    std::shared_ptr<Node<T, C>>parent;
+    std::shared_ptr<Node<T, C>>right;
+    std::shared_ptr<Node<T, C>>left;
     int h;
 
 public:
@@ -48,19 +48,19 @@ public:
         return this->h;
     }
 
-    void setParent(Node<T,C> *parent) {
+    void setParent(std::shared_ptr<Node<T, C>> parent) {
         this->parent = parent;
     }
 
-    Node<T, C> *getParent() {
+    std::shared_ptr<Node<T, C>>getParent() {
         return this->parent;
     }
 
-    void setRight(Node<T, C> *right) {
+    void setRight(std::shared_ptr<Node<T, C>> right) {
         this->right = right;
     }
 
-    Node<T, C> *getRight() {
+    std::shared_ptr<Node<T, C>> getRight() {
         return this->right;
     }
 
@@ -69,11 +69,11 @@ public:
         return this->hasLeft()== nullptr && this->hasRight()== nullptr;
     }
 
-    void setLeft(Node<T, C> *left) {
+    void setLeft(std::shared_ptr<Node<T, C>> left) {
         this->left = left;
     }
 
-    Node<T, C> *getLeft() {
+    std::shared_ptr<Node<T, C>> getLeft() {
         return this->left;
     }
     bool hasParent()
@@ -128,32 +128,35 @@ public:
     }
 };
 
+
+
 template <class T,class C>
 class Avltree {
 public:
-    //std::shared_ptr<Node<T, C>> root;
-    Node<T,C>* root;
+    typedef std::shared_ptr<Node<T, C>> Node_ptr;
+    Node_ptr root;
+   //Node<T,C>* root;
 
     Avltree(): root(nullptr){}
 
 
-    int insert( Node<T,C>* node);
+    int insert(Node_ptr node);
 
     void remove(Node<T, C>* node);
     Node<T, C>* removebinary(Node<T,C> * node);
     Node<T, C>* getNextLeft(Node<T,C> * node);
 
-    int inorder( Node<T,C>* root, T *order, int count);
+    int inorder(Node_ptr root, T *order, int count);
     void preorder(Node<T, C>* root);
 
     void postorder(Node<T, C>* root);
-    void roll(Node<T, C>* node, int bf);
-    void llRoll(Node<T, C>* node);
-    void lrRoll(Node<T, C>* node);
-    void rrRoll(Node<T, C>* node);
-    void rlRoll(Node<T, C>* node);
-    Node<T, C>* findKey(C key);
-    Node<T,C>* getRoot();
+    void roll(Node_ptr node, int bf);
+    void llRoll(Node_ptr node);
+    void lrRoll(Node_ptr node);
+    void rrRoll(Node_ptr node);
+    void rlRoll(Node_ptr node);
+    Node_ptr findKey(C key);
+    Node_ptr getRoot();
 
 
 
@@ -161,15 +164,15 @@ public:
 };
 
 template<class T ,class C>
-Node<T,C>* Avltree<T,C>::getRoot()
+std::shared_ptr<Node<T, C>> Avltree<T, C>::getRoot()
 {
     return root;
 }
 
 template<class T ,class C>
-Node<T, C>* Avltree<T,C>::findKey(C key)
+        std::shared_ptr<Node<T, C>> Avltree<T,C>::findKey(C key)
 {
-    Node<T, C>* iterator = root;
+    std::shared_ptr<Node<T, C>> iterator = root;
     while (iterator!=nullptr)
     {
         if (iterator->getKey()==key)
@@ -188,7 +191,7 @@ Node<T, C>* Avltree<T,C>::findKey(C key)
 }
 
 template<class T ,class C>
-        int Avltree<T,C>::insert(Node<T,C>* node){
+int Avltree<T,C>::insert(std::shared_ptr<Node<T, C>> node){
     if (root == nullptr)
     {
         root= node;
@@ -197,7 +200,7 @@ template<class T ,class C>
     C key = node->getKey();
     if (this->findKey(node->getKey()) != nullptr)
         return -1;
-    Node<T,C>* iterator = root;
+    std::shared_ptr<Node<T, C>> iterator= root;
     while (iterator!=nullptr)
     {
         if (iterator->getKey()<key)
@@ -220,11 +223,11 @@ template<class T ,class C>
         iterator->setRight(node);
     node->setParent(iterator);
     node->setHeight(0);
-    iterator = node;
+    iterator= node;
     //balancing:
     while (iterator!=root)
     {
-        Node<T,C>* p = iterator->getParent();
+        std::shared_ptr<Node<T, C>> p= iterator->getParent();
         int it_height = iterator->getHeight();
         int p_height = p->getHeight();
         if (p_height>=it_height+1)
@@ -242,7 +245,7 @@ template<class T ,class C>
 }
 
 template<class T ,class C>
-void Avltree<T,C>::roll(Node<T, C>* node, int bf) {
+        void Avltree<T,C>::roll(std::shared_ptr<Node<T, C>> node, int bf) {
     if (bf == 2 && node->hasLeft()) {
         if (node->getLeft()->getBF() >= 0) {
             llRoll(node);
@@ -266,9 +269,9 @@ void Avltree<T,C>::roll(Node<T, C>* node, int bf) {
 }
 
 template<class T ,class C>
-void Avltree<T,C>::llRoll(Node<T, C>* node)
+        void Avltree<T,C>::llRoll(std::shared_ptr<Node<T, C>> node)
 {
-    Node<T, C>* temp = node->getLeft();
+            std::shared_ptr<Node<T, C>> temp = node->getLeft();
     node->setLeft(temp->getRight());
     temp->setRight(node);
     //you need, right?
@@ -284,10 +287,10 @@ void Avltree<T,C>::llRoll(Node<T, C>* node)
 }
 
 template<class T ,class C>
-void Avltree<T,C>::lrRoll(Node<T, C>* node)
+        void Avltree<T,C>::lrRoll(std::shared_ptr<Node<T, C>> node)
 {
-    Node<T, C>* temp1 = node->getLeft();
-    Node<T, C>* temp2 = node->getLeft()->getRight();
+            std::shared_ptr<Node<T, C>> temp1 = node->getLeft();
+            std::shared_ptr<Node<T, C>> temp2 = node->getLeft()->getRight();
     node->setLeft(temp2->getRight());
     temp2->getRight()->setParent(node);
     temp1->setRight(temp2->getLeft());
@@ -304,10 +307,10 @@ void Avltree<T,C>::lrRoll(Node<T, C>* node)
 
 }
 template<class T ,class C>
-void Avltree<T,C>::rrRoll(Node<T, C>* node)
+        void Avltree<T,C>::rrRoll(std::shared_ptr<Node<T, C>> node)
 {
     //need to test
-    Node<T, C>* temp = node->getRight();
+    std::shared_ptr<Node<T, C>> temp = node->getRight();
     node->setRight(temp->getLeft());
     if(node->hasParent())
     {
@@ -321,11 +324,11 @@ void Avltree<T,C>::rrRoll(Node<T, C>* node)
 }
 
 template<class T ,class C>
-void Avltree<T,C>::rlRoll(Node<T, C>* node)
+        void Avltree<T,C>::rlRoll(std::shared_ptr<Node<T, C>> node)
 {
     //need to test
-    Node<T, C>* temp1 = node->getRight();
-    Node<T, C>* temp2 = node->getRight()->getLeft();
+    std::shared_ptr<Node<T, C>> temp1 = node->getRight();
+    std::shared_ptr<Node<T, C>> temp2 = node->getRight()->getLeft();
     node->setRight(temp2->getLeft());
     temp2->getLeft()->setParent(node);
     temp1->setLeft(temp2->getRight());
@@ -341,7 +344,7 @@ void Avltree<T,C>::rlRoll(Node<T, C>* node)
 }
 
 template<class T ,class C>
-        int Avltree<T,C>::inorder( Node<T,C>* root, T *order, int count) {
+        int Avltree<T,C>::inorder( std::shared_ptr<Node<T, C>> root, T *order, int count) {
     if(!root){
         return 0;
     }
