@@ -1,6 +1,15 @@
 #include "squidsystem.h"
 
 
+
+/*SquidSystem* SquidSystem::Init()
+{
+    //should return a pointer. is & right?
+    SquidSystem new_system();
+    return new_system;
+
+}
+*/
 StatusType SquidSystem::AddGroup(int GroupID) {
     if(GroupID<=0)
         return INVALID_INPUT;
@@ -8,7 +17,6 @@ StatusType SquidSystem::AddGroup(int GroupID) {
       //  return FAILURE;
     return SUCCESS;
 }
-
 
 StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
     //what about null ss?
@@ -37,8 +45,10 @@ StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
     if (new_player_level_id_node == nullptr)
         return ALLOCATION_ERROR;
     pl_tree.insert(new_player_level_id_node);
-    //here insert to group
+
+    //adding player to the group's trees
     player_group.addPlayer(new_player_node, new_player_level_id_node);
+    return SUCCESS;
 }
 
 /*

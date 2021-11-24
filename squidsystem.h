@@ -24,8 +24,8 @@ private:
 public:
     SquidSystem();
     ~SquidSystem()=default;
-    SquidSystem(const SquidSystem& other);
-    SquidSystem& operator=(const SquidSystem& other);
+
+    SquidSystem* Init();
 
     StatusType AddGroup(int GroupID);
 
