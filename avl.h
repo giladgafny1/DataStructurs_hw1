@@ -245,7 +245,7 @@ int Avltree<T,C>::insert(std::shared_ptr<Node<T, C>> node){
 }
 
 template<class T ,class C>
-        void Avltree<T,C>::roll(std::shared_ptr<Node<T, C>> node, int bf) {
+void Avltree<T,C>::roll(std::shared_ptr<Node<T,C>> node, int bf) {
     if (bf == 2 && node->hasLeft()) {
         if (node->getLeft()->getBF() >= 0) {
             llRoll(node);
@@ -281,6 +281,7 @@ template<class T ,class C>
             node->getParent()->setLeft(temp);
         if(node->isRight())
             node->getParent()->setRight(temp);
+        temp->setParent(node->getParent());
     }
     node->setParent(temp);
 
@@ -319,6 +320,7 @@ template<class T ,class C>
             node->getParent()->setLeft(temp);
         if(node->isRight())
             node->getParent()->setRight(temp);
+        temp->setParent(node->getParent());
     }
     temp->setLeft(node);
     node->setParent(temp);
@@ -372,7 +374,7 @@ std::shared_ptr<Node<T, C>> Avltree<T, C>::removebinary(std::shared_ptr<Node<T, 
         }
         else
         {
-            node->getParent()->setRight(nullptr);
+            node->getParent()->setLeft(nullptr);
         }
         std::shared_ptr<Node<T, C>> parent= node->getParent();
         return parent;
@@ -398,25 +400,33 @@ std::shared_ptr<Node<T, C>> Avltree<T, C>::removebinary(std::shared_ptr<Node<T, 
     node->getRight()->setParent(new_root);
     tmp_p->setLeft(nullptr);
     tmp_p->setRight(tmp_R);
+    if(node->isRight())
+    {
+        node->getParent()->setRight(new_root);
+    } else{
+        node->getParent()->setLeft(new_root);
+    }
     return tmp_p;
 }
 
 template<class T,class C>
 void Avltree<T, C>::remove(std::shared_ptr<Node<T, C>> node_to_remove)  {
     std::shared_ptr<Node<T, C>> node= removebinary(node_to_remove);
-    if(node->getRight()->getHeight()>node->getLeft()->getHeight())
+    if(node->IsLeaf())
     {
-        node->setHeight(1+node->getRight()->getHeight());
+        node->setHeight(0);
     } else
     {
-        node->setHeight(1+node->getLeft()->getHeight());
+        node->setHeight(1+node->getRight()->getHeight());
     }
-    int height=node->getHeight();
+
+   // int height=node->getHeight();
     roll(node,node->getBF());
+    node=node->getParent();
     while (node!=root)
     {
+        roll(node,node->getBF());
         node=node->getParent();
-        roll(node);
     }
 
 }

@@ -92,7 +92,7 @@ int main(int argc, const char**argv) {
     {
         cout<<arr[i] <<endl;
     }
-    tree.removebinary(node_10);
+    tree.remove(node_14);
     tree.inorder(tree.getRoot(), arr, 0);
     cout<<"second loop"<<endl;
     for (int i=0;i<11;i++)
