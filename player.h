@@ -24,6 +24,8 @@ public:
 
     friend bool operator==(const LevelIdKey &key1, const LevelIdKey &key2);
     friend bool operator<(const LevelIdKey &key1, const LevelIdKey &key2);
+    friend bool operator>(const LevelIdKey &key1, const LevelIdKey &key2);
+
 };
 
 class Player {

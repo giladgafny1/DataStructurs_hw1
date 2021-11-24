@@ -23,7 +23,9 @@ bool Group::isPlayerInGroup(int player_id, LevelIdKey level_id){
 }
 void Group::addPlayer(std::shared_ptr<Node<Player, int>> player_by_id, std::shared_ptr<Node<Player, LevelIdKey>> player_by_level)
 {
-    players_tree_id->insert(player_by_id);
-    players_tree_levels->insert(player_by_level);
+    std::shared_ptr<Node<Player, int>> new_sp_node_id(player_by_id);
+    players_tree_id->insert(new_sp_node_id);
+    std::shared_ptr<Node<Player, LevelIdKey>> new_sp_node_level(player_by_level);
+    players_tree_levels->insert(new_sp_node_level);
 
 }

@@ -27,7 +27,7 @@ public:
         this->key=key;
     }
 
-    int getKey()
+    C &getKey()
     {
         return this->key;
     }
@@ -36,7 +36,7 @@ public:
         this->data = data;
     }
 
-    T getData() {
+    T &getData() {
         return this->data;
     }
 
@@ -44,7 +44,7 @@ public:
         this->h = h;
     }
 
-    T getHeight() {
+    int getHeight() {
         return this->h;
     }
 
@@ -223,7 +223,7 @@ int Avltree<T,C>::insert(std::shared_ptr<Node<T, C>> node){
         iterator->setRight(node);
     node->setParent(iterator);
     node->setHeight(0);
-    iterator= node;
+    iterator = node;
     //balancing:
     while (iterator!=root)
     {

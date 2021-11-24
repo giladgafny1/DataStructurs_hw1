@@ -9,7 +9,7 @@ StatusType SquidSystem::AddGroup(int GroupID) {
     return SUCCESS;
 }
 
-/*
+
 StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
     //what about null ss?
     if (player_id<=0 || group_id<=0 || level<0)
@@ -21,8 +21,8 @@ StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
     if (g_tree.findKey(group_id) == nullptr)
         return FAILURE;
     LevelIdKey level_id_player(level, player_id);
-    Group *player_group = g_tree.findKey(group_id)->getData();
-    if (player_group->isPlayerInGroup(player_id, level_id_player))
+    Group player_group = g_tree.findKey(group_id)->getData();
+    if (player_group.isPlayerInGroup(player_id, level_id_player))
         return FAILURE;
     Player new_player(player_id, level, group_id);
 
@@ -36,11 +36,11 @@ StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
     std::shared_ptr<Node<Player, LevelIdKey>> new_player_level_id_node = std::make_shared<Node<Player, LevelIdKey>>(new_player, new_player.getLevelIdKey());
     if (new_player_level_id_node == nullptr)
         return ALLOCATION_ERROR;
-    pl_tree.insert(new_player_level_id_node)
+    pl_tree.insert(new_player_level_id_node);
     //here insert to group
-    player_group->addPlayer(new_player_node, new_player_level_id_node);
+    player_group.addPlayer(new_player_node, new_player_level_id_node);
 }
-*/
+
 /*
 StatusType SquidSystem::IncreaseLevel(int PlayerID, int LevelIncrease) {
 

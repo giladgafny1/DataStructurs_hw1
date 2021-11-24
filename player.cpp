@@ -9,6 +9,20 @@ return (key1.level==key2.level && key1.id==key2.id);
 }
 bool operator<(const LevelIdKey &key1, const LevelIdKey &key2)
 {
+    if (key1.level>key2.level)
+        return true;
+    else
+    {
+        if (key1.level==key2.level)
+        {
+            if(key1.id<key2.id)
+                return true;
+        }
+    }
+    return false;
+}
+bool operator>(const LevelIdKey &key1, const LevelIdKey &key2)
+{
     if (key1.level<key2.level)
         return true;
     else

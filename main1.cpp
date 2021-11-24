@@ -94,12 +94,11 @@ int main(int argc, const char**argv) {
     }
     tree.removebinary(node_10);
     tree.inorder(tree.getRoot(), arr, 0);
+    cout<<"second loop"<<endl;
     for (int i=0;i<11;i++)
     {
         cout<<arr[i] <<endl;
     }
-
-
 
 
 }
