@@ -40,8 +40,8 @@ int main(int argc, const char**argv) {
     std::shared_ptr<Node<int, int>> node_29= make_shared<Node<int,int>>(29,29);
     std::shared_ptr<Node<int, int>> node_19= make_shared<Node<int,int>>(19,19);
     std::shared_ptr<Node<int, int>> node_18= make_shared<Node<int,int>>(18,18);
-/*
 
+/*
     Node<int, int> node_8(8,8);
     Node<int, int> node_15(15,15);
     Node<int, int> node_6(6,6);
@@ -89,6 +89,12 @@ int main(int argc, const char**argv) {
     int arr[12];
     tree.inorder(tree.getRoot(), arr, 0);
     for (int i=0;i<12;i++)
+    {
+        cout<<arr[i] <<endl;
+    }
+    tree.removebinary(node_10);
+    tree.inorder(tree.getRoot(), arr, 0);
+    for (int i=0;i<11;i++)
     {
         cout<<arr[i] <<endl;
     }
