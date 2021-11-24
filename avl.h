@@ -107,7 +107,7 @@ public:
         return false;
     }
 
-    std::shared_ptr<Node<T, C>> HasOnePlayer()
+    std::shared_ptr<Node<T, C>> HasOneSon()
     {
         if(this->right== nullptr && this->left!= nullptr)
             return this->left;
@@ -375,14 +375,14 @@ std::shared_ptr<Node<T, C>> Avltree<T, C>::removebinary(std::shared_ptr<Node<T, 
         std::shared_ptr<Node<T, C>> parent= node->getParent();
         return parent;
     }
-    if(node->HasOnePlayer() != nullptr)
+    if(node->HasOneSon() != nullptr)
     {
         if(node->isLeft())
         {
-            node->getParent()->setLeft(node->HasOnePlayer());
+            node->getParent()->setLeft(node->HasOneSon());
         }
         else
-            node->getParent()->setRight(node->HasOnePlayer());
+            node->getParent()->setRight(node->HasOneSon());
         std::shared_ptr<Node<T, C>> parent= node->getParent();
         return parent;
     }
