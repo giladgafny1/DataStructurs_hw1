@@ -132,17 +132,18 @@ template <class T,class C>
 class Avltree {
 public:
     std::shared_ptr<Node<T, C>> root;
+    //Node<T,C>* root;
 
     Avltree(): root(nullptr){}
 
 
-    int insert(Node<T, C>* node);
+    int insert( std::shared_ptr<Node<T, C>> node);
 
     void remove(Node<T, C>* node);
     Node<T, C>* removebinary(Node<T,C> * node);
     Node<T, C>* getNextLeft(Node<T,C> * node);
 
-    int inorder(Node<T, C> *root, T *order, int count);
+    int inorder( std::shared_ptr<Node<T, C>> root, T *order, int count);
     void preorder(Node<T, C>* root);
 
     void postorder(Node<T, C>* root);
@@ -152,7 +153,7 @@ public:
     void rrRoll(Node<T, C>* node);
     void rlRoll(Node<T, C>* node);
     Node<T, C>* findKey(C key);
-    Node<T, C>* getRoot();
+    std::shared_ptr<Node<T, C>> getRoot();
 
 
 
@@ -160,7 +161,7 @@ public:
 };
 
 template<class T ,class C>
-Node<T, C>* Avltree<T,C>::getRoot()
+std::shared_ptr<Node<T, C>> Avltree<T,C>::getRoot()
 {
     return root;
 }
@@ -187,16 +188,16 @@ Node<T, C>* Avltree<T,C>::findKey(C key)
 }
 
 template<class T ,class C>
-int Avltree<T,C>::insert(Node<T, C>* node){
+int Avltree<T,C>::insert(std::shared_ptr<Node<T,C>> node){
     if (root == nullptr)
     {
-        root = node;
+        root(node);
         return 1;
     }
     C key = node->getKey();
     if (this->findKey(node->getKey()) != nullptr)
         return -1;
-    Node<T, C>* iterator = root;
+    std::shared_ptr<Node<T, C>> iterator = root;
     while (iterator!=nullptr)
     {
         if (iterator->getKey()<key)
@@ -223,7 +224,7 @@ int Avltree<T,C>::insert(Node<T, C>* node){
     //balancing:
     while (iterator!=root)
     {
-        Node<T, C>* p = iterator->getParent();
+        std::shared_ptr<Node<T, C>> p = iterator->getParent();
         int it_height = iterator->getHeight();
         int p_height = p->getHeight();
         if (p_height>=it_height+1)
@@ -340,7 +341,7 @@ void Avltree<T,C>::rlRoll(Node<T, C>* node)
 }
 
 template<class T ,class C>
-int Avltree<T,C>::inorder(Node<T, C> *root, T *order, int count) {
+int Avltree<T,C>::inorder( std::shared_ptr<Node<T, C>> root, T *order, int count) {
     if(!root){
         return 0;
     }
