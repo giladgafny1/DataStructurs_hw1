@@ -1,10 +1,10 @@
 
 #include "group.h"
 
-int group::getGroupId() {
+int Group::getGroupId() {
     return this->id_group;
 }
 
-int group::getHighLevelPlayer() {
+int Group::getHighLevelPlayer() {
     return this->highest_level_player;
 }

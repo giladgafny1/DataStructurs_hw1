@@ -5,6 +5,7 @@
 #ifndef DATASTRUCTURS_HW1_PLAYER_H
 #define DATASTRUCTURS_HW1_PLAYER_H
 #include "group.h"
+
 class LevelIdKey
 {
 public:
@@ -31,7 +32,7 @@ public:
     int level;
     LevelIdKey level_id;
     int group_id;
-    group* group;
+    Group* group;
 
 
     Player(int id, int level, int group_id): id(id), level(level), group_id(group_id){
@@ -46,8 +47,8 @@ public:
     LevelIdKey getLevelIdKey();
     int getGroupId();
     void setGroupId(int new_id);
-    group getGroup();
-    void setGroup(group group);
+    Group getGroup();
+    void setGroup(Group group);
 
 
 };

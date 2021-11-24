@@ -27,21 +27,21 @@ public:
     SquidSystem(const SquidSystem& other);
     SquidSystem& operator=(const SquidSystem& other);
 
-    StatusType AddGroup(void *DS, int GroupID);
+    StatusType AddGroup(int GroupID);
 
     StatusType AddPlayer(int player_id, int group_id, int level);
 
-    StatusType RemovePlayer(void *DS, int PlayerID);
+    StatusType RemovePlayer(int PlayerID);
 
-    StatusType ReplaceGroup(void *DS, int GroupID, int ReplacementID);
+    StatusType ReplaceGroup(int GroupID, int ReplacementID);
 
-    StatusType IncreaseLevel(void *DS, int PlayerID, int LevelIncrease);
+    StatusType IncreaseLevel( int PlayerID, int LevelIncrease);
 
-    StatusType GetHighestLevel(void *DS, int GroupID, int *PlayerID);
+    StatusType GetHighestLevel(int GroupID, int *PlayerID);
 
-    StatusType GetAllPlayersByLevel(void *DS, int GroupID, int **Players, int *numOfPlayers);
+    StatusType GetAllPlayersByLevel(int GroupID, int **Players, int *numOfPlayers);
 
-    StatusType GetGroupsHighestLevel(void *DS, int numOfGroups, int **Players);
+    StatusType GetGroupsHighestLevel(int numOfGroups, int **Players);
 
 
 

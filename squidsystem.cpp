@@ -4,8 +4,8 @@
 StatusType SquidSystem::AddGroup(int GroupID) {
     if(GroupID<=0)
         return INVALID_INPUT;
-    if(g_tree.insert()==-1)
-        return FAILURE;
+   // if(g_tree.insert(GroupID)==-1)
+      //  return FAILURE;
     return SUCCESS;
 }
 
@@ -20,9 +20,9 @@ StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
         return FAILURE;
     if (g_tree.findKey(group_id) == nullptr)
         return FAILURE;
+
     Player new_player(player_id, level, group_id);
-    if (new_player== nullptr)
-        return ALLOCATION_ERROR;
+
     //adding to the players tree
     std::shared_ptr<Node<Player, int>> new_player_node = std::make_shared<Node<Player, int>>(new_player, player_id);
     if (new_player_node == nullptr)
