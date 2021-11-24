@@ -303,7 +303,7 @@ void Avltree<T,C>::lrRoll(std::shared_ptr<Node<T, C>> node)
         root = temp2;
         temp2->setParent(nullptr);
     }
-    node->setParent(temp1);
+    node->setParent(temp2);
 
 
 }
@@ -342,7 +342,7 @@ template<class T ,class C>
         root = temp2;
         temp2->setParent(nullptr);
     }
-    node->setParent(temp1);
+    node->setParent(temp2);
 }
 
 template<class T ,class C>
