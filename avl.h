@@ -153,10 +153,13 @@ static int getNodeHeight(std::shared_ptr<Node<T, C>> node)
 template<class T ,class C>
 static void setNodeHeight(std::shared_ptr<Node<T,C>>node)
 {
-    if (node->isLeaf())
-        node->setHeight(0);
-    else
-        node->setHeight(1 + max(getNodeHeight(node->getLeft()), getNodeHeight(node->getRight())));
+    if(node!= nullptr)
+    {
+        if (node->isLeaf())
+            node->setHeight(0);
+        else
+            node->setHeight(1 + max(getNodeHeight(node->getLeft()), getNodeHeight(node->getRight())));
+    }
 }
 template <class T,class C>
 class Avltree {
@@ -306,7 +309,8 @@ void Avltree<T,C>::llRoll(std::shared_ptr<Node<T, C>> node)
             node->getParent()->setLeft(temp);
         if(node->isRight())
             node->getParent()->setRight(temp);
-    }
+    } else
+        root=temp;
     temp->setParent(node->getParent());
     node->setParent(temp);
     //updating heights:
@@ -332,6 +336,13 @@ void Avltree<T,C>::lrRoll(std::shared_ptr<Node<T, C>> node)
     {
         root = temp2;
         temp2->setParent(nullptr);
+    } else
+    {
+        temp2->setParent(node->getParent());
+        if(node->isRight())
+            node->getParent()->setRight(temp2);
+        else
+            node->getParent()->setLeft(temp2);
     }
     node->setParent(temp2);
     //updating heights:
@@ -352,7 +363,8 @@ void Avltree<T,C>::rrRoll(std::shared_ptr<Node<T, C>> node)
             node->getParent()->setLeft(temp);
         if(node->isRight())
             node->getParent()->setRight(temp);
-    }
+    } else
+        root=temp;
     temp->setLeft(node);
     temp->setParent(node->getParent());
     node->setParent(temp);
@@ -383,8 +395,16 @@ void Avltree<T,C>::rlRoll(std::shared_ptr<Node<T, C>> node)
     {
         root = temp2;
         temp2->setParent(nullptr);
+    } else
+    {
+        temp2->setParent(node->getParent());
+        if(node->isRight())
+            node->getParent()->setRight(temp2);
+        else
+            node->getParent()->setLeft(temp2);
     }
     node->setParent(temp2);
+
     //updating heights:
     setNodeHeight(node);
     setNodeHeight(temp1);
@@ -418,7 +438,7 @@ std::shared_ptr<Node<T, C>> Avltree<T, C>::removebinary(std::shared_ptr<Node<T, 
         }
         else
         {
-            node->getParent()->setRight(nullptr);
+            node->getParent()->setLeft(nullptr);
         }
         std::shared_ptr<Node<T, C>> parent= node->getParent();
         return parent;
@@ -435,33 +455,48 @@ std::shared_ptr<Node<T, C>> Avltree<T, C>::removebinary(std::shared_ptr<Node<T, 
         return parent;
     }
     std::shared_ptr<Node<T, C>> new_root= getNextLeft(node);
-    std::shared_ptr<Node<T, C>> tmp_p=new_root->getParent();
-    std::shared_ptr<Node<T, C>> tmp_R=new_root->getRight();
-    new_root->setParent(node->getParent());
-    new_root->setRight(node->getRight());
+    std::shared_ptr<Node<T, C>> new_right_son;
+    std::shared_ptr<Node<T, C>> new_parent= node->getParent();
+    std::shared_ptr<Node<T, C>> new_grandson=new_root->getRight();
+    if(new_root->getParent()!=node){
+        new_right_son=node->getRight();
+    }
+    else{
+        new_right_son= nullptr;
+    }
+    new_root->setParent(new_parent);
     new_root->setLeft(node->getLeft());
+    new_root->setRight(new_right_son);
     node->getLeft()->setParent(new_root);
-    node->getRight()->setParent(new_root);
-    tmp_p->setLeft(nullptr);
-    tmp_p->setRight(tmp_R);
-    return tmp_p;
+    if(new_right_son!= nullptr){
+        new_right_son->setParent(new_root);
+        new_right_son->setLeft(new_grandson);
+    }
+    if(new_parent!= nullptr)
+    {
+        if(node->isRight())
+            new_parent->setRight(new_root);
+        else
+            new_parent->setLeft(new_root);
+    }
+    setNodeHeight(new_grandson);
+    setNodeHeight(new_right_son);
+    setNodeHeight(new_root);
+    setNodeHeight(new_parent);
+    if(new_right_son!= nullptr)
+         return new_right_son;
+    return new_root;
 }
 
 template<class T,class C>
 void Avltree<T, C>::remove(std::shared_ptr<Node<T, C>> node_to_remove)  {
     std::shared_ptr<Node<T, C>> node= removebinary(node_to_remove);
-    if(node->getRight()->getHeight()>node->getLeft()->getHeight())
-    {
-        node->setHeight(1+node->getRight()->getHeight());
-    } else
-    {
-        node->setHeight(1+node->getLeft()->getHeight());
-    }
-    int height=node->getHeight();
+   // int height=node->getHeight();
     roll(node,node->getBF());
-    while (node!=root)
+    while (node->getParent()!= nullptr)
     {
         node=node->getParent();
+       // height=node->getHeight();
         roll(node, node->getBF());
     }
 

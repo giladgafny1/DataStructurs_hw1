@@ -39,12 +39,12 @@ int main(int argc, const char**argv) {
     std::shared_ptr<Node<int, int>> node_20= make_shared<Node<int,int>>(20,20);
     std::shared_ptr<Node<int, int>> node_29= make_shared<Node<int,int>>(29,29);
     std::shared_ptr<Node<int, int>> node_17= make_shared<Node<int,int>>(17,17);
-    std::shared_ptr<Node<int, int>> node_19= make_shared<Node<int,int>>(19,19);
-    std::shared_ptr<Node<int, int>> node_18= make_shared<Node<int,int>>(18,18);
-    std::shared_ptr<Node<int, int>> node_23= make_shared<Node<int,int>>(23,23);
-    std::shared_ptr<Node<int, int>> node_25= make_shared<Node<int,int>>(25,25);
-    std::shared_ptr<Node<int, int>> node_30= make_shared<Node<int,int>>(30,30);
-    std::shared_ptr<Node<int, int>> node_31= make_shared<Node<int,int>>(31,31);
+    std::shared_ptr<Node<int, int>> node_9= make_shared<Node<int,int>>(9,9);
+    std::shared_ptr<Node<int, int>> node_7= make_shared<Node<int,int>>(7,7);
+    std::shared_ptr<Node<int, int>> node_3= make_shared<Node<int,int>>(3,3);
+    std::shared_ptr<Node<int, int>> node_1= make_shared<Node<int,int>>(1,1);
+    std::shared_ptr<Node<int, int>> node_2= make_shared<Node<int,int>>(2,2);
+    std::shared_ptr<Node<int, int>> node_5= make_shared<Node<int,int>>(5,5);
 
 /*
     Node<int, int> node_8(8,8);
@@ -111,18 +111,18 @@ int main(int argc, const char**argv) {
     tree.insert(node_11);
 */
 //testing rl
-    tree.insert(node_11);
-    tree.insert(node_19);
+    tree.insert(node_5);
+    tree.insert(node_2);
     tree.insert(node_8);
-    tree.insert(node_6);
+    tree.insert(node_1);
+    tree.insert(node_4);
     tree.insert(node_10);
-    tree.insert(node_13);
-    tree.insert(node_25);
-    tree.insert(node_23);
-    tree.insert(node_29);
+    tree.insert(node_6);
+    tree.insert(node_3);
+    tree.insert(node_7);
+    tree.insert(node_9);
     tree.insert(node_12);
-    tree.insert(node_17);
-    tree.insert(node_15);
+    tree.insert(node_11);
 
     int arr[12];
     tree.inorder(tree.getRoot(), arr, 0);
@@ -130,7 +130,7 @@ int main(int argc, const char**argv) {
     {
         cout<<arr[i] <<endl;
     }
-    tree.remove(node_14);
+    tree.remove(node_1);
     tree.inorder(tree.getRoot(), arr, 0);
     cout<<"second loop"<<endl;
     for (int i=0;i<11;i++)
