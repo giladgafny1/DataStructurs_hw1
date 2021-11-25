@@ -38,8 +38,13 @@ int main(int argc, const char**argv) {
     std::shared_ptr<Node<int, int>> node_13= make_shared<Node<int,int>>(13,13);
     std::shared_ptr<Node<int, int>> node_20= make_shared<Node<int,int>>(20,20);
     std::shared_ptr<Node<int, int>> node_29= make_shared<Node<int,int>>(29,29);
+    std::shared_ptr<Node<int, int>> node_17= make_shared<Node<int,int>>(17,17);
     std::shared_ptr<Node<int, int>> node_19= make_shared<Node<int,int>>(19,19);
     std::shared_ptr<Node<int, int>> node_18= make_shared<Node<int,int>>(18,18);
+    std::shared_ptr<Node<int, int>> node_23= make_shared<Node<int,int>>(23,23);
+    std::shared_ptr<Node<int, int>> node_25= make_shared<Node<int,int>>(25,25);
+    std::shared_ptr<Node<int, int>> node_30= make_shared<Node<int,int>>(30,30);
+    std::shared_ptr<Node<int, int>> node_31= make_shared<Node<int,int>>(31,31);
 
 /*
     Node<int, int> node_8(8,8);
@@ -56,24 +61,42 @@ int main(int argc, const char**argv) {
     Node<int, int> node_19(19,19);
     Node<int, int> node_18(18,18);
 */
+//testing rr roll
+/*
+    tree.insert(node_12);
+    tree.insert(node_8);
+    tree.insert(node_15);
+    tree.insert(node_6);
+    tree.insert(node_10);
+    tree.insert(node_14);
+    tree.insert(node_24);
+    tree.insert(node_4);
+    tree.insert(node_11);
+    tree.insert(node_13);
+    tree.insert(node_20);
+    tree.insert(node_29);
+    tree.insert(node_30);
+    tree.insert(node_31);
     //testing left roll
-    /*tree.insert(&node_12);
-    tree.insert(&node_8);
-    tree.insert(&node_15);
-    tree.insert(&node_6);
-    tree.insert(&node_10);
-    tree.insert(&node_14);
-    tree.insert(&node_24);
-    tree.insert(&node_4);
-    tree.insert(&node_11);
-    tree.insert(&node_13);
-    tree.insert(&node_20);
-    tree.insert(&node_29);
-    tree.insert(&node_19);
-    tree.insert(&node_18);
-*/
-    //testing right roll
-
+    */
+/*
+    tree.insert(node_12);
+    tree.insert(node_8);
+    tree.insert(node_15);
+    tree.insert(node_6);
+    tree.insert(node_10);
+    tree.insert(node_14);
+    tree.insert(node_24);
+    tree.insert(node_4);
+    tree.insert(node_11);
+    tree.insert(node_13);
+    tree.insert(node_20);
+    tree.insert(node_29);
+    tree.insert(node_19);
+    tree.insert(node_18);
+    //testing left right roll
+    */
+/*
     tree.insert(node_15);
     tree.insert(node_10);
     tree.insert(node_20);
@@ -86,6 +109,21 @@ int main(int argc, const char**argv) {
     tree.insert(node_4);
     tree.insert(node_8);
     tree.insert(node_11);
+*/
+//testing rl
+    tree.insert(node_11);
+    tree.insert(node_19);
+    tree.insert(node_8);
+    tree.insert(node_6);
+    tree.insert(node_10);
+    tree.insert(node_13);
+    tree.insert(node_25);
+    tree.insert(node_23);
+    tree.insert(node_29);
+    tree.insert(node_12);
+    tree.insert(node_17);
+    tree.insert(node_15);
+
     int arr[12];
     tree.inorder(tree.getRoot(), arr, 0);
     for (int i=0;i<12;i++)
