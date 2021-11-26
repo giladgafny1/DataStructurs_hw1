@@ -46,7 +46,7 @@ int Player::getId(){
     return this->id;
 }
 LevelIdKey Player::getLevelIdKey(){
-    return this->getLevelIdKey();
+    return this->level_id;
 }
 int Player::getGroupId(){
     return this->group_id;

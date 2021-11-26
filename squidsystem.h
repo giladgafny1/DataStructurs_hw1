@@ -15,14 +15,16 @@
 typedef Avltree<Player, int> PlayersTree;
 typedef Avltree<Player, LevelIdKey> PlayersTreeByLevel;
 typedef Avltree<Group, int> GroupsTree;
+typedef Avltree<Group, int> NotEmptyGroupsTree;
 
 class SquidSystem {
 private:
     PlayersTree p_tree;
     PlayersTreeByLevel pl_tree;
     GroupsTree g_tree;
+    NotEmptyGroupsTree  g_ne_tree;
 public:
-    SquidSystem();
+    SquidSystem(){};
     ~SquidSystem()=default;
 
     SquidSystem* Init();
@@ -42,8 +44,6 @@ public:
     StatusType GetAllPlayersByLevel(int GroupID, int **Players, int *numOfPlayers);
 
     StatusType GetGroupsHighestLevel(int numOfGroups, int **Players);
-
-
 
 };
 

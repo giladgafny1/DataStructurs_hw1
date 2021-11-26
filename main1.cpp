@@ -20,6 +20,7 @@
 #include "library1.h"
 #include <iostream>
 #include "avl.h"
+#include "squidsystem.h"
 using namespace std;
 
 
@@ -137,6 +138,19 @@ int main(int argc, const char**argv) {
     {
         cout<<arr[i] <<endl;
     }
-
+    //constructor
+    SquidSystem sys = SquidSystem();
+    //adds a group
+    cout<< sys.AddGroup(1) << endl;
+    //adds a group
+    cout<< sys.AddGroup(2) << endl;
+    //tries to add the same group again
+    cout<<sys.AddGroup(1) <<endl;
+    //tries to add a group with an invalid id
+    cout<<sys.AddGroup(0) <<endl;
+    //adds a new player
+    cout<< sys.AddPlayer(1234, 1, 0)<< endl;
+    //tries to add the same player to two diffenrent groups
+    cout<< sys.AddPlayer(1234, 2, 3)<<endl;
 
 }

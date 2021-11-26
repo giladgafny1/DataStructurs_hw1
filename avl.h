@@ -15,6 +15,7 @@ class Node {
 
 public:
     Node(T data, C key) : key(key), data(data), parent(nullptr), right(nullptr), left(nullptr), h(0) {}
+    Node():key(key), data(data), parent(nullptr), right(nullptr), left(nullptr), h(0){};
     Node(Node &node) = default;
 
     ~Node() = default;
@@ -170,7 +171,6 @@ public:
 
     Avltree(): root(nullptr){}
 
-
     int insert(Node_ptr node);
 
     void remove(std::shared_ptr<Node<T,C>> node_to_remove);
@@ -200,6 +200,8 @@ std::shared_ptr<Node<T, C>> Avltree<T, C>::getRoot()
 template<class T ,class C>
 std::shared_ptr<Node<T, C>> Avltree<T,C>::findKey(C key)
 {
+    if (root == nullptr)
+        return nullptr;
     std::shared_ptr<Node<T, C>> iterator = root;
     while (iterator!=nullptr)
     {

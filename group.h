@@ -12,8 +12,9 @@ class LevelIdKey;
 class Group {
 private:
     int id_group;
-    Avltree<Player,LevelIdKey>* players_tree_levels;
-    Avltree<Player,int>* players_tree_id;
+    //G removed the pointers from these (they caused bad creation of the tree (the root wasn't null))
+    Avltree<Player,LevelIdKey> players_tree_levels;
+    Avltree<Player,int> players_tree_id;
     int highest_level_player=-1;
 
 public:
@@ -21,8 +22,8 @@ public:
     ~Group()= default;
     int getHighLevelPlayer();
     int getGroupId();
-    Avltree<Player, LevelIdKey>* getPlayersLevelsTree();
-    Avltree<Player, int>* getPlayersTree();
+    Avltree<Player, LevelIdKey> getPlayersLevelsTree();
+    Avltree<Player, int> getPlayersTree();
     bool isPlayerInGroup(int player_id, LevelIdKey level_id);
     void addPlayer(std::shared_ptr<Node<Player, int>> player_by_id, std::shared_ptr<Node<Player, LevelIdKey>> player_by_level);
 

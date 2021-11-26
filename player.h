@@ -37,9 +37,10 @@ public:
     Group* group;
 
 
-    Player(int id, int level, int group_id): id(id), level(level), group_id(group_id){
+    Player(int id, int level, int group_i, Group* group): id(id), level(level), group_id(group_id){
         //good?
         level_id = LevelIdKey(level, id);
+        this->group = group;
     }
     ~Player()=default;
 
