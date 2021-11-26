@@ -55,8 +55,7 @@ void Player::setGroupId(int new_id)
 {
     this->group_id = new_id;
 }
-/*int getGroup()
-{
-    return group;
+
+Group* Player::getGroup() {
+    return this->group;
 }
-*/

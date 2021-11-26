@@ -75,6 +75,20 @@ StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
 
 }
 
+StatusType SquidSystem::RemovePlayer(int PlayerID) {
+    if(PlayerID<=0)
+        return INVALID_INPUT;
+    if(p_tree.findKey(PlayerID)== nullptr)
+        return FAILURE;
+    Player player_remove= p_tree.findKey(PlayerID)->getData();
+    Group* group_p= player_remove.getGroup();
+    LevelIdKey level_id(player_remove.getLevel(), PlayerID);
+    group_p->removePlayer(p_tree.findKey(PlayerID),pl_tree.findKey(level_id));
+    p_tree.remove(p_tree.findKey(PlayerID));
+    pl_tree.remove(pl_tree.findKey(level_id));
+    return SUCCESS;
+}
+
 /*
 StatusType SquidSystem::IncreaseLevel(int PlayerID, int LevelIncrease) {
 

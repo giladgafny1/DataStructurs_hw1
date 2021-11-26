@@ -26,11 +26,12 @@ public:
     Avltree<Player, int> getPlayersTree();
     bool isPlayerInGroup(int player_id, LevelIdKey level_id);
     void addPlayer(std::shared_ptr<Node<Player, int>> player_by_id, std::shared_ptr<Node<Player, LevelIdKey>> player_by_level);
-
+    void removePlayer(std::shared_ptr<Node<Player, int>> player_by_id, std::shared_ptr<Node<Player, LevelIdKey>> player_by_level);
 
 
 
 };
+
 
 
 #endif //DATASTRUCTURS_HW1_GROUP_H
