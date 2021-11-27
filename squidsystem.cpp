@@ -41,10 +41,10 @@ StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
     try
     {
         LevelIdKey level_id(level, player_id);
-        Group player_group = g_tree.findKey(group_id)->getData();
+        Group* player_group = &g_tree.findKey(group_id)->getData();
         if (group_to_add_node->getData().isPlayerInGroup(player_id, level_id))
             return FAILURE;
-        Player new_player(player_id, level, group_id, &player_group);
+        Player new_player(player_id, level, group_id, player_group);
         //adding to the players tree
         std::shared_ptr<Node<Player, int>> new_player_node = std::make_shared<Node<Player, int>>(new_player, player_id);
         if (new_player_node == nullptr)
@@ -86,6 +86,26 @@ StatusType SquidSystem::RemovePlayer(int PlayerID) {
     group_p->removePlayer(p_tree.findKey(PlayerID),pl_tree.findKey(level_id));
     p_tree.remove(p_tree.findKey(PlayerID));
     pl_tree.remove(pl_tree.findKey(level_id));
+    return SUCCESS;
+}
+
+StatusType SquidSystem::ReplaceGroup(int GroupID, int ReplacementID) {
+    if(GroupID<=0 || ReplacementID<=0 || GroupID==ReplacementID)
+        return INVALID_INPUT;
+    if(g_tree.findKey(GroupID)== nullptr || g_tree.findKey(ReplacementID)== nullptr)
+        return FAILURE;
+    // logk
+    Group* group_delete=&g_tree.findKey(GroupID)->getData();
+    Group* new_group=&g_tree.findKey(ReplacementID)->getData();
+    Player players_to_move[group_delete->getNumOfPlayers()];
+    Player players_stay[new_group->getNumOfPlayers()];
+    //o(n_group)
+    group_delete->getPlayersTree().inorder(group_delete->getPlayersTree().getRoot(),
+                                           players_to_move,0);
+    //o(n_rep)
+    new_group->getPlayersTree().inorder(new_group->getPlayersTree().getRoot(),
+                                        players_stay,0);
+
     return SUCCESS;
 }
 

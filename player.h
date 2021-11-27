@@ -40,8 +40,9 @@ public:
     Player(int id, int level, int group_i, Group* group1): id(id), level(level), group_id(group_i){
         //good?
         level_id = LevelIdKey(level, id);
-        group = group1;
+        group=group1;
     }
+    Player(){};
     ~Player()=default;
 
     int getLevel();

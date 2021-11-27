@@ -153,6 +153,10 @@ int main(int argc, const char **argv) {
     //tries to add the same player to two diffenrent groups
     cout << sys.AddPlayer(1234, 2, 3) << endl;
 
-    cout<<sys.RemovePlayer(1234)<<endl;
+    sys.AddPlayer(123,1,2);
+
+    //cout<<sys.RemovePlayer(1234)<<endl;
+
+    sys.ReplaceGroup(1,2);
 
 }

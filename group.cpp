@@ -27,10 +27,16 @@ void Group::addPlayer(std::shared_ptr<Node<Player, int>> player_by_id, std::shar
     players_tree_id.insert(new_sp_node_id);
     std::shared_ptr<Node<Player, LevelIdKey>> new_sp_node_level(player_by_level);
     players_tree_levels.insert(new_sp_node_level);
+    num_of_player++;
 
 }
 
 void Group::removePlayer(std::shared_ptr<Node<Player, int>> player_by_id, std::shared_ptr<Node<Player, LevelIdKey>> player_by_level) {
     this->players_tree_id.remove(player_by_id);
     this->players_tree_levels.remove(player_by_level);
+    num_of_player--;
+}
+
+int Group::getNumOfPlayers() {
+    return num_of_player;
 }

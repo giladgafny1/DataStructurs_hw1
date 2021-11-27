@@ -177,7 +177,7 @@ public:
     std::shared_ptr<Node<T, C>> removebinary(std::shared_ptr<Node<T, C>> node);
     std::shared_ptr<Node<T, C>> getNextLeft(std::shared_ptr<Node<T, C>> node);
 
-    int inorder(Node_ptr root, T *order, int count);
+    int inorder(Node_ptr root, T order [], int count);
     void preorder(Node<T, C>* root);
 
     void postorder(Node<T, C>* root);
@@ -414,7 +414,7 @@ void Avltree<T,C>::rlRoll(std::shared_ptr<Node<T, C>> node)
 }
 
 template<class T ,class C>
-int Avltree<T,C>::inorder( std::shared_ptr<Node<T, C>> root, T *order, int count) {
+int Avltree<T,C>::inorder( std::shared_ptr<Node<T, C>> root, T order [], int count) {
     if(!root){
         return 0;
     }
@@ -434,6 +434,11 @@ template<class T,class C>
 std::shared_ptr<Node<T, C>> Avltree<T, C>::removebinary(std::shared_ptr<Node<T, C>> node) {
     if (node->isLeaf())
     {
+        if(root== node)
+        {
+            root= nullptr;
+            return nullptr;
+        }
         if(node->isRight())
         {
             node->getParent()->setRight(nullptr);
@@ -494,13 +499,15 @@ template<class T,class C>
 void Avltree<T, C>::remove(std::shared_ptr<Node<T, C>> node_to_remove)  {
     std::shared_ptr<Node<T, C>> node= removebinary(node_to_remove);
    // int height=node->getHeight();
-    roll(node,node->getBF());
-    while (node->getParent()!= nullptr)
-    {
-        node=node->getParent();
-       // height=node->getHeight();
-        roll(node, node->getBF());
-    }
+   if(node!= nullptr){
+       roll(node,node->getBF());
+       while (node->getParent()!= nullptr)
+       {
+           node=node->getParent();
+           // height=node->getHeight();
+           roll(node, node->getBF());
+       }
+   }
 
 }
 
