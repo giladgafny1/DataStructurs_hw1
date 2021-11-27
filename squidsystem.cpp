@@ -109,18 +109,20 @@ StatusType SquidSystem::ReplaceGroup(int GroupID, int ReplacementID) {
     return SUCCESS;
 }
 
-/*
-StatusType SquidSystem::IncreaseLevel(int PlayerID, int LevelIncrease) {
 
+StatusType SquidSystem::IncreaseLevel(int PlayerID, int LevelIncrease) {
+//still need to update highest level
     if(PlayerID<=0 || LevelIncrease<=0)
     {
         return INVALID_INPUT;
     }
-    Node<Player,int>* player = p_tree.findKey(PlayerID);
-    if(player== nullptr);
-    {
+    if(p_tree.findKey(PlayerID)==nullptr)
         return FAILURE;
-    }
-    player->getData().setLevel(player->getData().getLevel()+LevelIncrease);
+    //does it return the player and i can manipulate it's data?
+    Player* player_to_level = p_tree.findKey(PlayerID)->getDataPtr();
+    LevelIdKey level_id_key(player_to_level->getLevel(), PlayerID);
+    Player* player_to_level_by_level = pl_tree.findKey(level_id_key)->getDataPtr();
+    player_to_level->setLevel(player_to_level->getLevel()+LevelIncrease);
+    player_to_level_by_level->setLevel(player_to_level_by_level->getLevel()+LevelIncrease);
+    return SUCCESS;
 }
-*/

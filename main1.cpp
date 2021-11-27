@@ -157,6 +157,6 @@ int main(int argc, const char **argv) {
 
     //cout<<sys.RemovePlayer(1234)<<endl;
 
-    sys.ReplaceGroup(1,2);
-
+//    sys.ReplaceGroup(1,2);
+    cout<<sys.IncreaseLevel(1234, 2);
 }

@@ -12,7 +12,7 @@ class LevelIdKey;
 class Group {
 private:
     int id_group;
-    int num_of_player;
+    int num_of_players;
     //G removed the pointers from these (they caused bad creation of the tree (the root wasn't null))
     Avltree<Player,LevelIdKey> players_tree_levels;
     Avltree<Player,int> players_tree_id;
@@ -20,7 +20,7 @@ private:
 
 public:
     Group(int id_group): id_group(id_group){
-        num_of_player=0;
+        num_of_players=0;
     };
   //  Group& operator=(Group& group)=default;
     ~Group()= default;

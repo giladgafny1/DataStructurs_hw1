@@ -40,6 +40,11 @@ public:
     T &getData() {
         return this->data;
     }
+    T* getDataPtr()
+    {
+        return &(this->data);
+    }
+
 
     void setHeight(int h) {
         this->h = h;
@@ -170,7 +175,9 @@ public:
    //Node<T,C>* root;
 
     Avltree(): root(nullptr){}
+    ~Avltree() = default;
 
+    void deleteAvlNode(Node_ptr node);
     int insert(Node_ptr node);
 
     void remove(std::shared_ptr<Node<T,C>> node_to_remove);
@@ -190,7 +197,24 @@ public:
     Node_ptr getRoot();
 };
 
+/* destructor - not sure if needed cause were using shared_ptr:
+template<class T, class C>
+Avltree<T, C>::~Avltree<T,C>()
+{
+    deleteAvlNode(root);
 
+}
+template<class T, class C>
+void Avltree<T,C>::deleteAvlNode(Node_ptr node)
+{
+    if (node!=nullptr)
+    {
+        deleteAvlNode(node->getLeft());
+        deleteAvlNode(node->getRight());
+        delete node;
+    }
+}
+*/
 template<class T ,class C>
 std::shared_ptr<Node<T, C>> Avltree<T, C>::getRoot()
 {
