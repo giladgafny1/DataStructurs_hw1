@@ -58,3 +58,7 @@ void Group::addToLevelTree(std::shared_ptr<Node<Player, LevelIdKey>> player_by_l
 int Group::getNumOfPlayers() {
     return num_of_players;
 }
+
+void Group::setPlayersTree(Avltree<Player, int> players_tree_id1) {
+    players_tree_id=players_tree_id1;
+}

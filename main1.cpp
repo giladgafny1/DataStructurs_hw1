@@ -125,7 +125,7 @@ int main(int argc, const char **argv) {
     tree.insert(node_9);
     tree.insert(node_12);
     tree.insert(node_11);
-
+/*
     int arr[12];
     tree.inorder(tree.getRoot(), arr, 0);
     for (int i = 0; i < 12; i++) {
@@ -137,6 +137,7 @@ int main(int argc, const char **argv) {
     for (int i = 0; i < 11; i++) {
         cout << arr[i] << endl;
     }
+    */
     //constructor
     cout << "!!!!" << endl;
     SquidSystem sys = SquidSystem();
@@ -154,6 +155,8 @@ int main(int argc, const char **argv) {
     cout << sys.AddPlayer(1234, 2, 3) << endl;
 
     sys.AddPlayer(123,1,2);
+
+    sys.ReplaceGroup(1,2);
 
     //cout<<sys.RemovePlayer(1234)<<endl;
 
