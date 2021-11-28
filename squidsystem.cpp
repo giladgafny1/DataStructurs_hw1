@@ -56,9 +56,17 @@ StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
         if (new_player_level_id_node == nullptr)
             return ALLOCATION_ERROR;
         pl_tree.insert(new_player_level_id_node);
-
+        //checking if highest_level
+        if(level>highest_level)
+        {
+            highest_level = level;
+            highest_level_p = new_player_node->getDataPtr();
+        }
         //adding player to the group's trees - 2*logn
-        group_to_add_node->getData().addPlayer(new_player_node, new_player_level_id_node);
+        std::shared_ptr<Node<Player, int>> new_player_node_for_group = std::make_shared<Node<Player, int>>(new_player, player_id);
+        std::shared_ptr<Node<Player, LevelIdKey>> new_player_level_id_node_for_group = std::make_shared<Node<Player, LevelIdKey>>(new_player, new_player.getLevelIdKey());
+
+        group_to_add_node->getData().addPlayer(new_player_node_for_group, new_player_level_id_node_for_group);
 
         //if the group was empty, adds it to the not empty groups tree - logn
         if(!g_ne_tree.findKey(group_id))
@@ -111,7 +119,6 @@ StatusType SquidSystem::ReplaceGroup(int GroupID, int ReplacementID) {
 
 
 StatusType SquidSystem::IncreaseLevel(int PlayerID, int LevelIncrease) {
-//still need to update highest level
     if(PlayerID<=0 || LevelIncrease<=0)
     {
         return INVALID_INPUT;
@@ -120,9 +127,52 @@ StatusType SquidSystem::IncreaseLevel(int PlayerID, int LevelIncrease) {
         return FAILURE;
     //does it return the player and i can manipulate it's data?
     Player* player_to_level = p_tree.findKey(PlayerID)->getDataPtr();
-    LevelIdKey level_id_key(player_to_level->getLevel(), PlayerID);
-    Player* player_to_level_by_level = pl_tree.findKey(level_id_key)->getDataPtr();
-    player_to_level->setLevel(player_to_level->getLevel()+LevelIncrease);
-    player_to_level_by_level->setLevel(player_to_level_by_level->getLevel()+LevelIncrease);
+    int current_level = player_to_level->getLevel();
+    LevelIdKey level_id_key(current_level, PlayerID);
+    player_to_level->setLevel(current_level+LevelIncrease);
+
+    //replacing player in the level tree according to he's/she's level:
+    std::shared_ptr<Node<Player, LevelIdKey>> player_node_to_reposition = pl_tree.findKey(level_id_key);
+    Group* group_to_reposition = player_node_to_reposition->getDataPtr()->getGroup();
+    std::shared_ptr<Node<Player, LevelIdKey>> player_node_to_reposition_in_group =
+            group_to_reposition->getPlayersLevelsTree().findKey(level_id_key);
+    group_to_reposition->removeFromLevelTree(player_node_to_reposition_in_group);
+    pl_tree.remove(player_node_to_reposition);
+    (player_node_to_reposition->getKeyPtr())->setLevel(current_level+LevelIncrease);
+    player_node_to_reposition->getDataPtr()->setLevel(current_level+LevelIncrease);(player_node_to_reposition->getKeyPtr())->setLevel(current_level+LevelIncrease);
+    (player_node_to_reposition_in_group->getKeyPtr())->setLevel(current_level+LevelIncrease);
+    player_node_to_reposition_in_group->getDataPtr()->setLevel(current_level+LevelIncrease);
+    group_to_reposition->addToLevelTree(player_node_to_reposition_in_group);
+    pl_tree.insert(player_node_to_reposition);
+
+    if (player_to_level->getLevel()>highest_level)
+    {
+        highest_level = player_to_level->getLevel();
+        highest_level_p = player_to_level;
+    }
     return SUCCESS;
 }
+
+StatusType SquidSystem::GetHighestLevel(int GroupID, int *PlayerID) {
+    if(GroupID==0||PlayerID== nullptr)
+        return INVALID_INPUT;
+    if (GroupID<0)
+    {
+        if(highest_level==-1)
+            *PlayerID = -1;
+        else
+            *PlayerID = (highest_level_p->getId());
+        return SUCCESS;
+    }
+    if(g_tree.findKey(GroupID)==nullptr)
+        return FAILURE;
+    Group* group = g_tree.findKey(GroupID)->getDataPtr();
+    if(group->getHighestLevel()==-1)
+    {
+        *PlayerID = -1;
+        return SUCCESS;
+    }
+    *PlayerID = group->getHighestLevelPlayer()->getId();
+    return SUCCESS;
+}
+

@@ -6,8 +6,11 @@ int Group::getGroupId() {
     return this->id_group;
 }
 
-int Group::getHighLevelPlayer() {
-    return this->highest_level_player;
+Player* Group::getHighestLevelPlayer() {
+    return highest_level_p;
+}
+int Group::getHighestLevel() {
+    return this->highest_level;
 }
 
 Avltree<Player, LevelIdKey> Group::getPlayersLevelsTree(){
@@ -28,6 +31,11 @@ void Group::addPlayer(std::shared_ptr<Node<Player, int>> player_by_id, std::shar
     std::shared_ptr<Node<Player, LevelIdKey>> new_sp_node_level(player_by_level);
     players_tree_levels.insert(new_sp_node_level);
     num_of_players++;
+    if((player_by_id->getDataPtr()->getLevel())>highest_level)
+    {
+        highest_level = player_by_id->getDataPtr()->getLevel();
+        highest_level_p = player_by_id->getDataPtr();
+    }
 
 }
 
@@ -37,6 +45,16 @@ void Group::removePlayer(std::shared_ptr<Node<Player, int>> player_by_id, std::s
     num_of_players--;
 }
 
+void Group::removeFromLevelTree(std::shared_ptr<Node<Player, LevelIdKey>> player_by_level)
+{
+    int current_level = player_by_level->getDataPtr()->getLevel();
+    players_tree_levels.remove(player_by_level);
+}
+void Group::addToLevelTree(std::shared_ptr<Node<Player, LevelIdKey>> player_by_level)
+{
+    int current_level = player_by_level->getDataPtr()->getLevel();
+    players_tree_levels.insert(player_by_level);
+}
 int Group::getNumOfPlayers() {
     return num_of_players;
 }

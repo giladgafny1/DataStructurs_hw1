@@ -23,8 +23,10 @@ private:
     PlayersTreeByLevel pl_tree;
     GroupsTree g_tree;
     NotEmptyGroupsTree  g_ne_tree;
+    int highest_level;
+    Player* highest_level_p;
 public:
-    SquidSystem(){};
+    SquidSystem(): highest_level(-1), highest_level_p(nullptr) {};
     ~SquidSystem()=default;
 
     SquidSystem* Init();

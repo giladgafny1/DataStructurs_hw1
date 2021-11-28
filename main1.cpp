@@ -159,4 +159,9 @@ int main(int argc, const char **argv) {
 
 //    sys.ReplaceGroup(1,2);
     cout<<sys.IncreaseLevel(1234, 2);
+    cout<<sys.IncreaseLevel(123, 5);
+    cout<<sys.IncreaseLevel(12345, 5);
+    cout<<sys.IncreaseLevel(1234, 10);
+
+    cout<<"test";
 }

@@ -32,7 +32,10 @@ public:
     {
         return this->key;
     }
-
+    C* getKeyPtr()
+    {
+        return &(this->key);
+    }
     void setData(T data) {
         this->data = data;
     }
@@ -138,6 +141,12 @@ public:
         if (this->right!= nullptr)
             h_r = this->right->h;
         return h_l-h_r;
+    }
+    void removeTies()
+    {
+        this->parent=nullptr;
+        this->left=nullptr;
+        this->right=nullptr;
     }
 
 };
@@ -456,11 +465,13 @@ int Avltree<T,C>::inorder( std::shared_ptr<Node<T, C>> root, T order [], int cou
 
 template<class T,class C>
 std::shared_ptr<Node<T, C>> Avltree<T, C>::removebinary(std::shared_ptr<Node<T, C>> node) {
+    //added the removeTies where i thought was needed;
     if (node->isLeaf())
     {
         if(root== node)
         {
-            root= nullptr;
+            node->removeTies();
+            root = nullptr;
             return nullptr;
         }
         if(node->isRight())
@@ -472,10 +483,19 @@ std::shared_ptr<Node<T, C>> Avltree<T, C>::removebinary(std::shared_ptr<Node<T, 
             node->getParent()->setLeft(nullptr);
         }
         std::shared_ptr<Node<T, C>> parent= node->getParent();
+        node->removeTies();
         return parent;
     }
     if(node->HasOneSon() != nullptr)
     {
+        //G added a case if root
+        if(root == node)
+        {
+            root = node->HasOneSon();
+            node->HasOneSon()->setParent(nullptr);
+            node->removeTies();
+            return nullptr;
+        }
         if(node->isLeft())
         {
             node->getParent()->setLeft(node->HasOneSon());
@@ -483,6 +503,7 @@ std::shared_ptr<Node<T, C>> Avltree<T, C>::removebinary(std::shared_ptr<Node<T, 
         else
             node->getParent()->setRight(node->HasOneSon());
         std::shared_ptr<Node<T, C>> parent= node->getParent();
+        node->removeTies();
         return parent;
     }
     std::shared_ptr<Node<T, C>> new_root= getNextLeft(node);
@@ -515,7 +536,11 @@ std::shared_ptr<Node<T, C>> Avltree<T, C>::removebinary(std::shared_ptr<Node<T, 
     setNodeHeight(new_root);
     setNodeHeight(new_parent);
     if(new_right_son!= nullptr)
-         return new_right_son;
+    {
+        node->removeTies();
+        return new_right_son;
+    }
+    node->removeTies();
     return new_root;
 }
 
