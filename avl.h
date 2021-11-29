@@ -550,6 +550,7 @@ std::shared_ptr<Node<T, C>> Avltree<T, C>::getNextLeft(std::shared_ptr<Node<T, C
 template<class T, class C>
 void Avltree<T, C>::makeATree(Node_ptr *datas, int start, int end)  {
     root= buildATree(datas,start,end);
+    setNodeHeight(root);
 }
 template<class T,class C>
 std::shared_ptr<Node<T, C>> Avltree<T, C>::buildATree(std::shared_ptr<Node<T, C>> *datas, int start, int end) {
@@ -559,6 +560,11 @@ std::shared_ptr<Node<T, C>> Avltree<T, C>::buildATree(std::shared_ptr<Node<T, C>
     std::shared_ptr<Node<T, C>> Node_r=datas[mid];
     Node_r->setLeft(buildATree(datas,start, mid-1));
     Node_r->setRight(buildATree(datas,mid+1,end));
+    if(Node_r->getRight()!= nullptr)
+        Node_r->getRight()->setParent(Node_r);
+    if(Node_r->getLeft()!= nullptr)
+        Node_r->getLeft()->setParent(Node_r);
+    setNodeHeight(Node_r);
     return Node_r;
 }
 

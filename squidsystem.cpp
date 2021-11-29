@@ -8,6 +8,7 @@ SquidSystem* SquidSystem::Init()
 }
 */
 void mergeArr(std::shared_ptr<Node<Player, int>>  players1[], int n1, std::shared_ptr<Node<Player, int>>  players2[], int n2, std::shared_ptr<Node<Player, int>>  players_merge[]);
+void updateGroupPlayers(std::shared_ptr<Node<Player, int>> players_merge[], Group* group, int n);
 
 StatusType SquidSystem::AddGroup(int GroupID) {
     if (GroupID <= 0)
@@ -60,13 +61,15 @@ StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
             highest_level_p = new_player_node->getDataPtr();
         }
         //adding player to the group's trees - 2*logn
+        /*
         std::shared_ptr<Node<Player, int>> new_player_node_for_group = std::make_shared<Node<Player, int>>(new_player,
                                                                                                            player_id);
         std::shared_ptr<Node<Player, LevelIdKey>> new_player_level_id_node_for_group = std::make_shared<Node<Player, LevelIdKey>>(
                 new_player, new_player.getLevelIdKey());
 
         group_to_add_node->getData().addPlayer(new_player_node_for_group, new_player_level_id_node_for_group);
-
+        */
+        group_to_add_node->getData().addPlayer1(&new_player);
         //if the group was empty, adds it to the not empty groups tree - logn
         if (!g_ne_tree.findKey(group_id)) {
             std::shared_ptr<Node<Group, int>> existing_group_node(group_to_add_node);
@@ -119,9 +122,22 @@ StatusType SquidSystem::ReplaceGroup(int GroupID, int ReplacementID) {
     players_tree.makeATree(players_merge,0,new_group->getNumOfPlayers()+ group_delete->getNumOfPlayers()-1);
     new_group->setPlayersTree(players_tree);
 
+    updateGroupPlayers(players_merge,new_group,new_group->getNumOfPlayers()+group_delete->getNumOfPlayers());
+    new_group->setNumOfPlayers(group_delete->getNumOfPlayers());
+
+    g_tree.remove(g_tree.findKey(GroupID));
+
     return SUCCESS;
 }
 
+void updateGroupPlayers(std::shared_ptr<Node<Player, int>> players_merge[],Group* group,int n)
+{
+    for(int i=0;i<n;i++)
+    {
+        players_merge[i]->getDataPtr()->setGroup(group);
+        players_merge[i]->getDataPtr()->setGroupId(group->getGroupId());
+    }
+}
 
 void mergeArr(std::shared_ptr<Node<Player, int>> players1[], int n1, std::shared_ptr<Node<Player, int>> players2[], int n2, std::shared_ptr<Node<Player, int>> players_merge[]) {
     int c1 = 0, c2 = 0;

@@ -52,7 +52,7 @@ public:
     int getGroupId();
     void setGroupId(int new_id);
     Group* getGroup();
-    void setGroup(Group group);
+    void setGroup(Group* group);
 
 
 };

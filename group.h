@@ -39,6 +39,8 @@ public:
     void addToLevelTree(std::shared_ptr<Node<Player, LevelIdKey>> player_by_level);
     int getNumOfPlayers();
     void setPlayersTree(Avltree<Player,int> players_tree_id1);
+    void setNumOfPlayers(int num);
+    void addPlayer1(Player* player);
 
 
 };

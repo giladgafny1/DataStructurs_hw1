@@ -36,8 +36,23 @@ void Group::addPlayer(std::shared_ptr<Node<Player, int>> player_by_id, std::shar
         highest_level = player_by_id->getDataPtr()->getLevel();
         highest_level_p = player_by_id->getDataPtr();
     }
+}
+
+void Group::addPlayer1(Player *player) {
+    std::shared_ptr<Node<Player, int>> node_player_id= std::make_shared<Node<Player,int>>(*player,player->getId());
+    std::shared_ptr<Node<Player, LevelIdKey>> node_player_level= std::make_shared<Node<Player,LevelIdKey>>(*player,player->getLevelIdKey());
+    players_tree_id.insert(node_player_id);
+    players_tree_levels.insert(node_player_level);
+    num_of_players++;
+    if((player->getLevel())>highest_level)
+    {
+        highest_level = player->getLevel();
+        highest_level_p = player;
+    }
 
 }
+
+
 
 void Group::removePlayer(std::shared_ptr<Node<Player, int>> player_by_id, std::shared_ptr<Node<Player, LevelIdKey>> player_by_level) {
     this->players_tree_id.remove(player_by_id);
@@ -62,3 +77,8 @@ int Group::getNumOfPlayers() {
 void Group::setPlayersTree(Avltree<Player, int> players_tree_id1) {
     players_tree_id=players_tree_id1;
 }
+
+void Group::setNumOfPlayers(int num) {
+    this->num_of_players+=num;
+}
+
