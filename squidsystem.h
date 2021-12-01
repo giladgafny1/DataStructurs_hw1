@@ -12,8 +12,8 @@
 #include "group.h"
 #include "library1.h"
 
-typedef Avltree<Player, int> PlayersTree;
-typedef Avltree<Player, LevelIdKey> PlayersTreeByLevel;
+typedef Avltree<std::shared_ptr<Player>, int> PlayersTree;
+typedef Avltree<std::shared_ptr<Player>, LevelIdKey> PlayersTreeByLevel;
 typedef Avltree<Group, int> GroupsTree;
 typedef Avltree<Group, int> NotEmptyGroupsTree;
 
@@ -24,7 +24,7 @@ private:
     GroupsTree g_tree;
     NotEmptyGroupsTree  g_ne_tree;
     int highest_level;
-    Player* highest_level_p;
+    std::shared_ptr<Player> highest_level_p;
 public:
     SquidSystem(): highest_level(-1), highest_level_p(nullptr) {};
     ~SquidSystem()=default;

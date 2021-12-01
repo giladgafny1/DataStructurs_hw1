@@ -42,23 +42,23 @@ StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
         Group *player_group = &g_tree.findKey(group_id)->getData();
         if (group_to_add_node->getData().isPlayerInGroup(player_id, level_id))
             return FAILURE;
-        Player new_player(player_id, level, group_id, player_group);
+        std::shared_ptr<Player> new_player= std::make_shared<Player>(player_id, level, group_id, player_group);
         //adding to the players tree
-        std::shared_ptr<Node<Player, int>> new_player_node = std::make_shared<Node<Player, int>>(new_player, player_id);
+        std::shared_ptr<Node<std::shared_ptr<Player>, int>> new_player_node = std::make_shared<Node<std::shared_ptr<Player>, int>>(new_player, player_id);
         if (new_player_node == nullptr)
             return ALLOCATION_ERROR;
         p_tree.insert(new_player_node);
 
         //adding to the players tree by level
-        std::shared_ptr<Node<Player, LevelIdKey>> new_player_level_id_node = std::make_shared<Node<Player, LevelIdKey>>(
-                new_player, new_player.getLevelIdKey());
+        std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> new_player_level_id_node = std::make_shared<Node<std::shared_ptr<Player>, LevelIdKey>>(
+                new_player, new_player->getLevelIdKey());
         if (new_player_level_id_node == nullptr)
             return ALLOCATION_ERROR;
         pl_tree.insert(new_player_level_id_node);
         //checking if highest_level
         if (level > highest_level) {
             highest_level = level;
-            highest_level_p = new_player_node->getDataPtr();
+            highest_level_p = new_player_node->getData();
         }
         //adding player to the group's trees - 2*logn
         /*
