@@ -15,14 +15,14 @@
 typedef Avltree<std::shared_ptr<Player>, int> PlayersTree;
 typedef Avltree<std::shared_ptr<Player>, LevelIdKey> PlayersTreeByLevel;
 typedef Avltree<std::shared_ptr<Group>, int> GroupsTree;
-typedef Avltree<std::shared_ptr<Group>, int> NotEmptyGroupsTree;
+typedef Avltree<std::shared_ptr<Player>, int> HighestPlayerByGroup;
 
 class SquidSystem {
 private:
     PlayersTree p_tree;
     PlayersTreeByLevel pl_tree;
     GroupsTree g_tree;
-    NotEmptyGroupsTree  g_ne_tree;
+    HighestPlayerByGroup  pl_tree_by_group;
     int highest_level;
     std::shared_ptr<Player> highest_level_p;
 public:

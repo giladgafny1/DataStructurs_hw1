@@ -51,13 +51,13 @@ void Group::addPlayer(std::shared_ptr<Player> new_player)
 
 
 
-/*
-void Group::removePlayer(std::shared_ptr<Node<Player, int>> player_by_id, std::shared_ptr<Node<Player, LevelIdKey>> player_by_level) {
+
+void Group::removePlayer(std::shared_ptr<Node<std::shared_ptr<Player> , int>> player_by_id, std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> player_by_level) {
     this->players_tree_id.remove(player_by_id);
     this->players_tree_levels.remove(player_by_level);
     num_of_players--;
 }
-*/
+
 void Group::increasePlayerLevel(std::shared_ptr<Player> player_to_level, int past_lvl, int future_lvl, LevelIdKey past_lvl_id_key)
 {
     std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> player_node_to_reposition_in_group =
@@ -78,27 +78,31 @@ void Group::increasePlayerLevel(std::shared_ptr<Player> player_to_level, int pas
         }
     }
 }
-/*
-void Group::removeFromLevelTree(std::shared_ptr<Node<Player, LevelIdKey>> player_by_level)
+
+void Group::removeFromLevelTree(std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> player_by_level)
 {
-    int current_level = player_by_level->getDataPtr()->getLevel();
+    int current_level = player_by_level->getData()->getLevel();
     players_tree_levels.remove(player_by_level);
 }
-void Group::addToLevelTree(std::shared_ptr<Node<Player, LevelIdKey>> player_by_level)
+void Group::addToLevelTree(std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> player_by_level)
 {
-    int current_level = player_by_level->getDataPtr()->getLevel();
+    int current_level = player_by_level->getData()->getLevel();
     players_tree_levels.insert(player_by_level);
 }
- */
+
 int Group::getNumOfPlayers() {
     return num_of_players;
 }
-/*
-void Group::setPlayersTree(Avltree<Player, int> players_tree_id1) {
+
+void Group::setPlayersTree(Avltree<std::shared_ptr<Player> , int> players_tree_id1) {
     players_tree_id=players_tree_id1;
 }
-*/
+
 void Group::setNumOfPlayers(int num) {
     this->num_of_players+=num;
 }
 
+void Group::setHighestPlayer(std::shared_ptr<Player> player) {
+    this->highest_level_p=player;
+    this->highest_level=player->getLevel();
+}
