@@ -157,8 +157,7 @@ int main(int argc, const char **argv) {
     sys.AddPlayer(123,1,2);
 
 
-
-    sys.ReplaceGroup(1,2);
+//    sys.ReplaceGroup(1,2);
 
 //    cout<<sys.RemovePlayer(1234)<<endl;
 

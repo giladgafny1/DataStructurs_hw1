@@ -45,9 +45,6 @@ void Player::setLevel(int new_level){
 int Player::getId(){
     return this->id;
 }
-LevelIdKey Player::getLevelIdKey(){
-    return this->level_id;
-}
 int Player::getGroupId(){
     return this->group_id;
 }
@@ -56,10 +53,10 @@ void Player::setGroupId(int new_id)
     this->group_id = new_id;
 }
 
-Group* Player::getGroup() {
+std::shared_ptr<Group> Player::getGroup() {
     return this->group;
 }
 
-void Player::setGroup(Group *group) {
+void Player::setGroup(std::shared_ptr<Group> group) {
     this->group=group;
 }

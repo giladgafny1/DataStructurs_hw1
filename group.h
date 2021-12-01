@@ -14,11 +14,11 @@ private:
     int id_group;
     int num_of_players;
     //G removed the pointers from these (they caused bad creation of the tree (the root wasn't null))
-    Avltree<Player,LevelIdKey> players_tree_levels;
-    Avltree<Player,int> players_tree_id;
+    Avltree<std::shared_ptr<Player>,LevelIdKey> players_tree_levels;
+    Avltree<std::shared_ptr<Player>,int> players_tree_id;
     int highest_level;
     //added a pointer to higest level player cause should be O(1)
-    Player* highest_level_p;
+    std::shared_ptr<Player> highest_level_p;
 
 public:
     Group(int id_group): id_group(id_group), highest_level(-1){
@@ -27,20 +27,21 @@ public:
     };
   //  Group& operator=(Group& group)=default;
     ~Group()= default;
-    Player* getHighestLevelPlayer();
+    std::shared_ptr<Player> getHighestLevelPlayer();
     int getHighestLevel();
     int getGroupId();
-    Avltree<Player, LevelIdKey> getPlayersLevelsTree();
-    Avltree<Player, int> getPlayersTree();
+    Avltree<std::shared_ptr<Player>, LevelIdKey> getPlayersLevelsTree();
+    Avltree<std::shared_ptr<Player>, int> getPlayersTree();
     bool isPlayerInGroup(int player_id, LevelIdKey level_id);
-    void addPlayer(std::shared_ptr<Node<Player, int>> player_by_id, std::shared_ptr<Node<Player, LevelIdKey>> player_by_level);
+    void addPlayer(std::shared_ptr<Player> new_player);
     void removePlayer(std::shared_ptr<Node<Player, int>> player_by_id, std::shared_ptr<Node<Player, LevelIdKey>> player_by_level);
+
+    void increasePlayerLevel(std::shared_ptr<Player> player_to_level, int past_lvl, int future_lvl, LevelIdKey past_lvl_id_key);
     void removeFromLevelTree(std::shared_ptr<Node<Player, LevelIdKey>> player_by_level);
     void addToLevelTree(std::shared_ptr<Node<Player, LevelIdKey>> player_by_level);
     int getNumOfPlayers();
     void setPlayersTree(Avltree<Player,int> players_tree_id1);
     void setNumOfPlayers(int num);
-    void addPlayer1(Player* player);
 
 
 };

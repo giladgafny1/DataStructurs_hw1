@@ -14,8 +14,8 @@
 
 typedef Avltree<std::shared_ptr<Player>, int> PlayersTree;
 typedef Avltree<std::shared_ptr<Player>, LevelIdKey> PlayersTreeByLevel;
-typedef Avltree<Group, int> GroupsTree;
-typedef Avltree<Group, int> NotEmptyGroupsTree;
+typedef Avltree<std::shared_ptr<Group>, int> GroupsTree;
+typedef Avltree<std::shared_ptr<Group>, int> NotEmptyGroupsTree;
 
 class SquidSystem {
 private:

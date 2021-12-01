@@ -32,14 +32,12 @@ class Player {
 public:
     int id;
     int level;
-    LevelIdKey level_id;
     int group_id;
-    Group* group;
+    std::shared_ptr<Group> group;
 
 
-    Player(int id, int level, int group_i, Group* group1): id(id), level(level), group_id(group_i){
+    Player(int id, int level, int group_i, std::shared_ptr<Group> group1): id(id), level(level), group_id(group_i){
         //good?
-        level_id = LevelIdKey(level, id);
         group=group1;
     }
     Player(){};
@@ -48,11 +46,10 @@ public:
     int getLevel();
     void setLevel(int new_level);
     int getId();
-    LevelIdKey getLevelIdKey();
     int getGroupId();
     void setGroupId(int new_id);
-    Group* getGroup();
-    void setGroup(Group* group);
+    std::shared_ptr<Group> getGroup();
+    void setGroup(std::shared_ptr<Group> group);
 
 
 };
