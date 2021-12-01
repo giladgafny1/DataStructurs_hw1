@@ -447,7 +447,7 @@ void Avltree<T, C>::rlRoll(std::shared_ptr<Node<T, C>> node) {
 }
 
 template<class T, class C>
-int Avltree<T, C>::inorder(std::shared_ptr<Node<T, C>> root, std::shared_ptr<Node<T, C>> order[], int count) {
+int Avltree<T, C>::inorder(std::shared_ptr<Node<T, C>> root, std::shared_ptr<Node<T, C>>* order, int count) {
     if (!root) {
         return 0;
     }

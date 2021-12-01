@@ -25,8 +25,9 @@ private:
     HighestPlayerByGroup  pl_tree_by_group;
     int highest_level;
     std::shared_ptr<Player> highest_level_p;
+    int num_of_players_in_sys;
 public:
-    SquidSystem(): highest_level(-1), highest_level_p(nullptr) {};
+    SquidSystem(): highest_level(-1), highest_level_p(nullptr), num_of_players_in_sys(0) {};
     ~SquidSystem()=default;
 
     SquidSystem* Init();

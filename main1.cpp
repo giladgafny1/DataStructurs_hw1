@@ -173,6 +173,22 @@ int main(int argc, const char **argv) {
     cout<<sys.IncreaseLevel(123, 5);
    // cout<<sys.IncreaseLevel(12345, 5);
     cout<<sys.IncreaseLevel(1234, 10);
+    int x = 8;
+    int* highest_lvl_id = &x;
+    cout<<sys.GetHighestLevel(-1, highest_lvl_id)<<endl;
+    cout<<"highest level id is "<<*highest_lvl_id<<endl;
+    int* playerIDs= (int*)malloc(sizeof(int)*100);
+    int numOfPlayers = -1;
+    cout<<sys.GetAllPlayersByLevel(-1, &playerIDs, &numOfPlayers);
+    if (numOfPlayers > 0) {
+        cout << "Rank	||	Player" << endl;
+    }
 
+    for (int i = 0; i < numOfPlayers; i++) {
+        cout << i + 1 << "\t||\t" << playerIDs[i] << endl;
+    }
+    cout << "and there are no more players!" << endl;
+
+    free (playerIDs);
     cout<<"test";
 }
