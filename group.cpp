@@ -25,6 +25,7 @@ bool Group::isPlayerInGroup(int player_id, LevelIdKey level_id){
         return true;
     return false;
 }
+/*
 void Group::addPlayer(std::shared_ptr<Player> new_player)
 {
     std::shared_ptr<Node<std::shared_ptr<Player>, int>> new_player_node_for_group = std::make_shared<Node<std::shared_ptr<Player>, int>>(new_player,
@@ -154,4 +155,4 @@ StatusType Group::GetAllPlayersByLevelInGroup(int **Players, int *numOfPlayers)
     delete[] players_arr;
     return SUCCESS;
 }
-
+*/

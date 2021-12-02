@@ -18,7 +18,7 @@ private:
     Avltree<std::shared_ptr<Player>,LevelIdKey> players_tree_levels;
     Avltree<std::shared_ptr<Player>,int> players_tree_id;
     int highest_level;
-    //added a pointer to higest level player cause should be O(1)
+    //added a pointer to highest level player cause should be O(1)
     std::weak_ptr<Player> highest_level_p;
 
 public:

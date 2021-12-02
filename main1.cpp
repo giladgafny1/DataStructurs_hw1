@@ -26,7 +26,7 @@ using namespace std;
 
 
 int main(int argc, const char **argv) {
-    Avltree<int, int> tree;
+//    Avltree<int, int> tree;
 /*
     std::shared_ptr<Node<int, int>> node_12 = make_shared<Node<int, int>>(12, 12);
     std::shared_ptr<Node<int, int>> node_8 = make_shared<Node<int, int>>(8, 8);
@@ -143,27 +143,31 @@ int main(int argc, const char **argv) {
     SquidSystem sys = SquidSystem();
     //adds a group
     cout << sys.AddGroup(1) << endl;
+    cout << sys.AddGroup(2) << endl;
+    cout << sys.AddGroup(3) << endl;
+/*
     cout << sys.AddPlayer(1234, 1, 0) << endl;
+    sys.AddPlayer(1233,1,2);
 
-        //adds a group
-        cout << sys.AddGroup(2) << endl;
-        //tries to add the same group again
-        cout << sys.AddGroup(1) << endl;
-        //tries to add a group with an invalid id
-        cout << sys.AddGroup(0) << endl;
-        //adds a new player
+    //adds a group
+    //tries to add the same group again
 
-        //tries to add the same player to two diffenrent groups
-        cout << sys.AddPlayer(1234, 2, 3) << endl;
+    cout << sys.AddGroup(1) << endl;
+    //tries to add a group with an invalid id
+    cout << sys.AddGroup(0) << endl;
+    //adds a new player
 
-        sys.AddPlayer(1233,1,2);
-        sys.AddPlayer(1232,1,2);
-        sys.AddPlayer(123,2,3);
-        sys.AddPlayer(122,2,4);
-        sys.AddPlayer(121,2,4);
-        sys.AddGroup(3);
-        sys.AddPlayer(120,3,4);
-        sys.RemovePlayer(120);
+    //tries to add the same player to two diffenrent groups
+    cout << sys.AddPlayer(1234, 2, 3) << endl;
+
+    sys.AddPlayer(1233,1,2);
+    sys.AddPlayer(1232,1,2);
+    sys.AddPlayer(123,2,3);
+    sys.AddPlayer(122,2,4);
+    sys.AddPlayer(121,2,4);
+    sys.AddGroup(3);
+    sys.AddPlayer(120,3,4);
+    sys.RemovePlayer(120);
       //  cout<<sys.RemovePlayer(1234)<<endl;
 
 
@@ -223,5 +227,5 @@ int main(int argc, const char **argv) {
         cout << "and there are no more players!" << endl;
         free (playerIDs);
         cout<<"test";
-
+*/
 }

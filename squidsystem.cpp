@@ -20,22 +20,22 @@ StatusType SquidSystem::AddGroup(int GroupID) {
     try {
         //adds the group to the groups tree
         std::shared_ptr<Group> new_group = std::make_shared<Group>(GroupID);
-        std::shared_ptr<Node<std::shared_ptr<Group>, int>> new_group_node = std::make_shared<Node<std::shared_ptr<Group>, int>>(new_group, GroupID);
-        g_tree.insert(new_group_node);
+        Node<std::shared_ptr<Group>, int> new_group_node(new_group, GroupID);
+        g_tree.insert(&new_group_node);
         return SUCCESS;
     }
     catch (std::bad_alloc) {
         return ALLOCATION_ERROR;
     }
 }
-
+/*
 StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
     if (player_id <= 0 || group_id <= 0 || level < 0) {
         return INVALID_INPUT;
     }
     if (p_tree.findKey(player_id) != nullptr)
         return FAILURE;
-    std::shared_ptr<Node<std::shared_ptr<Group>, int>> group_to_add_node = g_tree.findKey(group_id);
+    Node<std::shared_ptr<Group>, int>* group_to_add_node = g_tree.findKey(group_id);
     if (group_to_add_node == nullptr)
         return FAILURE;
     try {
@@ -46,7 +46,7 @@ StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
             return FAILURE;
         std::shared_ptr<Player> new_player = std::make_shared<Player>(player_id, level, group_id, player_group);
         //adding to the players tree
-        std::shared_ptr<Node<std::shared_ptr<Player>, int>> new_player_node = std::make_shared<Node<std::shared_ptr<Player>, int>>(new_player, player_id);
+        Node<std::shared_ptr<Player>, int> new_player_node = Node<std::shared_ptr<Player>, int>(new_player, player_id);
         if (new_player_node == nullptr)
             return ALLOCATION_ERROR;
         p_tree.insert(new_player_node);
@@ -62,7 +62,7 @@ StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
         }
         if((new_player->getLevel())==highest_level)
         {
-            if (new_player->getId()<highest_level_p->getId())
+            if (new_player->getId()<highest_level_p.lock()->getId())
             {
                 highest_level = new_player->getLevel();
                 highest_level_p = new_player;
@@ -350,7 +350,7 @@ StatusType SquidSystem::IncreaseLevel(int PlayerID, int LevelIncrease) {
     }
     if((player_to_level->getLevel())==highest_level)
     {
-        if (player_to_level->getId()<highest_level_p->getId())
+        if (player_to_level->getId()<highest_level_p.lock()->getId())
         {
             highest_level = player_to_level->getLevel();
             highest_level_p = player_to_level;
@@ -366,7 +366,7 @@ StatusType SquidSystem::GetHighestLevel(int GroupID, int *PlayerID) {
         if (highest_level == -1)
             *PlayerID = -1;
         else
-            *PlayerID = (highest_level_p->getId());
+            *PlayerID = (highest_level_p.lock()->getId());
         return SUCCESS;
     }
     if (g_tree.findKey(GroupID) == nullptr)
@@ -453,3 +453,4 @@ StatusType SquidSystem::GetGroupsHighestLevel(int numOfGroups, int **Players)
 void SquidSystem::Quit() {
 
 }
+ */
