@@ -145,10 +145,10 @@ int main(int argc, const char **argv) {
     cout << sys.AddGroup(1) << endl;
     cout << sys.AddGroup(2) << endl;
     cout << sys.AddGroup(3) << endl;
-/*
+
     cout << sys.AddPlayer(1234, 1, 0) << endl;
     sys.AddPlayer(1233,1,2);
-
+/*
     //adds a group
     //tries to add the same group again
 

@@ -25,14 +25,27 @@ bool Group::isPlayerInGroup(int player_id, LevelIdKey level_id){
         return true;
     return false;
 }
-/*
-void Group::addPlayer(std::shared_ptr<Player> new_player)
+
+StatusType Group::addPlayer(std::shared_ptr<Player> new_player)
 {
-    std::shared_ptr<Node<std::shared_ptr<Player>, int>> new_player_node_for_group = std::make_shared<Node<std::shared_ptr<Player>, int>>(new_player,
-                                                                                                                                         new_player->getId());
+    Node<std::shared_ptr<Player>, int>* new_player_node_for_group;
+    try{
+        new_player_node_for_group = new Node<std::shared_ptr<Player>, int>(new_player,new_player->getId());
+    }
+    catch (std::bad_alloc)
+    {
+        return ALLOCATION_ERROR;
+    }
     LevelIdKey level_id_key = LevelIdKey(new_player->getLevel(), new_player->getId());
-    std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> new_player_level_id_node_for_group = std::make_shared<Node<std::shared_ptr<Player>, LevelIdKey>>(
-            new_player, level_id_key);
+    Node<std::shared_ptr<Player>, LevelIdKey>* new_player_level_id_node_for_group;
+    try{
+        new_player_level_id_node_for_group = new Node<std::shared_ptr<Player>, LevelIdKey>(new_player, level_id_key);
+    }
+    catch (std::bad_alloc)
+    {
+        delete new_player_node_for_group;
+        return ALLOCATION_ERROR;
+    }
     players_tree_id.insert(new_player_node_for_group);
     players_tree_levels.insert(new_player_level_id_node_for_group);
     num_of_players++;
@@ -53,7 +66,7 @@ void Group::addPlayer(std::shared_ptr<Player> new_player)
 
 
 
-
+/*
 void Group::removePlayer(std::shared_ptr<Node<std::shared_ptr<Player> , int>> player_by_id, std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> player_by_level) {
     this->players_tree_id.remove(player_by_id);
     this->players_tree_levels.remove(player_by_level);
@@ -105,11 +118,11 @@ void Group::increasePlayerLevel(std::shared_ptr<Player> player_to_level, int pas
     }
 }
 
-
+*/
 int Group::getNumOfPlayers() {
     return num_of_players;
 }
-
+/*
 void Group::setPlayersTree(Avltree<std::shared_ptr<Player> , int> players_tree_id1 ,Avltree<std::shared_ptr<Player> , LevelIdKey> players_tree_level) {
     players_tree_id=players_tree_id1;
     players_tree_levels=players_tree_level;

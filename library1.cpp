@@ -11,14 +11,14 @@ StatusType AddGroup(void *DS, int GroupID){
         return INVALID_INPUT;
     return ((SquidSystem*)DS)-> AddGroup (GroupID);
 }
-/*
+
 StatusType  AddPlayer(void *DS, int PlayerID, int GroupID, int level)
 {
     if (DS == nullptr)
         return INVALID_INPUT;
     return((SquidSystem*)DS)-> AddPlayer(PlayerID, GroupID, level);
 }
-
+/*
 StatusType RemovePlayer(void *DS, int PlayerID)
 {
     if (DS == nullptr)

@@ -9,7 +9,7 @@ SquidSystem* SquidSystem::Init()
 */
 void mergeArr(std::shared_ptr<Node<std::shared_ptr<Player> , int>>  players1[], int n1, std::shared_ptr<Node<std::shared_ptr<Player> , int>>  players2[], int n2, std::shared_ptr<Node<std::shared_ptr<Player> , int>>  players_merge[]);
 void updateGroupPlayers(std::shared_ptr<Node<std::shared_ptr<Player> , int>> players_merge[],std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> players_merge_level [],std::shared_ptr<Group> group,int n);
-std::shared_ptr<Player> updateHighestPlayer(std::shared_ptr<Node<std::shared_ptr<Player>, int>> high_player,std::shared_ptr<Player> player);
+std::shared_ptr<Player> updateHighestPlayer(Node<std::shared_ptr<Player>, int>* high_player,std::shared_ptr<Player> player);
 void mergeArrLevel(std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> players1[], int n1, std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> players2[], int n2, std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> players_merge[]);
 
 StatusType SquidSystem::AddGroup(int GroupID) {
@@ -20,15 +20,21 @@ StatusType SquidSystem::AddGroup(int GroupID) {
     try {
         //adds the group to the groups tree
         std::shared_ptr<Group> new_group = std::make_shared<Group>(GroupID);
-        Node<std::shared_ptr<Group>, int> new_group_node(new_group, GroupID);
-        g_tree.insert(&new_group_node);
+        Node<std::shared_ptr<Group>, int>* new_group_node;
+        try{
+            new_group_node = new Node<std::shared_ptr<Group>, int>(new_group, GroupID);
+        }
+        catch (std::bad_alloc) {
+            return ALLOCATION_ERROR;
+        }
+        g_tree.insert(new_group_node);
         return SUCCESS;
     }
     catch (std::bad_alloc) {
         return ALLOCATION_ERROR;
     }
 }
-/*
+
 StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
     if (player_id <= 0 || group_id <= 0 || level < 0) {
         return INVALID_INPUT;
@@ -38,48 +44,58 @@ StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
     Node<std::shared_ptr<Group>, int>* group_to_add_node = g_tree.findKey(group_id);
     if (group_to_add_node == nullptr)
         return FAILURE;
+    LevelIdKey level_id(level, player_id);
+    std::shared_ptr<Group> player_group = group_to_add_node->getData();
+    std::shared_ptr<Player> new_player = std::make_shared<Player>(player_id, level, group_id, player_group);
+    //adding to the players tree
+    Node<std::shared_ptr<Player>, int>* new_player_node;
     try {
-        LevelIdKey level_id(level, player_id);
-        std::shared_ptr<Group> player_group = group_to_add_node->getData();
-        //not needed
-        if (player_group->isPlayerInGroup(player_id, level_id))
-            return FAILURE;
-        std::shared_ptr<Player> new_player = std::make_shared<Player>(player_id, level, group_id, player_group);
-        //adding to the players tree
-        Node<std::shared_ptr<Player>, int> new_player_node = Node<std::shared_ptr<Player>, int>(new_player, player_id);
-        if (new_player_node == nullptr)
-            return ALLOCATION_ERROR;
-        p_tree.insert(new_player_node);
+        new_player_node = new Node<std::shared_ptr<Player>, int>(new_player, player_id);
+    }
+    catch (std::bad_alloc) {
+        return ALLOCATION_ERROR;
+    }
+    p_tree.insert(new_player_node);
 
-        //adding to the players tree by level
-        std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> new_player_level_id_node = std::make_shared<Node<std::shared_ptr<Player>, LevelIdKey>>(
-                new_player, level_id);
-        pl_tree.insert(new_player_level_id_node);
-        //checking if highest_level
-        if (level > highest_level) {
-            highest_level = level;
+    //adding to the players tree by level
+    Node<std::shared_ptr<Player>, LevelIdKey>* new_player_level_id_node;
+    try {
+        new_player_level_id_node = new Node<std::shared_ptr<Player>, LevelIdKey>(new_player, level_id);
+    }
+    catch (std::bad_alloc) {
+        return ALLOCATION_ERROR;
+    }
+    pl_tree.insert(new_player_level_id_node);
+    //checking if highest_level
+    if (level > highest_level) {
+        highest_level = level;
+        highest_level_p = new_player;
+    }
+    if((new_player->getLevel())==highest_level)
+    {
+        if (new_player->getId()<highest_level_p.lock()->getId())
+        {
+            highest_level = new_player->getLevel();
             highest_level_p = new_player;
         }
-        if((new_player->getLevel())==highest_level)
-        {
-            if (new_player->getId()<highest_level_p.lock()->getId())
-            {
-                highest_level = new_player->getLevel();
-                highest_level_p = new_player;
-            }
-        }
-        //adding player to the group's trees - 2*logn
+    }
+    //adding player to the group's trees - 2*logn
 
-        if(player_group->getNumOfPlayers()==0)
-        {
-            std::shared_ptr<Node<std::shared_ptr<Player>, int>> node_to_highest_player_tree=
-                    std::make_shared<Node<std::shared_ptr<Player>, int>>(new_player,group_id);
-            pl_tree_by_group.insert(node_to_highest_player_tree);
-            num_of_no_empty_group++;
+    if(player_group->getNumOfPlayers()==0)
+    {
+        Node<std::shared_ptr<Player>, int>* node_to_highest_player_tree;
+        try {
+            node_to_highest_player_tree = new Node<std::shared_ptr<Player>, int>(new_player,group_id);
+        }
+        catch (std::bad_alloc) {
+            return ALLOCATION_ERROR;
+        }
+        pl_tree_by_group.insert(node_to_highest_player_tree);
+        num_of_no_empty_group++;
         }
         else
         {
-            std::shared_ptr<Node<std::shared_ptr<Player>, int>> high_player = pl_tree_by_group.findKey(group_id);
+            Node<std::shared_ptr<Player>, int>* high_player = pl_tree_by_group.findKey(group_id);
             if(updateHighestPlayer(high_player,new_player)!= nullptr)
                 high_player->setData(updateHighestPlayer(high_player,new_player));
         }
@@ -87,14 +103,9 @@ StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
         group_to_add_node->getData()->addPlayer(new_player);
         num_of_players_in_sys++;
         return SUCCESS;
-    }
-    catch (std::bad_alloc) {
-        return ALLOCATION_ERROR;
-    }
-
 }
 
-std::shared_ptr<Player> updateHighestPlayer(std::shared_ptr<Node<std::shared_ptr<Player>, int>> high_player,std::shared_ptr<Player> player)
+std::shared_ptr<Player> updateHighestPlayer(Node<std::shared_ptr<Player>, int>* high_player,std::shared_ptr<Player> player)
 {
     if(high_player->getData()->getLevel()<player->getLevel())
     {
@@ -109,7 +120,7 @@ std::shared_ptr<Player> updateHighestPlayer(std::shared_ptr<Node<std::shared_ptr
     }
     return nullptr;
 }
-
+/*
 StatusType SquidSystem::RemovePlayer(int PlayerID) {
     if (PlayerID <= 0)
         return INVALID_INPUT;
