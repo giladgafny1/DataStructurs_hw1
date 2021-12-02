@@ -120,7 +120,7 @@ std::shared_ptr<Player> updateHighestPlayer(Node<std::shared_ptr<Player>, int>* 
     }
     return nullptr;
 }
-/*
+
 StatusType SquidSystem::RemovePlayer(int PlayerID) {
     if (PlayerID <= 0)
         return INVALID_INPUT;
@@ -138,7 +138,7 @@ StatusType SquidSystem::RemovePlayer(int PlayerID) {
 
     if(change)
     {
-        std::shared_ptr<Node<std::shared_ptr<Player>, int>> high_player = pl_tree_by_group.findKey(group_p.lock()->getGroupId());
+        Node<std::shared_ptr<Player>, int>* high_player = pl_tree_by_group.findKey(group_p.lock()->getGroupId());
         high_player->setData(group_p.lock()->getHighestLevelPlayer().lock());
     }
 
@@ -151,7 +151,7 @@ StatusType SquidSystem::RemovePlayer(int PlayerID) {
     return SUCCESS;
 }
 
-
+/*
 StatusType SquidSystem::ReplaceGroup(int GroupID, int ReplacementID) {
     if (GroupID <= 0 || ReplacementID <= 0 || GroupID == ReplacementID)
         return INVALID_INPUT;

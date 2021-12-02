@@ -148,7 +148,7 @@ int main(int argc, const char **argv) {
 
     cout << sys.AddPlayer(1234, 1, 0) << endl;
     sys.AddPlayer(1233,1,2);
-/*
+
     //adds a group
     //tries to add the same group again
 
@@ -156,7 +156,8 @@ int main(int argc, const char **argv) {
     //tries to add a group with an invalid id
     cout << sys.AddGroup(0) << endl;
     //adds a new player
-
+    sys.RemovePlayer(1233);
+/*
     //tries to add the same player to two diffenrent groups
     cout << sys.AddPlayer(1234, 2, 3) << endl;
 
@@ -169,7 +170,6 @@ int main(int argc, const char **argv) {
     sys.AddPlayer(120,3,4);
     sys.RemovePlayer(120);
       //  cout<<sys.RemovePlayer(1234)<<endl;
-
 
 
 

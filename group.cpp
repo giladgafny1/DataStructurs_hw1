@@ -62,12 +62,13 @@ StatusType Group::addPlayer(std::shared_ptr<Player> new_player)
             highest_level_p = new_player;
         }
     }
+    return SUCCESS;
 }
 
 
 
-/*
-void Group::removePlayer(std::shared_ptr<Node<std::shared_ptr<Player> , int>> player_by_id, std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> player_by_level) {
+
+void Group::removePlayer(Node<std::shared_ptr<Player> , int>* player_by_id, Node<std::shared_ptr<Player> , LevelIdKey>* player_by_level) {
     this->players_tree_id.remove(player_by_id);
     this->players_tree_levels.remove(player_by_level);
     num_of_players--;
@@ -88,7 +89,7 @@ void Group::removePlayer(std::shared_ptr<Node<std::shared_ptr<Player> , int>> pl
 
 std::shared_ptr<Player> getNewHighestPlayer(Avltree<std::shared_ptr<Player>,LevelIdKey> players_tree)
 {
-    std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> node=players_tree.getRoot();
+    Node<std::shared_ptr<Player>, LevelIdKey>* node=players_tree.getRoot();
     while (node->getLeft()!= nullptr)
     {
         node=node->getLeft();
@@ -96,7 +97,7 @@ std::shared_ptr<Player> getNewHighestPlayer(Avltree<std::shared_ptr<Player>,Leve
     return node->getData();
 }
 
-
+/*
 void Group::increasePlayerLevel(std::shared_ptr<Player> player_to_level, int past_lvl, int future_lvl, LevelIdKey past_lvl_id_key)
 {
     std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> player_node_to_reposition_in_group =
