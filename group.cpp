@@ -1,6 +1,7 @@
 
 #include "group.h"
 #include "player.h"
+std::shared_ptr<Player> getNewHighestPlayer(Avltree<std::shared_ptr<Player>,LevelIdKey> players_tree);
 
 int Group::getGroupId() {
     return this->id_group;
@@ -56,7 +57,31 @@ void Group::removePlayer(std::shared_ptr<Node<std::shared_ptr<Player> , int>> pl
     this->players_tree_id.remove(player_by_id);
     this->players_tree_levels.remove(player_by_level);
     num_of_players--;
+    if(num_of_players==0)
+    {
+        highest_level=-1;
+        highest_level_p= nullptr;
+    }
+    else
+    {
+        if(highest_level_p->getId()==player_by_id->getData()->getId())
+        {
+            highest_level_p= getNewHighestPlayer(players_tree_levels);
+            highest_level=highest_level_p->getLevel();
+        }
+    }
 }
+
+std::shared_ptr<Player> getNewHighestPlayer(Avltree<std::shared_ptr<Player>,LevelIdKey> players_tree)
+{
+    std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> node=players_tree.getRoot();
+    while (node->getLeft()!= nullptr)
+    {
+        node=node->getLeft();
+    }
+    return node->getData();
+}
+
 
 void Group::increasePlayerLevel(std::shared_ptr<Player> player_to_level, int past_lvl, int future_lvl, LevelIdKey past_lvl_id_key)
 {
@@ -79,23 +104,14 @@ void Group::increasePlayerLevel(std::shared_ptr<Player> player_to_level, int pas
     }
 }
 
-void Group::removeFromLevelTree(std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> player_by_level)
-{
-    int current_level = player_by_level->getData()->getLevel();
-    players_tree_levels.remove(player_by_level);
-}
-void Group::addToLevelTree(std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> player_by_level)
-{
-    int current_level = player_by_level->getData()->getLevel();
-    players_tree_levels.insert(player_by_level);
-}
 
 int Group::getNumOfPlayers() {
     return num_of_players;
 }
 
-void Group::setPlayersTree(Avltree<std::shared_ptr<Player> , int> players_tree_id1) {
+void Group::setPlayersTree(Avltree<std::shared_ptr<Player> , int> players_tree_id1 ,Avltree<std::shared_ptr<Player> , LevelIdKey> players_tree_level) {
     players_tree_id=players_tree_id1;
+    players_tree_levels=players_tree_level;
 }
 
 void Group::setNumOfPlayers(int num) {
@@ -120,7 +136,14 @@ StatusType Group::GetAllPlayersByLevelInGroup(int **Players, int *numOfPlayers)
     if (ret_arr == nullptr)
         return ALLOCATION_ERROR;
     //helper array so can be statically allocated - try?
-    std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> players_arr[num_of_players];
+    std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> *players_arr;
+    try{
+        players_arr= new std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> [num_of_players];
+    }
+    catch (std::bad_alloc)
+    {
+        return ALLOCATION_ERROR;
+    }
     players_tree_levels.inorder(players_tree_levels.getRoot(), players_arr, 0);
     for (int i=0;i<num_of_players;i++)
     {
@@ -128,6 +151,7 @@ StatusType Group::GetAllPlayersByLevelInGroup(int **Players, int *numOfPlayers)
     }
     *numOfPlayers=num_of_players;
     *Players=ret_arr;
+    delete[] players_arr;
     return SUCCESS;
 }
 

@@ -8,8 +8,9 @@ SquidSystem* SquidSystem::Init()
 }
 */
 void mergeArr(std::shared_ptr<Node<std::shared_ptr<Player> , int>>  players1[], int n1, std::shared_ptr<Node<std::shared_ptr<Player> , int>>  players2[], int n2, std::shared_ptr<Node<std::shared_ptr<Player> , int>>  players_merge[]);
-void updateGroupPlayers(std::shared_ptr<Node<std::shared_ptr<Player> , int>> players_merge[], std::shared_ptr<Group>  group, int n);
+void updateGroupPlayers(std::shared_ptr<Node<std::shared_ptr<Player> , int>> players_merge[],std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> players_merge_level [],std::shared_ptr<Group> group,int n);
 std::shared_ptr<Player> updateHighestPlayer(std::shared_ptr<Node<std::shared_ptr<Player>, int>> high_player,std::shared_ptr<Player> player);
+void mergeArrLevel(std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> players1[], int n1, std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> players2[], int n2, std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> players_merge[]);
 
 StatusType SquidSystem::AddGroup(int GroupID) {
     if (GroupID <= 0)
@@ -74,6 +75,7 @@ StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
             std::shared_ptr<Node<std::shared_ptr<Player>, int>> node_to_highest_player_tree=
                     std::make_shared<Node<std::shared_ptr<Player>, int>>(new_player,group_id);
             pl_tree_by_group.insert(node_to_highest_player_tree);
+            num_of_no_empty_group++;
         }
         else
         {
@@ -116,14 +118,23 @@ StatusType SquidSystem::RemovePlayer(int PlayerID) {
     std::shared_ptr<Player> player_remove = p_tree.findKey(PlayerID)->getData();
     std::shared_ptr<Group> group_p = player_remove->getGroup();
     LevelIdKey level_id(player_remove->getLevel(), PlayerID);
-
+    bool change= false;
+    if(player_remove->getId()== group_p->getHighestLevelPlayer()->getId())
+        change= true;
     group_p->removePlayer(group_p->getPlayersTree().findKey(PlayerID),group_p->getPlayersLevelsTree().findKey(level_id));
     p_tree.remove(p_tree.findKey(PlayerID));
     pl_tree.remove(pl_tree.findKey(level_id));
 
+    if(change)
+    {
+        std::shared_ptr<Node<std::shared_ptr<Player>, int>> high_player = pl_tree_by_group.findKey(group_p->getGroupId());
+        high_player->setData(group_p->getHighestLevelPlayer());
+    }
+
     if(group_p->getNumOfPlayers()==0)
     {
         pl_tree_by_group.remove(pl_tree_by_group.findKey(group_p->getGroupId()));
+        num_of_no_empty_group--;
     }
     num_of_players_in_sys--;
     return SUCCESS;
@@ -138,27 +149,98 @@ StatusType SquidSystem::ReplaceGroup(int GroupID, int ReplacementID) {
     // logk
     std::shared_ptr<Group>  group_delete = g_tree.findKey(GroupID)->getData();
     std::shared_ptr<Group>  new_group = g_tree.findKey(ReplacementID)->getData();
-    std::shared_ptr<Node<std::shared_ptr<Player> , int>> players_to_move[group_delete->getNumOfPlayers()];
-    std::shared_ptr<Node<std::shared_ptr<Player> , int>> players_stay[new_group->getNumOfPlayers()];
+    std::shared_ptr<Node<std::shared_ptr<Player> , int>> *players_to_move;
+    try {
+        players_to_move=new  std::shared_ptr<Node<std::shared_ptr<Player> , int>> [group_delete->getNumOfPlayers()];
+    }
+    catch (std::bad_alloc)
+    {
+        return ALLOCATION_ERROR;
+    }
+
+    std::shared_ptr<Node<std::shared_ptr<Player> , int>> *players_stay;
+    try {
+        players_stay=new  std::shared_ptr<Node<std::shared_ptr<Player> , int>> [new_group->getNumOfPlayers()];
+    }
+    catch(std::bad_alloc) {
+        delete [] players_to_move;
+        return ALLOCATION_ERROR;
+    }
+    std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> *players_to_move_level;
+    try {
+        players_to_move_level=new std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>>[group_delete->getNumOfPlayers()];
+    }
+    catch (std::bad_alloc)
+    {
+        delete [] players_to_move;
+        delete [] players_stay;
+        return ALLOCATION_ERROR;
+    }
+
+    std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> *players_stay_level;
+    try {
+        players_stay_level=new std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>>[new_group->getNumOfPlayers()];
+    }
+    catch (std::bad_alloc)
+    {
+        delete [] players_to_move;
+        delete [] players_stay;
+        delete [] players_to_move_level;
+        return ALLOCATION_ERROR;
+    }
     //o(n_group)
     group_delete->getPlayersTree().inorder(group_delete->getPlayersTree().getRoot(),
                                           players_to_move, 0);
+    group_delete->getPlayersLevelsTree().inorder(group_delete->getPlayersLevelsTree().getRoot(),
+                                        players_to_move_level,0);
     //o(n_rep)
     new_group->getPlayersTree().inorder(new_group->getPlayersTree().getRoot(),
                                        players_stay, 0);
+    new_group->getPlayersLevelsTree().inorder(new_group->getPlayersLevelsTree().getRoot(),
+                                        players_stay_level, 0);
 
-    std::shared_ptr<Node<std::shared_ptr<Player> , int>> players_merge[group_delete->getNumOfPlayers() + new_group->getNumOfPlayers()];
+    std::shared_ptr<Node<std::shared_ptr<Player> , int>> *players_merge;
+    try {
+        players_merge= new std::shared_ptr<Node<std::shared_ptr<Player> , int>> [group_delete->getNumOfPlayers() + new_group->getNumOfPlayers()];
+    }
+    catch (std::bad_alloc)
+    {
+        delete [] players_to_move;
+        delete [] players_stay;
+        delete [] players_to_move_level;
+        delete [] players_stay_level;
+        return ALLOCATION_ERROR;
+    }
     mergeArr(players_to_move, group_delete->getNumOfPlayers(), players_stay, new_group->getNumOfPlayers(), players_merge);
+    std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> *players_merge_level;
+    try {
+        players_merge_level= new std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> [group_delete->getNumOfPlayers() + new_group->getNumOfPlayers()];
+    }
+    catch (std::bad_alloc)
+    {
+        delete [] players_to_move;
+        delete [] players_stay;
+        delete [] players_to_move_level;
+        delete [] players_stay_level;
+        delete [] players_merge;
+        return ALLOCATION_ERROR;
+    }
+    mergeArrLevel(players_to_move_level, group_delete->getNumOfPlayers(), players_stay_level, new_group->getNumOfPlayers(), players_merge_level);
 
     Avltree<std::shared_ptr<Player> ,int> players_tree;
     players_tree.makeATree(players_merge,0,new_group->getNumOfPlayers()+ group_delete->getNumOfPlayers()-1);
-    new_group->setPlayersTree(players_tree);
 
-    updateGroupPlayers(players_merge,new_group,new_group->getNumOfPlayers()+group_delete->getNumOfPlayers());
+
+    Avltree<std::shared_ptr<Player> ,LevelIdKey> players_tree_level;
+    players_tree_level.makeATree(players_merge_level,0,new_group->getNumOfPlayers()+ group_delete->getNumOfPlayers()-1);
+    new_group->setPlayersTree(players_tree,players_tree_level);
+
+    updateGroupPlayers(players_merge,players_merge_level,new_group,new_group->getNumOfPlayers()+group_delete->getNumOfPlayers());
     new_group->setNumOfPlayers(group_delete->getNumOfPlayers());
 
     g_tree.remove(g_tree.findKey(GroupID));
-
+    if(group_delete->getNumOfPlayers()>0)
+        num_of_no_empty_group--;
     std::shared_ptr<Node<std::shared_ptr<Player>, int>> high_player = pl_tree_by_group.findKey(ReplacementID);
     if(updateHighestPlayer(high_player,group_delete->getHighestLevelPlayer())!= nullptr){
         high_player->setData(group_delete->getHighestLevelPlayer());
@@ -166,15 +248,23 @@ StatusType SquidSystem::ReplaceGroup(int GroupID, int ReplacementID) {
     }
 
     pl_tree_by_group.remove(pl_tree_by_group.findKey(group_delete->getGroupId()));
+    delete [] players_to_move;
+    delete [] players_stay;
+    delete [] players_to_move_level;
+    delete [] players_stay_level;
+    delete [] players_merge;
+    delete [] players_merge_level;
     return SUCCESS;
 }
 
-void updateGroupPlayers(std::shared_ptr<Node<std::shared_ptr<Player> , int>> players_merge[],std::shared_ptr<Group> group,int n)
+void updateGroupPlayers(std::shared_ptr<Node<std::shared_ptr<Player> , int>> players_merge[],std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> players_merge_level [],std::shared_ptr<Group> group,int n)
 {
     for(int i=0;i<n;i++)
     {
         players_merge[i]->getData()->setGroup(group);
         players_merge[i]->getData()->setGroupId(group->getGroupId());
+        players_merge_level[i]->getData()->setGroup(group);
+        players_merge_level[i]->getData()->setGroupId(group->getGroupId());
     }
 }
 
@@ -202,6 +292,32 @@ void mergeArr(std::shared_ptr<Node<std::shared_ptr<Player> , int>> players1[], i
         players_merge[i]->removeTies();
     }
 }
+
+void mergeArrLevel(std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> players1[], int n1, std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> players2[], int n2, std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> players_merge[]) {
+    int c1 = 0, c2 = 0;
+    while (c1 != n1 && c2 != n2) {
+        if (players1[c1]->getData()->getId() > players2[c2]->getData()->getId()) {
+            players_merge[c1 + c2] = players2[c2];
+            c2++;
+        } else {
+            players_merge[c1 + c2] = players1[c1];
+            c1++;
+        }
+    }
+    while (c1 != n1) {
+        players_merge[c1 + c2] = players1[c1];
+        c1++;
+    }
+    while (c2 != n2) {
+        players_merge[c1 + c2] = players2[c2];
+        c2++;
+    }
+    for(int i=0;i<n2+n1;i++)
+    {
+        players_merge[i]->removeTies();
+    }
+}
+
 
 
 StatusType SquidSystem::IncreaseLevel(int PlayerID, int LevelIncrease) {
@@ -281,7 +397,14 @@ StatusType SquidSystem::GetAllPlayersByLevel(int GroupID, int **Players, int *nu
         if (ret_arr == nullptr)
             return ALLOCATION_ERROR;
         //helper array so can be statically allocated - try?
-        std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> players_arr[num_of_players_in_sys];
+        std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> *players_arr;
+        try {
+            players_arr=new std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> [num_of_players_in_sys];
+        }
+        catch (std::bad_alloc)
+        {
+            return ALLOCATION_ERROR;
+        }
         pl_tree.inorder(pl_tree.getRoot(), players_arr, 0);
         for (int i=0;i<num_of_players_in_sys;i++)
         {
@@ -289,6 +412,7 @@ StatusType SquidSystem::GetAllPlayersByLevel(int GroupID, int **Players, int *nu
         }
         *numOfPlayers=num_of_players_in_sys;
         *Players=ret_arr;
+        delete [] players_arr;
         return SUCCESS;
     }
     if (g_tree.findKey(GroupID) == nullptr)
@@ -296,11 +420,36 @@ StatusType SquidSystem::GetAllPlayersByLevel(int GroupID, int **Players, int *nu
     std::shared_ptr<Group> group = g_tree.findKey(GroupID)->getData();
     return (group->GetAllPlayersByLevelInGroup(Players, numOfPlayers));
 }
-//mor, i'll let you implement
+
 StatusType SquidSystem::GetGroupsHighestLevel(int numOfGroups, int **Players)
 {
-
-
+    if(Players== nullptr || numOfGroups<1)
+        return INVALID_INPUT;
+    if(numOfGroups>num_of_no_empty_group)
+        return FAILURE;
+    int* ret_arr;
+    ret_arr = (int*)malloc(numOfGroups*sizeof(int));
+    if (ret_arr == nullptr)
+        return ALLOCATION_ERROR;
+    std::shared_ptr<Node<std::shared_ptr<Player>, int>> *players_arr;
+    try {
+        players_arr=new std::shared_ptr<Node<std::shared_ptr<Player>, int>> [numOfGroups];
+    }
+    catch (std::bad_alloc)
+    {
+        return ALLOCATION_ERROR;
+    }
+    pl_tree_by_group.inorder(pl_tree_by_group.getRoot(), players_arr, 0);
+    for (int i=0;i<numOfGroups;i++)
+    {
+        ret_arr[i]=(players_arr[i]->getData()->getId());
+    }
+    *Players=ret_arr;
+    delete [] players_arr;
+    return SUCCESS;
 }
 
 
+void SquidSystem::Quit() {
+
+}

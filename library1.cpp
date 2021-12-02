@@ -59,7 +59,7 @@ StatusType GetAllPlayersByLevel(void *DS, int GroupID, int **Players, int *numOf
         return((SquidSystem*)DS)-> GetAllPlayersByLevel(GroupID, Players, numOfPlayers);
     }
 }
-/*
+
 StatusType GetGroupsHighestLevel(void *DS, int numOfGroups, int **Players)
 {
     {
@@ -68,4 +68,11 @@ StatusType GetGroupsHighestLevel(void *DS, int numOfGroups, int **Players)
         return((SquidSystem*)DS)-> GetGroupsHighestLevel(numOfGroups, Players);
     }
 }
-*/
+
+
+void Quit(void **DS)
+{
+    delete DS;
+    DS= nullptr;
+
+}

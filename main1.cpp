@@ -27,7 +27,7 @@ using namespace std;
 
 int main(int argc, const char **argv) {
     Avltree<int, int> tree;
-
+/*
     std::shared_ptr<Node<int, int>> node_12 = make_shared<Node<int, int>>(12, 12);
     std::shared_ptr<Node<int, int>> node_8 = make_shared<Node<int, int>>(8, 8);
     std::shared_ptr<Node<int, int>> node_15 = make_shared<Node<int, int>>(15, 15);
@@ -48,7 +48,7 @@ int main(int argc, const char **argv) {
     std::shared_ptr<Node<int, int>> node_2 = make_shared<Node<int, int>>(2, 2);
     std::shared_ptr<Node<int, int>> node_5 = make_shared<Node<int, int>>(5, 5);
 
-/*
+
     Node<int, int> node_8(8,8);
     Node<int, int> node_15(15,15);
     Node<int, int> node_6(6,6);
@@ -111,7 +111,7 @@ int main(int argc, const char **argv) {
     tree.insert(node_4);
     tree.insert(node_8);
     tree.insert(node_11);
-*/
+
 //testing rl
     tree.insert(node_5);
     tree.insert(node_2);
@@ -125,7 +125,7 @@ int main(int argc, const char **argv) {
     tree.insert(node_9);
     tree.insert(node_12);
     tree.insert(node_11);
-/*
+
     int arr[12];
     tree.inorder(tree.getRoot(), arr, 0);
     for (int i = 0; i < 12; i++) {
@@ -143,51 +143,85 @@ int main(int argc, const char **argv) {
     SquidSystem sys = SquidSystem();
     //adds a group
     cout << sys.AddGroup(1) << endl;
-    //adds a group
-    cout << sys.AddGroup(2) << endl;
-    //tries to add the same group again
-    cout << sys.AddGroup(1) << endl;
-    //tries to add a group with an invalid id
-    cout << sys.AddGroup(0) << endl;
-    //adds a new player
     cout << sys.AddPlayer(1234, 1, 0) << endl;
-    //tries to add the same player to two diffenrent groups
-    cout << sys.AddPlayer(1234, 2, 3) << endl;
+    /*
+        //adds a group
+        cout << sys.AddGroup(2) << endl;
+        //tries to add the same group again
+        cout << sys.AddGroup(1) << endl;
+        //tries to add a group with an invalid id
+        cout << sys.AddGroup(0) << endl;
+        //adds a new player
 
-    sys.AddPlayer(1233,1,2);
-    sys.AddPlayer(1232,1,2);
-    sys.AddPlayer(123,2,3);
-    sys.AddPlayer(122,2,4);
-    sys.AddPlayer(121,2,4);
-    sys.AddGroup(3);
-    sys.AddPlayer(120,3,4);
-    sys.RemovePlayer(120);
-  //  cout<<sys.RemovePlayer(1234)<<endl;
+        //tries to add the same player to two diffenrent groups
+        cout << sys.AddPlayer(1234, 2, 3) << endl;
 
-   // sys.ReplaceGroup(2,1);
+        sys.AddPlayer(1233,1,2);
+        sys.AddPlayer(1232,1,2);
+        sys.AddPlayer(123,2,3);
+        sys.AddPlayer(122,2,4);
+        sys.AddPlayer(121,2,4);
+        sys.AddGroup(3);
+        sys.AddPlayer(120,3,4);
+        sys.RemovePlayer(120);
+      //  cout<<sys.RemovePlayer(1234)<<endl;
 
 
 
-//    sys.ReplaceGroup(1,2);
-    cout<<sys.IncreaseLevel(1234, 2);
-    cout<<sys.IncreaseLevel(123, 5);
-   // cout<<sys.IncreaseLevel(12345, 5);
-    cout<<sys.IncreaseLevel(1234, 10);
-    int x = 8;
-    int* highest_lvl_id = &x;
-    cout<<sys.GetHighestLevel(-1, highest_lvl_id)<<endl;
-    cout<<"highest level id is "<<*highest_lvl_id<<endl;
-    int* playerIDs= (int*)malloc(sizeof(int)*100);
-    int numOfPlayers = -1;
-    sys.GetAllPlayersByLevel(2, &playerIDs, &numOfPlayers);
-    if (numOfPlayers > 0) {
-        cout << "Rank	||	Player" << endl;
-    }
 
-    for (int i = 0; i < numOfPlayers; i++) {
-        cout << i + 1 << "\t||\t" << playerIDs[i] << endl;
-    }
-    cout << "and there are no more players!" << endl;
-    free (playerIDs);
-    cout<<"test";
+
+    //    sys.ReplaceGroup(1,2);
+        cout<<sys.IncreaseLevel(1234, 2);
+        cout<<sys.IncreaseLevel(123, 5);
+       // cout<<sys.IncreaseLevel(12345, 5);
+        cout<<sys.IncreaseLevel(1234, 10);
+        int x = 8;
+        int* highest_lvl_id = &x;
+        cout<<sys.GetHighestLevel(-1, highest_lvl_id)<<endl;
+        cout<<"highest level id is "<<*highest_lvl_id<<endl;
+        int* playerIDs;
+        int numOfPlayers = -1;
+        sys.GetGroupsHighestLevel(2, &playerIDs);
+        if (numOfPlayers > 0) {
+            cout << "Rank	||	Player" << endl;
+        }
+
+        for (int i = 0; i < 2; i++) {
+            cout << i + 1 << "\t||\t" << playerIDs[i] << endl;
+        }
+        free (playerIDs);
+        sys.IncreaseLevel(121,10);
+        sys.GetGroupsHighestLevel(2, &playerIDs);
+        if (numOfPlayers > 0) {
+            cout << "Rank	||	Player" << endl;
+        }
+
+        for (int i = 0; i < 2; i++) {
+            cout << i + 1 << "\t||\t" << playerIDs[i] << endl;
+        }
+        free (playerIDs);
+        sys.RemovePlayer(121);
+        sys.GetGroupsHighestLevel(2, &playerIDs);
+        if (numOfPlayers > 0) {
+            cout << "Rank	||	Player" << endl;
+        }
+
+        for (int i = 0; i < 2; i++) {
+            cout << i + 1 << "\t||\t" << playerIDs[i] << endl;
+        }
+        free (playerIDs);
+        sys.RemovePlayer(1234);
+        sys.GetGroupsHighestLevel(2, &playerIDs);
+        if (numOfPlayers > 0) {
+            cout << "Rank	||	Player" << endl;
+        }
+
+        for (int i = 0; i < 2; i++) {
+            cout << i + 1 << "\t||\t" << playerIDs[i] << endl;
+        }
+        sys.ReplaceGroup(2,1);
+        cout << "and there are no more players!" << endl;
+        free (playerIDs);
+        cout<<"test";
+        */
 }

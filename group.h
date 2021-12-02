@@ -37,10 +37,8 @@ public:
     void addPlayer(std::shared_ptr<Player> new_player);
     void removePlayer(std::shared_ptr<Node<std::shared_ptr<Player> , int>> player_by_id, std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> player_by_level);
     void increasePlayerLevel(std::shared_ptr<Player> player_to_level, int past_lvl, int future_lvl, LevelIdKey past_lvl_id_key);
-    void removeFromLevelTree(std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> player_by_level);
-    void addToLevelTree(std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> player_by_level);
     int getNumOfPlayers();
-    void setPlayersTree(Avltree<std::shared_ptr<Player> ,int> players_tree_id1);
+    void setPlayersTree(Avltree<std::shared_ptr<Player> ,int> players_tree_id1 , Avltree<std::shared_ptr<Player> , LevelIdKey> players_tree_level);
     void setNumOfPlayers(int num);
     void setHighestPlayer(std::shared_ptr<Player> player);
     StatusType GetAllPlayersByLevelInGroup(int **Players, int *numOfPlayers);

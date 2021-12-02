@@ -182,7 +182,7 @@ public:
 
     Avltree() : root(nullptr) {}
 
-    ~Avltree() = default;
+    ~Avltree();
 
     void deleteAvlNode(Node_ptr node);
 
@@ -221,13 +221,14 @@ public:
     Node_ptr getRoot();
 };
 
-/* destructor - not sure if needed cause were using shared_ptr:
+// destructor - not sure if needed cause were using shared_ptr:
 template<class T, class C>
 Avltree<T, C>::~Avltree<T,C>()
 {
-    deleteAvlNode(root);
+    root.reset();
 
 }
+/*
 template<class T, class C>
 void Avltree<T,C>::deleteAvlNode(Node_ptr node)
 {
