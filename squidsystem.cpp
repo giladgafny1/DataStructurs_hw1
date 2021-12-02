@@ -286,30 +286,16 @@ StatusType SquidSystem::GetAllPlayersByLevel(int GroupID, int **Players, int *nu
         {
             ret_arr[i]=(players_arr[i]->getData()->getId());
         }
-        /*
-        LevelIdKey** order_arr;
-        try
-        {
-            order_arr = (LevelIdKey**)malloc(num_of_players_in_sys*sizeof(LevelIdKey*));
-        }
-        catch(std::bad_alloc)
-        {
-            free(ret_arr);
-            return ALLOCATION_ERROR;
-        }
-
-        //wasf or test - order_arr[0]=pl_tree.getRoot();
-        pl_tree.inorderKeys(pl_tree.getRoot(), order_arr, 0);
-        for (int i=0;i<num_of_players_in_sys;i++)
-        {
-            ret_arr[i]=(order_arr[i]->getLevel());
-        }
-        free(order_arr);
-         */
         *numOfPlayers=num_of_players_in_sys;
         *Players=ret_arr;
         return SUCCESS;
     }
+
+}
+//mor, i'll let you implement
+StatusType SquidSystem::GetGroupsHighestLevel(int numOfGroups, int **Players)
+{
+
 
 }
 
