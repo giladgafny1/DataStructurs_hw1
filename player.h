@@ -21,6 +21,10 @@ public:
     {
         this->level = level;
     }
+    int getLevel()
+    {
+        return this->level;
+    }
 
     friend bool operator==(const LevelIdKey &key1, const LevelIdKey &key2);
     friend bool operator<(const LevelIdKey &key1, const LevelIdKey &key2);

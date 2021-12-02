@@ -199,6 +199,9 @@ public:
 
     int inorder(Node_ptr root, Node_ptr order[], int count);
 
+    int inorderKeys(Node_ptr root, C** order, int count);
+
+
     void preorder(Node<T, C> *root);
 
     void postorder(Node<T, C> *root);
@@ -458,6 +461,23 @@ int Avltree<T, C>::inorder(std::shared_ptr<Node<T, C>> root, std::shared_ptr<Nod
     order[count] = root;
     count++;
     tmp = this->inorder(root->getRight(), order, count);
+    if (tmp != 0)
+        count = tmp;
+    return count;
+}
+
+template<class T, class C>
+int Avltree<T, C>::inorderKeys(std::shared_ptr<Node<T, C>> root, C** order, int count) {
+    if (!root) {
+        return 0;
+    }
+    int tmp;
+    tmp = this->inorderKeys(root->getLeft(), order, count);
+    if (tmp != 0)
+        count = tmp;
+    order[count] = root->getKeyPtr();
+    count++;
+    tmp = this->inorderKeys(root->getRight(), order, count);
     if (tmp != 0)
         count = tmp;
     return count;

@@ -179,7 +179,7 @@ int main(int argc, const char **argv) {
     cout<<"highest level id is "<<*highest_lvl_id<<endl;
     int* playerIDs= (int*)malloc(sizeof(int)*100);
     int numOfPlayers = -1;
-    cout<<sys.GetAllPlayersByLevel(-1, &playerIDs, &numOfPlayers);
+    sys.GetAllPlayersByLevel(-1, &playerIDs, &numOfPlayers);
     if (numOfPlayers > 0) {
         cout << "Rank	||	Player" << endl;
     }
@@ -188,7 +188,6 @@ int main(int argc, const char **argv) {
         cout << i + 1 << "\t||\t" << playerIDs[i] << endl;
     }
     cout << "and there are no more players!" << endl;
-
     free (playerIDs);
     cout<<"test";
 }

@@ -276,31 +276,36 @@ StatusType SquidSystem::GetAllPlayersByLevel(int GroupID, int **Players, int *nu
             return SUCCESS;
         }
         int* ret_arr;
-        try
-        {
-            ret_arr = (int*)malloc(num_of_players_in_sys*sizeof(int));
-        }
-        catch(std::bad_alloc)
-        {
+        ret_arr = (int*)malloc(num_of_players_in_sys*sizeof(int));
+        if (ret_arr == nullptr)
             return ALLOCATION_ERROR;
+        //helper array so can be statically allocated - try?
+        std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> players_arr[num_of_players_in_sys];
+        pl_tree.inorder(pl_tree.getRoot(), players_arr, 0);
+        for (int i=0;i<num_of_players_in_sys;i++)
+        {
+            ret_arr[i]=(players_arr[i]->getData()->getId());
         }
-        std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> *order_arr;
+        /*
+        LevelIdKey** order_arr;
         try
         {
-            order_arr = (std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>>*)malloc(num_of_players_in_sys*sizeof(std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>>));
+            order_arr = (LevelIdKey**)malloc(num_of_players_in_sys*sizeof(LevelIdKey*));
         }
         catch(std::bad_alloc)
         {
             free(ret_arr);
             return ALLOCATION_ERROR;
         }
+
         //wasf or test - order_arr[0]=pl_tree.getRoot();
-        pl_tree.inorder(pl_tree.getRoot(), order_arr, 0);
+        pl_tree.inorderKeys(pl_tree.getRoot(), order_arr, 0);
         for (int i=0;i<num_of_players_in_sys;i++)
         {
-            ret_arr[i]=(order_arr[i]->getData())->getId();
+            ret_arr[i]=(order_arr[i]->getLevel());
         }
         free(order_arr);
+         */
         *numOfPlayers=num_of_players_in_sys;
         *Players=ret_arr;
         return SUCCESS;
