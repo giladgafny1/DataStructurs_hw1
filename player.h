@@ -54,7 +54,7 @@ public:
     void setGroupId(int new_id);
     std::weak_ptr<Group> getGroup();
     void setGroup(std::weak_ptr<Group> group);
-
+    void resetGroup();
 
 };
 

@@ -26,10 +26,14 @@ private:
     int highest_level;
     std::shared_ptr<Player> highest_level_p;
     int num_of_players_in_sys;
+    int num_of_groups;
     int num_of_no_empty_group;
 public:
-    SquidSystem(): highest_level(-1), highest_level_p(nullptr), num_of_players_in_sys(0), num_of_no_empty_group(0) {};
-    ~SquidSystem()=default;
+    SquidSystem(): highest_level(-1), highest_level_p(nullptr), num_of_players_in_sys(0), num_of_groups(0), num_of_no_empty_group(0)
+    {};
+    ~SquidSystem();
+
+    StatusType destroy();
 
     SquidSystem* Init();
 

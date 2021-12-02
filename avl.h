@@ -184,7 +184,9 @@ public:
 
     ~Avltree();
 
-    void deleteAvlNode(Node_ptr node);
+    void deleteAvlNode(Node_ptr& node);
+
+    void deleteAvlNodeaux();
 
     int insert(Node_ptr node);
 
@@ -226,21 +228,27 @@ public:
 template<class T, class C>
 Avltree<T, C>::~Avltree<T,C>()
 {
-    deleteAvlNode(root);
+    deleteAvlNodeaux();
 
 }
 
 
 template<class T, class C>
-void Avltree<T,C>::deleteAvlNode(Node_ptr node)
+void Avltree<T, C>::deleteAvlNode(Node_ptr &node)
 {
     if (node!=nullptr)
     {
-        deleteAvlNode(node->getLeft());
-        deleteAvlNode(node->getRight());
+        deleteAvlNode(&node->getLeft().get());
+        deleteAvlNode(&node->getRight().get());
         node.reset();
     }
 }
+
+template<class T, class C>
+void Avltree<T, C>::deleteAvlNodeaux() {
+   root.reset();
+}
+
 
 template<class T, class C>
 std::shared_ptr<Node<T, C>> Avltree<T, C>::getRoot() {
@@ -517,8 +525,11 @@ std::shared_ptr<Node<T, C>> Avltree<T, C>::removebinary(std::shared_ptr<Node<T, 
         }
         if (node->isLeft()) {
             node->getParent()->setLeft(node->HasOneSon());
-        } else
+            node->HasOneSon()->setParent(node->getParent());
+        } else{
             node->getParent()->setRight(node->HasOneSon());
+            node->HasOneSon()->setParent(node->getParent());
+        }
         std::shared_ptr<Node<T, C>> parent = node->getParent();
         node->removeTies();
         setNodeHeight(node);

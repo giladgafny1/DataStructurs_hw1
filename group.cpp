@@ -105,6 +105,11 @@ void Group::increasePlayerLevel(std::shared_ptr<Player> player_to_level, int pas
 }
 
 
+void Group::resetHighPlayer() {
+    highest_level_p.reset();
+}
+
+
 int Group::getNumOfPlayers() {
     return num_of_players;
 }

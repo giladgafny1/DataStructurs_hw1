@@ -60,3 +60,7 @@ std::weak_ptr<Group> Player::getGroup() {
 void Player::setGroup(std::weak_ptr<Group> group) {
     this->group=group;
 }
+
+void Player::resetGroup() {
+    group.reset();
+}

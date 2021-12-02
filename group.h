@@ -42,6 +42,7 @@ public:
     void setNumOfPlayers(int num);
     void setHighestPlayer(std::shared_ptr<Player> player);
     StatusType GetAllPlayersByLevelInGroup(int **Players, int *numOfPlayers);
+    void resetHighPlayer();
 
 
 };

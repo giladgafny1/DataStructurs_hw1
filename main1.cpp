@@ -144,7 +144,8 @@ int main(int argc, const char **argv) {
     //adds a group
     cout << sys.AddGroup(1) << endl;
     cout << sys.AddPlayer(1234, 1, 0) << endl;
-
+    cout << sys.AddGroup(2) << endl;
+/*
         //adds a group
         cout << sys.AddGroup(2) << endl;
         //tries to add the same group again
@@ -223,5 +224,5 @@ int main(int argc, const char **argv) {
         cout << "and there are no more players!" << endl;
         free (playerIDs);
         cout<<"test";
-
+*/
 }
