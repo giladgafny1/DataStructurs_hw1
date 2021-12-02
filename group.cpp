@@ -3,6 +3,7 @@
 #include "player.h"
 std::shared_ptr<Player> getNewHighestPlayer(Avltree<std::shared_ptr<Player>,LevelIdKey> players_tree);
 
+
 int Group::getGroupId() {
     return this->id_group;
 }
@@ -160,3 +161,44 @@ StatusType Group::GetAllPlayersByLevelInGroup(int **Players, int *numOfPlayers)
     return SUCCESS;
 }
 
+void Group::resetTrees() {
+    std::shared_ptr<Node<std::shared_ptr<Player>, int>> *players_arr;
+    players_arr=new std::shared_ptr<Node<std::shared_ptr<Player>, int>> [num_of_players];
+
+    std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> *players_arr_level;
+    players_arr_level=new std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> [num_of_players];
+
+    players_tree_levels.preorder(players_tree_levels.getRoot(),players_arr_level,0);
+    players_tree_id.preorder(players_tree_id.getRoot(),players_arr,0);
+    for (int i = 0; i < num_of_players; ++i) {
+        players_arr[i]->getData()->resetGroup();
+        players_arr[i]->getData().reset();
+        if(players_arr[i]->getParent()!= nullptr)
+        {
+            if(players_arr[i]->isLeft())
+                players_arr[i]->getParent()->setLeft(nullptr);
+            else
+                players_arr[i]->getParent()->setRight(nullptr);
+        }
+        players_arr[i]->setParent(nullptr);
+        players_arr[i]->setLeft(nullptr);
+        players_arr[i]->setRight(nullptr);
+        players_arr[i].reset();
+
+
+        players_arr_level[i]->getData().reset();
+        if(players_arr_level[i]->getParent()!= nullptr)
+        {
+            if(players_arr_level[i]->isLeft())
+                players_arr_level[i]->getParent()->setLeft(nullptr);
+            else
+                players_arr_level[i]->getParent()->setRight(nullptr);
+        }
+        players_arr_level[i]->setParent(nullptr);
+        players_arr_level[i]->setLeft(nullptr);
+        players_arr_level[i]->setRight(nullptr);
+        players_arr_level[i].reset();
+    }
+    delete [] players_arr;
+    delete [] players_arr_level;
+}

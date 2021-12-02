@@ -143,9 +143,17 @@ int main(int argc, const char **argv) {
     SquidSystem sys = SquidSystem();
     //adds a group
     cout << sys.AddGroup(1) << endl;
-    cout << sys.AddPlayer(1234, 1, 0) << endl;
+    cout << sys.AddPlayer(10, 1, 0) << endl;
     cout << sys.AddGroup(2) << endl;
-/*
+    cout << sys.AddPlayer(11, 1, 0) << endl;
+    cout << sys.AddPlayer(12, 2, 4) << endl;
+    cout << sys.AddPlayer(13, 1, 03) << endl;
+    cout << sys.AddGroup(3) << endl;
+    cout << sys.AddPlayer(14, 3, 4) << endl;
+    sys.RemovePlayer(11);
+    sys.IncreaseLevel(10,5);
+    sys.ReplaceGroup(2,1);
+
         //adds a group
         cout << sys.AddGroup(2) << endl;
         //tries to add the same group again
@@ -180,6 +188,7 @@ int main(int argc, const char **argv) {
         int* highest_lvl_id = &x;
         cout<<sys.GetHighestLevel(-1, highest_lvl_id)<<endl;
         cout<<"highest level id is "<<*highest_lvl_id<<endl;
+
         int* playerIDs;
         int numOfPlayers = -1;
         sys.GetGroupsHighestLevel(2, &playerIDs);
@@ -191,6 +200,8 @@ int main(int argc, const char **argv) {
             cout << i + 1 << "\t||\t" << playerIDs[i] << endl;
         }
         free (playerIDs);
+/*
+
         sys.IncreaseLevel(121,10);
         sys.GetGroupsHighestLevel(2, &playerIDs);
         if (numOfPlayers > 0) {

@@ -11,6 +11,7 @@ void mergeArr(std::shared_ptr<Node<std::shared_ptr<Player> , int>>  players1[], 
 void updateGroupPlayers(std::shared_ptr<Node<std::shared_ptr<Player> , int>> players_merge[],std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> players_merge_level [],std::shared_ptr<Group> group,int n);
 std::shared_ptr<Player> updateHighestPlayer(std::shared_ptr<Node<std::shared_ptr<Player>, int>> high_player,std::shared_ptr<Player> player);
 void mergeArrLevel(std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> players1[], int n1, std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> players2[], int n2, std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> players_merge[]);
+std::shared_ptr<Player> getNewHighestPlayer1(Avltree<std::shared_ptr<Player>,LevelIdKey> players_tree);
 
 StatusType SquidSystem::AddGroup(int GroupID) {
     if (GroupID <= 0)
@@ -111,6 +112,16 @@ std::shared_ptr<Player> updateHighestPlayer(std::shared_ptr<Node<std::shared_ptr
     return nullptr;
 }
 
+std::shared_ptr<Player> getNewHighestPlayer1(Avltree<std::shared_ptr<Player>,LevelIdKey> players_tree)
+{
+    std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> node=players_tree.getRoot();
+    while (node->getLeft()!= nullptr)
+    {
+        node=node->getLeft();
+    }
+    return node->getData();
+}
+
 StatusType SquidSystem::RemovePlayer(int PlayerID) {
     if (PlayerID <= 0)
         return INVALID_INPUT;
@@ -126,11 +137,28 @@ StatusType SquidSystem::RemovePlayer(int PlayerID) {
     p_tree.remove(p_tree.findKey(PlayerID));
     pl_tree.remove(pl_tree.findKey(level_id));
 
+    if(num_of_players_in_sys==0)
+    {
+        highest_level=-1;
+        highest_level_p= nullptr;
+    }
+    else
+    {
+        if(highest_level_p->getId()==player_remove->getId())
+        {
+            highest_level_p= getNewHighestPlayer1(pl_tree);
+            highest_level=highest_level_p->getLevel();
+        }
+    }
+
+
     if(change)
     {
         std::shared_ptr<Node<std::shared_ptr<Player>, int>> high_player = pl_tree_by_group.findKey(group_p.lock()->getGroupId());
         high_player->setData(group_p.lock()->getHighestLevelPlayer().lock());
     }
+
+
 
     if(group_p.lock()->getNumOfPlayers()==0)
     {
@@ -452,6 +480,7 @@ StatusType SquidSystem::GetGroupsHighestLevel(int numOfGroups, int **Players)
     }
     *Players=ret_arr;
     delete [] players_arr;
+    delete [] ret_arr;
     return SUCCESS;
 }
 
@@ -505,32 +534,83 @@ StatusType SquidSystem::destroy() {
         return ALLOCATION_ERROR;
     }
 
-    p_tree.inorder(p_tree.getRoot(),players_arr,0);
-    pl_tree.inorder(pl_tree.getRoot(),players_arr_level,0);
-    pl_tree_by_group.inorder(pl_tree_by_group.getRoot(),players_arr_2,0);
-    g_tree.inorder(g_tree.getRoot(),group_arr,0);
+    p_tree.preorder(p_tree.getRoot(),players_arr,0);
+    pl_tree.preorder(pl_tree.getRoot(),players_arr_level,0);
+    pl_tree_by_group.preorder(pl_tree_by_group.getRoot(),players_arr_2,0);
+    g_tree.preorder(g_tree.getRoot(),group_arr,0);
 
     for (int (i) = 0; (i) < num_of_players_in_sys; ++(i)) {
         players_arr[i]->getData()->resetGroup();
         players_arr[i]->getData().reset();
+        if(players_arr[i]->getParent()!= nullptr)
+        {
+            if(players_arr[i]->isLeft())
+                players_arr[i]->getParent()->setLeft(nullptr);
+            else
+                players_arr[i]->getParent()->setRight(nullptr);
+        }
+        players_arr[i]->setParent(nullptr);
+        players_arr[i]->setLeft(nullptr);
+        players_arr[i]->setRight(nullptr);
+        players_arr[i].reset();
+
+
         players_arr_level[i]->getData().reset();
+        if(players_arr_level[i]->getParent()!= nullptr)
+        {
+            if(players_arr_level[i]->isLeft())
+                players_arr_level[i]->getParent()->setLeft(nullptr);
+            else
+                players_arr_level[i]->getParent()->setRight(nullptr);
+        }
+        players_arr_level[i]->setParent(nullptr);
+        players_arr_level[i]->setLeft(nullptr);
+        players_arr_level[i]->setRight(nullptr);
+        players_arr_level[i].reset();
+
     }
+
     for (int i = 0; i < num_of_no_empty_group; ++i) {
         players_arr_2[i]->getData().reset();
+        if(players_arr_2[i]->getParent()!= nullptr)
+        {
+            if(players_arr_2[i]->isLeft())
+                players_arr_2[i]->getParent()->setLeft(nullptr);
+            else
+                players_arr_2[i]->getParent()->setRight(nullptr);
+        }
+        players_arr_2[i]->setParent(nullptr);
+        players_arr_2[i]->setLeft(nullptr);
+        players_arr_2[i]->setRight(nullptr);
+        players_arr_2[i].reset();
     }
     for (int i = 0; i < num_of_groups; ++i) {
         group_arr[i]->getData()->resetHighPlayer();
-      //  group_arr[i]->getData()->getPlayersTree().
-        group_arr[i]->getData().reset();
+        group_arr[i]->getData()->resetTrees();
+        if(group_arr[i]->getParent()!= nullptr)
+        {
+            if(group_arr[i]->isLeft())
+                group_arr[i]->getParent()->setLeft(nullptr);
+            else
+                group_arr[i]->getParent()->setRight(nullptr);
+        }
+        group_arr[i]->setParent(nullptr);
+        group_arr[i]->setLeft(nullptr);
+        group_arr[i]->setRight(nullptr);
+        group_arr[i].reset();
     }
-    p_tree.deleteAvlNodeaux();
-    pl_tree.deleteAvlNodeaux();
-    pl_tree_by_group.deleteAvlNodeaux();
-    g_tree.deleteAvlNodeaux();
+
+    //p_tree.deleteAvlNodeaux();
+   // pl_tree.deleteAvlNodeaux();
+  //  pl_tree_by_group.deleteAvlNodeaux();
+  //  g_tree.deleteAvlNodeaux();
     highest_level_p.reset();
+
     delete [] players_arr;
     delete [] players_arr_level;
     delete [] players_arr_2;
     delete [] group_arr;
     return  SUCCESS;
 }
+
+

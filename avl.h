@@ -184,7 +184,7 @@ public:
 
     ~Avltree();
 
-    void deleteAvlNode(Node_ptr& node);
+    void deleteAvlNode(Node_ptr node);
 
     void deleteAvlNodeaux();
 
@@ -200,13 +200,14 @@ public:
     Node_ptr buildATree(Node_ptr datas [], int start, int end);
 
     int inorder(Node_ptr root, Node_ptr order[], int count);
+    int preorder(Node_ptr root, Node_ptr order[], int count);
 
     int inorderKeys(Node_ptr root, C** order, int count);
 
 
     void preorder(Node<T, C> *root);
 
-    void postorder(Node<T, C> *root);
+    //void postorder(Node<T, C> *root);
 
     void roll(Node_ptr node, int bf);
 
@@ -234,19 +235,26 @@ Avltree<T, C>::~Avltree<T,C>()
 
 
 template<class T, class C>
-void Avltree<T, C>::deleteAvlNode(Node_ptr &node)
+void Avltree<T, C>::deleteAvlNode(Node_ptr node)
 {
     if (node!=nullptr)
     {
-        deleteAvlNode(&node->getLeft().get());
-        deleteAvlNode(&node->getRight().get());
+        deleteAvlNode(node->getLeft());
+        deleteAvlNode(node->getRight());
+        if(node->getParent()!= nullptr)
+        {
+            if(node->isLeft())
+                node->getParent()->getLeft().reset();
+            else
+                node->getParent()->getRight().reset();
+        }
         node.reset();
     }
 }
 
 template<class T, class C>
 void Avltree<T, C>::deleteAvlNodeaux() {
-   root.reset();
+
 }
 
 
@@ -478,6 +486,23 @@ int Avltree<T, C>::inorder(std::shared_ptr<Node<T, C>> root, std::shared_ptr<Nod
 }
 
 template<class T, class C>
+int Avltree<T, C>::preorder(Node_ptr root, Node_ptr *order, int count) {
+    if (!root) {
+        return 0;
+    }
+    int tmp;
+    tmp = this->inorder(root->getLeft(), order, count);
+    if (tmp != 0)
+        count = tmp;
+    tmp = this->inorder(root->getRight(), order, count);
+    if (tmp != 0)
+        count = tmp;
+    order[count] = root;
+    count++;
+    return count;
+}
+
+template<class T, class C>
 int Avltree<T, C>::inorderKeys(std::shared_ptr<Node<T, C>> root, C** order, int count) {
     if (!root) {
         return 0;
@@ -622,7 +647,6 @@ std::shared_ptr<Node<T, C>> Avltree<T, C>::buildATree(std::shared_ptr<Node<T, C>
     setNodeHeight(Node_r);
     return Node_r;
 }
-
 
 
 #endif
