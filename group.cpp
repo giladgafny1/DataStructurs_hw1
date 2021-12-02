@@ -106,3 +106,28 @@ void Group::setHighestPlayer(std::shared_ptr<Player> player) {
     this->highest_level_p=player;
     this->highest_level=player->getLevel();
 }
+
+StatusType Group::GetAllPlayersByLevelInGroup(int **Players, int *numOfPlayers)
+{
+    if(num_of_players==0)
+    {
+        Players = nullptr;
+        *numOfPlayers=0;
+        return SUCCESS;
+    }
+    int* ret_arr;
+    ret_arr = (int*)malloc(num_of_players*sizeof(int));
+    if (ret_arr == nullptr)
+        return ALLOCATION_ERROR;
+    //helper array so can be statically allocated - try?
+    std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> players_arr[num_of_players];
+    players_tree_levels.inorder(players_tree_levels.getRoot(), players_arr, 0);
+    for (int i=0;i<num_of_players;i++)
+    {
+        ret_arr[i]=(players_arr[i]->getData()->getId());
+    }
+    *numOfPlayers=num_of_players;
+    *Players=ret_arr;
+    return SUCCESS;
+}
+

@@ -40,6 +40,7 @@ StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
     try {
         LevelIdKey level_id(level, player_id);
         std::shared_ptr<Group> player_group = group_to_add_node->getData();
+        //not needed
         if (player_group->isPlayerInGroup(player_id, level_id))
             return FAILURE;
         std::shared_ptr<Player> new_player = std::make_shared<Player>(player_id, level, group_id, player_group);
@@ -290,7 +291,10 @@ StatusType SquidSystem::GetAllPlayersByLevel(int GroupID, int **Players, int *nu
         *Players=ret_arr;
         return SUCCESS;
     }
-
+    if (g_tree.findKey(GroupID) == nullptr)
+        return FAILURE;
+    std::shared_ptr<Group> group = g_tree.findKey(GroupID)->getData();
+    return (group->GetAllPlayersByLevelInGroup(Players, numOfPlayers));
 }
 //mor, i'll let you implement
 StatusType SquidSystem::GetGroupsHighestLevel(int numOfGroups, int **Players)
