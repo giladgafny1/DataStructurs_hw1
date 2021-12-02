@@ -170,7 +170,7 @@ int main(int argc, const char **argv) {
     sys.AddGroup(3);
     sys.AddPlayer(120,3,4);
     sys.RemovePlayer(120);
-      //  cout<<sys.RemovePlayer(1234)<<endl;
+    cout<<sys.RemovePlayer(1234)<<endl;
 
 
 
