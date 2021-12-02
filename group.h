@@ -31,8 +31,8 @@ public:
     std::weak_ptr<Player> getHighestLevelPlayer();
     int getHighestLevel();
     int getGroupId();
-    Avltree<std::shared_ptr<Player>, LevelIdKey> getPlayersLevelsTree();
-    Avltree<std::shared_ptr<Player>, int> getPlayersTree();
+    Avltree<std::shared_ptr<Player>, LevelIdKey>* getPlayersLevelsTree();
+    Avltree<std::shared_ptr<Player>, int>* getPlayersTree();
     bool isPlayerInGroup(int player_id, LevelIdKey level_id);
     StatusType addPlayer(std::shared_ptr<Player> new_player);
     void removePlayer(Node<std::shared_ptr<Player> , int>* player_by_id, Node<std::shared_ptr<Player> , LevelIdKey>* player_by_level);

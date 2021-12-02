@@ -492,6 +492,7 @@ Node<T,C>* Avltree<T, C>::removebinary(Node<T,C>* node) {
     if (node->isLeaf()) {
         if (root->getKey() == node->getKey()) {
             node->removeTies();
+            delete node;
             root = nullptr;
             return nullptr;
         }
@@ -504,6 +505,7 @@ Node<T,C>* Avltree<T, C>::removebinary(Node<T,C>* node) {
         node->removeTies();
         setNodeHeight(node);
         setNodeHeight(parent);
+        delete node;
         return parent;
     }
     if (node->HasOneSon() != nullptr) {
@@ -513,6 +515,7 @@ Node<T,C>* Avltree<T, C>::removebinary(Node<T,C>* node) {
             node->HasOneSon()->setParent(nullptr);
             node->removeTies();
             setNodeHeight(node);
+            delete node;
             return nullptr;
         }
         if (node->isLeft()) {
@@ -522,6 +525,7 @@ Node<T,C>* Avltree<T, C>::removebinary(Node<T,C>* node) {
         Node<T,C>* parent = node->getParent();
         node->removeTies();
         setNodeHeight(node);
+        delete node;
         setNodeHeight(parent);
         return parent;
     }
@@ -561,9 +565,11 @@ Node<T,C>* Avltree<T, C>::removebinary(Node<T,C>* node) {
     setNodeHeight(new_parent);
     if (new_right_son != nullptr) {
         node->removeTies();
+        delete node;
         return new_right_son;
     }
     node->removeTies();
+    delete node;
     return new_root;
 }
 

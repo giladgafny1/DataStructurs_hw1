@@ -73,7 +73,8 @@ StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
     }
     if((new_player->getLevel())==highest_level)
     {
-        if (new_player->getId()<highest_level_p.lock()->getId())
+        int highest_id = highest_level_p.lock()->getId();
+        if (new_player->getId()<highest_id)
         {
             highest_level = new_player->getLevel();
             highest_level_p = new_player;
@@ -132,7 +133,7 @@ StatusType SquidSystem::RemovePlayer(int PlayerID) {
     bool change= false;
     if(player_remove->getId()== group_p.lock()->getHighestLevelPlayer().lock()->getId())
         change= true;
-    group_p.lock()->removePlayer(group_p.lock()->getPlayersTree().findKey(PlayerID),group_p.lock()->getPlayersLevelsTree().findKey(level_id));
+    group_p.lock()->removePlayer(group_p.lock()->getPlayersTree()->findKey(PlayerID),group_p.lock()->getPlayersLevelsTree()->findKey(level_id));
     p_tree.remove(p_tree.findKey(PlayerID));
     pl_tree.remove(pl_tree.findKey(level_id));
 

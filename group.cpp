@@ -1,7 +1,7 @@
 
 #include "group.h"
 #include "player.h"
-std::shared_ptr<Player> getNewHighestPlayer(Avltree<std::shared_ptr<Player>,LevelIdKey> players_tree);
+std::shared_ptr<Player> getNewHighestPlayer(Avltree<std::shared_ptr<Player>,LevelIdKey>* players_tree);
 
 int Group::getGroupId() {
     return this->id_group;
@@ -14,11 +14,11 @@ int Group::getHighestLevel() {
     return this->highest_level;
 }
 
-Avltree<std::shared_ptr<Player>, LevelIdKey> Group::getPlayersLevelsTree(){
-    return this->players_tree_levels;
+Avltree<std::shared_ptr<Player>, LevelIdKey>* Group::getPlayersLevelsTree(){
+    return &(this->players_tree_levels);
 }
-Avltree<std::shared_ptr<Player>, int> Group::getPlayersTree(){
-    return this->players_tree_id;
+Avltree<std::shared_ptr<Player>, int>* Group::getPlayersTree(){
+    return &(this->players_tree_id);
 }
 bool Group::isPlayerInGroup(int player_id, LevelIdKey level_id){
     if (players_tree_id.findKey(player_id)!= nullptr && players_tree_levels.findKey(level_id)!= nullptr)
@@ -69,6 +69,7 @@ StatusType Group::addPlayer(std::shared_ptr<Player> new_player)
 
 
 void Group::removePlayer(Node<std::shared_ptr<Player> , int>* player_by_id, Node<std::shared_ptr<Player> , LevelIdKey>* player_by_level) {
+    int id = player_by_id->getData()->getId();
     this->players_tree_id.remove(player_by_id);
     this->players_tree_levels.remove(player_by_level);
     num_of_players--;
@@ -79,17 +80,17 @@ void Group::removePlayer(Node<std::shared_ptr<Player> , int>* player_by_id, Node
     }
     else
     {
-        if(highest_level_p.lock()->getId()==player_by_id->getData()->getId())
+        if(highest_level_p.lock()->getId()==id)
         {
-            highest_level_p= getNewHighestPlayer(players_tree_levels);
+            highest_level_p= getNewHighestPlayer(&players_tree_levels);
             highest_level=highest_level_p.lock()->getLevel();
         }
     }
 }
 
-std::shared_ptr<Player> getNewHighestPlayer(Avltree<std::shared_ptr<Player>,LevelIdKey> players_tree)
+std::shared_ptr<Player> getNewHighestPlayer(Avltree<std::shared_ptr<Player>,LevelIdKey>* players_tree)
 {
-    Node<std::shared_ptr<Player>, LevelIdKey>* node=players_tree.getRoot();
+    Node<std::shared_ptr<Player>, LevelIdKey>* node=players_tree->getRoot();
     while (node->getLeft()!= nullptr)
     {
         node=node->getLeft();

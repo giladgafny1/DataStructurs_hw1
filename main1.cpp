@@ -157,7 +157,8 @@ int main(int argc, const char **argv) {
     cout << sys.AddGroup(0) << endl;
     //adds a new player
     sys.RemovePlayer(1233);
-/*
+    cout <<"end"<<endl;
+
     //tries to add the same player to two diffenrent groups
     cout << sys.AddPlayer(1234, 2, 3) << endl;
 
@@ -175,6 +176,7 @@ int main(int argc, const char **argv) {
 
 
     //    sys.ReplaceGroup(1,2);
+    /*
         cout<<sys.IncreaseLevel(1234, 2);
         cout<<sys.IncreaseLevel(123, 5);
        // cout<<sys.IncreaseLevel(12345, 5);
