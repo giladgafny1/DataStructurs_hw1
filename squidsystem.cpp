@@ -480,7 +480,6 @@ StatusType SquidSystem::GetGroupsHighestLevel(int numOfGroups, int **Players)
     }
     *Players=ret_arr;
     delete [] players_arr;
-    delete [] ret_arr;
     return SUCCESS;
 }
 

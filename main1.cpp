@@ -191,49 +191,49 @@ int main(int argc, const char **argv) {
 
         int* playerIDs;
         int numOfPlayers = -1;
-        sys.GetGroupsHighestLevel(2, &playerIDs);
+        sys.GetGroupsHighestLevel(3, &playerIDs);
         if (numOfPlayers > 0) {
             cout << "Rank	||	Player" << endl;
         }
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             cout << i + 1 << "\t||\t" << playerIDs[i] << endl;
         }
         free (playerIDs);
-/*
 
-        sys.IncreaseLevel(121,10);
-        sys.GetGroupsHighestLevel(2, &playerIDs);
+
+        sys.IncreaseLevel(12,10);
+        sys.GetGroupsHighestLevel(3, &playerIDs);
         if (numOfPlayers > 0) {
             cout << "Rank	||	Player" << endl;
         }
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             cout << i + 1 << "\t||\t" << playerIDs[i] << endl;
         }
         free (playerIDs);
-        sys.RemovePlayer(121);
-        sys.GetGroupsHighestLevel(2, &playerIDs);
+        sys.RemovePlayer(12);
+        sys.GetGroupsHighestLevel(3, &playerIDs);
         if (numOfPlayers > 0) {
             cout << "Rank	||	Player" << endl;
         }
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             cout << i + 1 << "\t||\t" << playerIDs[i] << endl;
         }
         free (playerIDs);
         sys.RemovePlayer(1234);
-        sys.GetGroupsHighestLevel(2, &playerIDs);
+        sys.GetGroupsHighestLevel(3, &playerIDs);
         if (numOfPlayers > 0) {
             cout << "Rank	||	Player" << endl;
         }
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             cout << i + 1 << "\t||\t" << playerIDs[i] << endl;
         }
-        sys.ReplaceGroup(2,1);
+        sys.ReplaceGroup(3,1);
         cout << "and there are no more players!" << endl;
         free (playerIDs);
         cout<<"test";
-*/
+
 }
