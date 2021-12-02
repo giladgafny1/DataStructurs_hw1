@@ -19,16 +19,16 @@ private:
     Avltree<std::shared_ptr<Player>,int> players_tree_id;
     int highest_level;
     //added a pointer to higest level player cause should be O(1)
-    std::shared_ptr<Player> highest_level_p;
+    std::weak_ptr<Player> highest_level_p;
 
 public:
     Group(int id_group): id_group(id_group), highest_level(-1){
         num_of_players=0;
-        highest_level_p = nullptr;
+        highest_level_p.lock() = nullptr;
     };
   //  Group& operator=(Group& group)=default;
     ~Group()= default;
-    std::shared_ptr<Player> getHighestLevelPlayer();
+    std::weak_ptr<Player> getHighestLevelPlayer();
     int getHighestLevel();
     int getGroupId();
     Avltree<std::shared_ptr<Player>, LevelIdKey> getPlayersLevelsTree();

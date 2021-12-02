@@ -222,13 +222,15 @@ public:
 };
 
 // destructor - not sure if needed cause were using shared_ptr:
+
 template<class T, class C>
 Avltree<T, C>::~Avltree<T,C>()
 {
-    root.reset();
+    deleteAvlNode(root);
 
 }
-/*
+
+
 template<class T, class C>
 void Avltree<T,C>::deleteAvlNode(Node_ptr node)
 {
@@ -236,10 +238,10 @@ void Avltree<T,C>::deleteAvlNode(Node_ptr node)
     {
         deleteAvlNode(node->getLeft());
         deleteAvlNode(node->getRight());
-        delete node;
+        node.reset();
     }
 }
-*/
+
 template<class T, class C>
 std::shared_ptr<Node<T, C>> Avltree<T, C>::getRoot() {
     return root;

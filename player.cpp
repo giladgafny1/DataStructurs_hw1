@@ -53,10 +53,10 @@ void Player::setGroupId(int new_id)
     this->group_id = new_id;
 }
 
-std::shared_ptr<Group> Player::getGroup() {
+std::weak_ptr<Group> Player::getGroup() {
     return this->group;
 }
 
-void Player::setGroup(std::shared_ptr<Group> group) {
+void Player::setGroup(std::weak_ptr<Group> group) {
     this->group=group;
 }

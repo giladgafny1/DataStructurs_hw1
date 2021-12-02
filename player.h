@@ -37,10 +37,10 @@ public:
     int id;
     int level;
     int group_id;
-    std::shared_ptr<Group> group;
+    std::weak_ptr<Group> group;
 
 
-    Player(int id, int level, int group_i, std::shared_ptr<Group> group1): id(id), level(level), group_id(group_i){
+    Player(int id, int level, int group_i, std::weak_ptr<Group> group1): id(id), level(level), group_id(group_i){
         //good?
         group=group1;
     }
@@ -52,8 +52,8 @@ public:
     int getId();
     int getGroupId();
     void setGroupId(int new_id);
-    std::shared_ptr<Group> getGroup();
-    void setGroup(std::shared_ptr<Group> group);
+    std::weak_ptr<Group> getGroup();
+    void setGroup(std::weak_ptr<Group> group);
 
 
 };

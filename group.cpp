@@ -7,7 +7,7 @@ int Group::getGroupId() {
     return this->id_group;
 }
 
-std::shared_ptr<Player> Group::getHighestLevelPlayer() {
+std::weak_ptr<Player> Group::getHighestLevelPlayer() {
     return highest_level_p;
 }
 int Group::getHighestLevel() {
@@ -42,7 +42,7 @@ void Group::addPlayer(std::shared_ptr<Player> new_player)
     }
     if((new_player->getLevel())==highest_level)
     {
-        if (new_player->getId()<highest_level_p->getId())
+        if (new_player->getId()<highest_level_p.lock()->getId())
         {
             highest_level = new_player->getLevel();
             highest_level_p = new_player;
@@ -60,14 +60,14 @@ void Group::removePlayer(std::shared_ptr<Node<std::shared_ptr<Player> , int>> pl
     if(num_of_players==0)
     {
         highest_level=-1;
-        highest_level_p= nullptr;
+        highest_level_p.lock()= nullptr;
     }
     else
     {
-        if(highest_level_p->getId()==player_by_id->getData()->getId())
+        if(highest_level_p.lock()->getId()==player_by_id->getData()->getId())
         {
             highest_level_p= getNewHighestPlayer(players_tree_levels);
-            highest_level=highest_level_p->getLevel();
+            highest_level=highest_level_p.lock()->getLevel();
         }
     }
 }
@@ -96,7 +96,7 @@ void Group::increasePlayerLevel(std::shared_ptr<Player> player_to_level, int pas
     }
     if((player_to_level->getLevel())==highest_level)
     {
-        if (player_to_level->getId()<highest_level_p->getId())
+        if (player_to_level->getId()<highest_level_p.lock()->getId())
         {
             highest_level = player_to_level->getLevel();
             highest_level_p = player_to_level;

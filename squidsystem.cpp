@@ -116,24 +116,24 @@ StatusType SquidSystem::RemovePlayer(int PlayerID) {
     if (p_tree.findKey(PlayerID) == nullptr)
         return FAILURE;
     std::shared_ptr<Player> player_remove = p_tree.findKey(PlayerID)->getData();
-    std::shared_ptr<Group> group_p = player_remove->getGroup();
+    std::weak_ptr<Group> group_p = player_remove->getGroup();
     LevelIdKey level_id(player_remove->getLevel(), PlayerID);
     bool change= false;
-    if(player_remove->getId()== group_p->getHighestLevelPlayer()->getId())
+    if(player_remove->getId()== group_p.lock()->getHighestLevelPlayer().lock()->getId())
         change= true;
-    group_p->removePlayer(group_p->getPlayersTree().findKey(PlayerID),group_p->getPlayersLevelsTree().findKey(level_id));
+    group_p.lock()->removePlayer(group_p.lock()->getPlayersTree().findKey(PlayerID),group_p.lock()->getPlayersLevelsTree().findKey(level_id));
     p_tree.remove(p_tree.findKey(PlayerID));
     pl_tree.remove(pl_tree.findKey(level_id));
 
     if(change)
     {
-        std::shared_ptr<Node<std::shared_ptr<Player>, int>> high_player = pl_tree_by_group.findKey(group_p->getGroupId());
-        high_player->setData(group_p->getHighestLevelPlayer());
+        std::shared_ptr<Node<std::shared_ptr<Player>, int>> high_player = pl_tree_by_group.findKey(group_p.lock()->getGroupId());
+        high_player->setData(group_p.lock()->getHighestLevelPlayer().lock());
     }
 
-    if(group_p->getNumOfPlayers()==0)
+    if(group_p.lock()->getNumOfPlayers()==0)
     {
-        pl_tree_by_group.remove(pl_tree_by_group.findKey(group_p->getGroupId()));
+        pl_tree_by_group.remove(pl_tree_by_group.findKey(group_p.lock()->getGroupId()));
         num_of_no_empty_group--;
     }
     num_of_players_in_sys--;
@@ -242,9 +242,9 @@ StatusType SquidSystem::ReplaceGroup(int GroupID, int ReplacementID) {
     if(group_delete->getNumOfPlayers()>0)
         num_of_no_empty_group--;
     std::shared_ptr<Node<std::shared_ptr<Player>, int>> high_player = pl_tree_by_group.findKey(ReplacementID);
-    if(updateHighestPlayer(high_player,group_delete->getHighestLevelPlayer())!= nullptr){
-        high_player->setData(group_delete->getHighestLevelPlayer());
-        new_group->setHighestPlayer(group_delete->getHighestLevelPlayer());
+    if(updateHighestPlayer(high_player,group_delete->getHighestLevelPlayer().lock())!= nullptr){
+        high_player->setData(group_delete->getHighestLevelPlayer().lock());
+        new_group->setHighestPlayer(group_delete->getHighestLevelPlayer().lock());
     }
 
     pl_tree_by_group.remove(pl_tree_by_group.findKey(group_delete->getGroupId()));
@@ -334,12 +334,12 @@ StatusType SquidSystem::IncreaseLevel(int PlayerID, int LevelIncrease) {
 
     //replacing player in the level tree according to he's/she's level:
     std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> player_node_to_reposition = pl_tree.findKey(past_level_id_key);
-    std::shared_ptr<Group> group_to_reposition = player_node_to_reposition->getData()->getGroup();
-    std::shared_ptr<Node<std::shared_ptr<Player>, int>> high_player = pl_tree_by_group.findKey(group_to_reposition->getGroupId());
+    std::weak_ptr<Group> group_to_reposition = player_node_to_reposition->getData()->getGroup();
+    std::shared_ptr<Node<std::shared_ptr<Player>, int>> high_player = pl_tree_by_group.findKey(group_to_reposition.lock()->getGroupId());
     if(updateHighestPlayer(high_player,player_to_level)!= nullptr){
        high_player->setData(player_to_level);
     }
-    group_to_reposition->increasePlayerLevel(player_to_level, current_level, current_level+LevelIncrease, past_level_id_key);;
+    group_to_reposition.lock()->increasePlayerLevel(player_to_level, current_level, current_level+LevelIncrease, past_level_id_key);;
     pl_tree.remove(player_node_to_reposition);
     (player_node_to_reposition->getKeyPtr())->setLevel(current_level + LevelIncrease);
     player_node_to_reposition->getData()->setLevel(current_level + LevelIncrease);
@@ -376,7 +376,7 @@ StatusType SquidSystem::GetHighestLevel(int GroupID, int *PlayerID) {
         *PlayerID = -1;
         return SUCCESS;
     }
-    *PlayerID = group->getHighestLevelPlayer()->getId();
+    *PlayerID = group->getHighestLevelPlayer().lock()->getId();
     return SUCCESS;
 }
 
