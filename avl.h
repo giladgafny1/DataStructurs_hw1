@@ -524,6 +524,9 @@ int Avltree<T, C>::inorderKeys(std::shared_ptr<Node<T, C>> root, C** order, int 
 template<class T, class C>
 std::shared_ptr<Node<T, C>> Avltree<T, C>::removebinary(std::shared_ptr<Node<T, C>> node) {
     //added the removeTies where i thought was needed;
+    if(node== nullptr){
+        return nullptr;
+    }
     if (node->isLeaf()) {
         if (root->getKey() == node->getKey()) {
             node->removeTies();
