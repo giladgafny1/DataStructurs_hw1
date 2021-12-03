@@ -16,6 +16,8 @@ typedef Avltree<std::shared_ptr<Player>, int> PlayersTree;
 typedef Avltree<std::shared_ptr<Player>, LevelIdKey> PlayersTreeByLevel;
 typedef Avltree<std::shared_ptr<Group>, int> GroupsTree;
 typedef Avltree<std::shared_ptr<Player>, int> HighestPlayerByGroup;
+typedef Node<std::shared_ptr<Player> , int> NodePlayerId;
+typedef Node<std::shared_ptr<Player> , LevelIdKey> NodePlayerLevel;
 
 class SquidSystem {
 private:

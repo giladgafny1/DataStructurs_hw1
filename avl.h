@@ -575,17 +575,27 @@ std::shared_ptr<Node<T, C>> Avltree<T, C>::removebinary(std::shared_ptr<Node<T, 
     if (!(new_root->getParent()->getKey() == node->getKey())) {
         new_right_son = node->getRight();
     } else {
-        new_right_son = nullptr;
+        new_right_son = new_root->getRight();
     }
-
+    if (new_right_son != nullptr){
+        if(new_grandson!= nullptr &&(!(new_right_son->getKey()==new_grandson->getKey()))) {
+            new_right_son->setParent(new_root);
+            new_right_son->setLeft(new_grandson);
+        }
+        if(new_grandson== nullptr)
+        {
+            new_right_son->setParent(new_root);
+            new_right_son->setLeft(new_grandson);
+        } else
+        {
+            new_right_son->setParent(new_root);
+        }
+    }
     new_root->setParent(new_parent);
     new_root->setLeft(node->getLeft());
     new_root->setRight(new_right_son);
     node->getLeft()->setParent(new_root);
-    if (new_right_son != nullptr) {
-        new_right_son->setParent(new_root);
-        new_right_son->setLeft(new_grandson);
-    }
+
     if (new_parent != nullptr) {
         if (node->isRight())
             new_parent->setRight(new_root);
