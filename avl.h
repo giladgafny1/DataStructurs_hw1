@@ -477,12 +477,14 @@ int Avltree<T, C>::inorder(std::shared_ptr<Node<T, C>> root, std::shared_ptr<Nod
     tmp = this->inorder(root->getLeft(), order, count,n);
     if (tmp != 0)
         count = tmp;
-    order[count] = root;
-    count++;
-    if(count!= n){
-        tmp = this->inorder(root->getRight(), order, count,n);
-        if (tmp != 0)
-            count = tmp;
+    if(count!=n){
+        order[count] = root;
+        count++;
+        if(count!= n){
+            tmp = this->inorder(root->getRight(), order, count,n);
+            if (tmp != 0)
+                count = tmp;
+        }
     }
     return count;
 }
@@ -570,7 +572,7 @@ std::shared_ptr<Node<T, C>> Avltree<T, C>::removebinary(std::shared_ptr<Node<T, 
     std::shared_ptr<Node<T, C>> new_right_son;
     std::shared_ptr<Node<T, C>> new_parent = node->getParent();
     std::shared_ptr<Node<T, C>> new_grandson = new_root->getRight();
-
+    std::shared_ptr<Node<T, C>> old_parent = new_root->getParent();
 
     if (!(new_root->getParent()->getKey() == node->getKey())) {
         new_right_son = node->getRight();
@@ -580,12 +582,23 @@ std::shared_ptr<Node<T, C>> Avltree<T, C>::removebinary(std::shared_ptr<Node<T, 
     if (new_right_son != nullptr){
         if(new_grandson!= nullptr &&(!(new_right_son->getKey()==new_grandson->getKey()))) {
             new_right_son->setParent(new_root);
-            new_right_son->setLeft(new_grandson);
+            if(old_parent->getKey()==new_right_son->getKey()){
+                new_right_son->setLeft(new_grandson);
+                new_grandson->setParent(new_right_son);
+            }
+            else{
+                old_parent->setLeft(new_grandson);
+                new_grandson->setParent(old_parent);
+            }
         }
         if(new_grandson== nullptr)
         {
             new_right_son->setParent(new_root);
-            new_right_son->setLeft(new_grandson);
+            if(old_parent->getKey()==new_right_son->getKey()){
+                new_right_son->setLeft(new_grandson);
+            }
+            else
+                old_parent->setLeft(new_grandson);
         } else
         {
             new_right_son->setParent(new_root);
@@ -607,6 +620,7 @@ std::shared_ptr<Node<T, C>> Avltree<T, C>::removebinary(std::shared_ptr<Node<T, 
         root=new_root;
     }
     setNodeHeight(new_grandson);
+    setNodeHeight(old_parent);
     setNodeHeight(new_right_son);
     setNodeHeight(new_root);
     setNodeHeight(new_parent);

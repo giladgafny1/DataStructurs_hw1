@@ -16,6 +16,10 @@ std::shared_ptr<Player> getNewHighestPlayer1(Avltree<std::shared_ptr<Player>,Lev
 StatusType SquidSystem::AddGroup(int GroupID) {
     if (GroupID <= 0)
         return INVALID_INPUT;
+    if(GroupID==1415079276)
+    {
+        g_tree.findKey(1415079276);
+    }
     if (g_tree.findKey(GroupID))
         return FAILURE;
     try {
@@ -37,7 +41,7 @@ StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
     }
     if (p_tree.findKey(player_id) != nullptr)
         return FAILURE;
-    if(group_id==1518369983)
+    if(player_id==745833197    )
     {
         g_tree.findKey(group_id);
     }
@@ -131,6 +135,9 @@ StatusType SquidSystem::RemovePlayer(int PlayerID) {
         return INVALID_INPUT;
     if (p_tree.findKey(PlayerID) == nullptr)
         return FAILURE;
+    if(PlayerID==518389395){
+        p_tree.findKey(1441029315);
+    }
     std::shared_ptr<Player> player_remove = p_tree.findKey(PlayerID)->getData();
     std::weak_ptr<Group> group_p = player_remove->getGroup();
     LevelIdKey level_id(player_remove->getLevel(), PlayerID);
@@ -215,7 +222,7 @@ StatusType SquidSystem::ReplaceGroup(int GroupID, int ReplacementID) {
     if (g_tree.findKey(GroupID) == nullptr || g_tree.findKey(ReplacementID) == nullptr)
         return FAILURE;
     // logk
-    if(GroupID==38266725  || ReplacementID== 38266725 || GroupID==1518369983)
+    if(GroupID==1381234439)
     {
         g_tree.findKey(38266725 );
     }
@@ -229,11 +236,12 @@ StatusType SquidSystem::ReplaceGroup(int GroupID, int ReplacementID) {
         group_delete.reset();
         return SUCCESS;
     }
-    /*
+
     if(num_pl_new_group==0)
     {
         new_group->setPlayersTree(group_delete->getPlayersTree(),group_delete->getPlayersLevelsTree());
         new_group->setNumOfPlayers(num_pl_delete_group);
+        new_group->updatePlayerToTree(new_group);
         new_group->setHighestPlayer(group_delete->getHighestLevelPlayer().lock());
         pl_tree_by_group.remove(pl_tree_by_group.findKey(group_delete->getGroupId()));
         std::shared_ptr<Node<std::shared_ptr<Player>, int>> node_to_highest_player_tree=
@@ -245,7 +253,7 @@ StatusType SquidSystem::ReplaceGroup(int GroupID, int ReplacementID) {
         group_delete.reset();
         return SUCCESS;
     }
-     */
+
     std::shared_ptr<Node<std::shared_ptr<Player> , int>> *players_to_move;
     try {
         players_to_move=new std::shared_ptr<Node<std::shared_ptr<Player> , int>>[num_pl_delete_group];
@@ -345,6 +353,7 @@ StatusType SquidSystem::ReplaceGroup(int GroupID, int ReplacementID) {
             new_group->setHighestPlayer(group_delete->getHighestLevelPlayer().lock());
         }
     }
+    /*
     if(num_pl_new_group==0)
     {
         pl_tree_by_group.remove(pl_tree_by_group.findKey(group_delete->getGroupId()));
@@ -352,7 +361,7 @@ StatusType SquidSystem::ReplaceGroup(int GroupID, int ReplacementID) {
                 std::make_shared<Node<std::shared_ptr<Player>, int>>(group_delete->getHighestLevelPlayer().lock(),ReplacementID);
         pl_tree_by_group.insert(node_to_highest_player_tree);
     }
-
+*/
     num_of_groups--;
     pl_tree_by_group.remove(pl_tree_by_group.findKey(group_delete->getGroupId()));
 
@@ -404,7 +413,7 @@ void mergeArr(std::shared_ptr<Node<std::shared_ptr<Player> , int>> players1[], i
 void mergeArrLevel(std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> players1[], int n1, std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> players2[], int n2, std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> players_merge[]) {
     int c1 = 0, c2 = 0;
     while (c1 != n1 && c2 != n2) {
-        if (players1[c1]->getData()->getId() > players2[c2]->getData()->getId()) {
+        if (players1[c1]->getKey() > players2[c2]->getKey()) {
             players_merge[c1 + c2] = players2[c2];
             c2++;
         } else {
@@ -434,9 +443,9 @@ StatusType SquidSystem::IncreaseLevel(int PlayerID, int LevelIncrease) {
     }
     if (p_tree.findKey(PlayerID) == nullptr)
         return FAILURE;
-    if(PlayerID==1656716913 )
+    if(PlayerID==1525827268 )
     {
-        p_tree.findKey(1656716913 );
+        p_tree.findKey(1270687664 );
     }
     std::shared_ptr<Player> player_to_level = p_tree.findKey(PlayerID)->getData();
     int current_level = player_to_level->getLevel();

@@ -202,3 +202,33 @@ void Group::resetTrees() {
     delete [] players_arr;
     delete [] players_arr_level;
 }
+
+StatusType Group::updatePlayerToTree(std::weak_ptr<Group> group) {
+    std::shared_ptr<Node<std::shared_ptr<Player> , int>>* player_id;
+    try {
+        player_id=new std::shared_ptr<Node<std::shared_ptr<Player> , int>>[ num_of_players];
+    }
+    catch (std::bad_alloc)
+    {
+        return ALLOCATION_ERROR;
+    }
+    std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>>* player_level;
+    try {
+        player_level=new std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>>[ num_of_players];
+    }
+    catch (std::bad_alloc)
+    {
+        delete []player_id;
+        return ALLOCATION_ERROR;
+    }
+    players_tree_id.inorder(players_tree_id.getRoot(),player_id,0,num_of_players);
+    players_tree_levels.inorder(players_tree_levels.getRoot(),player_level,0,num_of_players);
+    for (int i = 0; i < num_of_players; ++i) {
+        player_id[i]->getData()->setGroup(group);
+        player_level[i]->getData()->setGroup(group);
+    }
+    delete []player_id;
+    delete[] player_level;
+    return SUCCESS;
+
+}

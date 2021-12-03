@@ -44,6 +44,7 @@ public:
     StatusType GetAllPlayersByLevelInGroup(int **Players, int *numOfPlayers);
     void resetHighPlayer();
     void resetTrees();
+    StatusType updatePlayerToTree(std::weak_ptr<Group> group);
 
 
 };

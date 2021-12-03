@@ -91,7 +91,6 @@ static bool isInit = false;
 
 int main(int argc, const char**argv) {
     char buffer[MAX_STRING_INPUT_SIZE];
-    printf("%d",c);
     // Reading commands
     while (fgets(buffer, MAX_STRING_INPUT_SIZE, stdin) != NULL) {
         fflush(stdout);
