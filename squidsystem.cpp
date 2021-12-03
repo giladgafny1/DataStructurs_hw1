@@ -219,14 +219,14 @@ StatusType SquidSystem::ReplaceGroup(int GroupID, int ReplacementID) {
     }
     //o(n_group)
     group_delete->getPlayersTree().inorder(group_delete->getPlayersTree().getRoot(),
-                                          players_to_move, 0);
+                                          players_to_move, 0,group_delete->getNumOfPlayers());
     group_delete->getPlayersLevelsTree().inorder(group_delete->getPlayersLevelsTree().getRoot(),
-                                        players_to_move_level,0);
+                                        players_to_move_level,0,group_delete->getNumOfPlayers());
     //o(n_rep)
     new_group->getPlayersTree().inorder(new_group->getPlayersTree().getRoot(),
-                                       players_stay, 0);
+                                       players_stay, 0,new_group->getNumOfPlayers());
     new_group->getPlayersLevelsTree().inorder(new_group->getPlayersLevelsTree().getRoot(),
-                                        players_stay_level, 0);
+                                        players_stay_level, 0,new_group->getNumOfPlayers());
 
     std::shared_ptr<Node<std::shared_ptr<Player> , int>> *players_merge;
     try {
@@ -439,7 +439,7 @@ StatusType SquidSystem::GetAllPlayersByLevel(int GroupID, int **Players, int *nu
         {
             return ALLOCATION_ERROR;
         }
-        pl_tree.inorder(pl_tree.getRoot(), players_arr, 0);
+        pl_tree.inorder(pl_tree.getRoot(), players_arr, 0,num_of_players_in_sys);
         for (int i=0;i<num_of_players_in_sys;i++)
         {
             ret_arr[i]=(players_arr[i]->getData()->getId());
@@ -473,7 +473,7 @@ StatusType SquidSystem::GetGroupsHighestLevel(int numOfGroups, int **Players)
     {
         return ALLOCATION_ERROR;
     }
-    pl_tree_by_group.inorder(pl_tree_by_group.getRoot(), players_arr, 0);
+    pl_tree_by_group.inorder(pl_tree_by_group.getRoot(), players_arr, 0,numOfGroups);
     for (int i=0;i<numOfGroups;i++)
     {
         ret_arr[i]=(players_arr[i]->getData()->getId());

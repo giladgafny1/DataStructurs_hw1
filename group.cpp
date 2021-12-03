@@ -150,7 +150,7 @@ StatusType Group::GetAllPlayersByLevelInGroup(int **Players, int *numOfPlayers)
     {
         return ALLOCATION_ERROR;
     }
-    players_tree_levels.inorder(players_tree_levels.getRoot(), players_arr, 0);
+    players_tree_levels.inorder(players_tree_levels.getRoot(), players_arr, 0,num_of_players);
     for (int i=0;i<num_of_players;i++)
     {
         ret_arr[i]=(players_arr[i]->getData()->getId());

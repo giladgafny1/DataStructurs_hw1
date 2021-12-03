@@ -199,7 +199,7 @@ public:
     void makeATree(Node_ptr datas [], int start, int end);
     Node_ptr buildATree(Node_ptr datas [], int start, int end);
 
-    int inorder(Node_ptr root, Node_ptr order[], int count);
+    int inorder(Node_ptr root, Node_ptr order[], int count, int n);
     int preorder(Node_ptr root, Node_ptr order[], int count);
 
     int inorderKeys(Node_ptr root, C** order, int count);
@@ -469,19 +469,21 @@ void Avltree<T, C>::rlRoll(std::shared_ptr<Node<T, C>> node) {
 }
 
 template<class T, class C>
-int Avltree<T, C>::inorder(std::shared_ptr<Node<T, C>> root, std::shared_ptr<Node<T, C>>* order, int count) {
-    if (!root) {
+int Avltree<T, C>::inorder(std::shared_ptr<Node<T, C>> root, std::shared_ptr<Node<T, C>>* order, int count, int n) {
+    if (!root || count==n) {
         return 0;
     }
     int tmp;
-    tmp = this->inorder(root->getLeft(), order, count);
+    tmp = this->inorder(root->getLeft(), order, count,n);
     if (tmp != 0)
         count = tmp;
     order[count] = root;
     count++;
-    tmp = this->inorder(root->getRight(), order, count);
-    if (tmp != 0)
-        count = tmp;
+    if(count!= n){
+        tmp = this->inorder(root->getRight(), order, count,n);
+        if (tmp != 0)
+            count = tmp;
+    }
     return count;
 }
 
@@ -491,10 +493,10 @@ int Avltree<T, C>::preorder(Node_ptr root, Node_ptr *order, int count) {
         return 0;
     }
     int tmp;
-    tmp = this->inorder(root->getLeft(), order, count);
+    tmp = this->preorder(root->getLeft(), order, count);
     if (tmp != 0)
         count = tmp;
-    tmp = this->inorder(root->getRight(), order, count);
+    tmp = this->preorder(root->getRight(), order, count);
     if (tmp != 0)
         count = tmp;
     order[count] = root;
