@@ -91,6 +91,7 @@ static bool isInit = false;
 
 int main(int argc, const char**argv) {
     char buffer[MAX_STRING_INPUT_SIZE];
+
     // Reading commands
     while (fgets(buffer, MAX_STRING_INPUT_SIZE, stdin) != NULL) {
         fflush(stdout);
@@ -340,8 +341,10 @@ void PrintAll(int *playerIDs, int numOfPlayers) {
         cout << i + 1 << "\t||\t" << playerIDs[i] << endl;
     }
     cout << "and there are no more players!" << endl;
-
-    free (playerIDs);
+    if(numOfPlayers>0)
+    {
+        free (playerIDs);
+    }
 }
 
 static errorType OnGetAllPlayersByLevel(void* DS, const char* const command) {

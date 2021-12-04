@@ -30,7 +30,7 @@ StatusType SquidSystem::AddGroup(int GroupID) {
         num_of_groups++;
         return SUCCESS;
     }
-    catch (std::bad_alloc) {
+    catch (std::bad_alloc&) {
         return ALLOCATION_ERROR;
     }
 }
@@ -98,7 +98,7 @@ StatusType SquidSystem::AddPlayer(int player_id, int group_id, int level) {
         num_of_players_in_sys++;
         return SUCCESS;
     }
-    catch (std::bad_alloc) {
+    catch (std::bad_alloc&) {
         return ALLOCATION_ERROR;
     }
 
@@ -184,21 +184,21 @@ StatusType initarrs(std::shared_ptr<NodePlayerId> players1 [], int n1,std::share
     try {
         players1=new std::shared_ptr<Node<std::shared_ptr<Player> , int>> [n1];
     }
-    catch (std::bad_alloc)
+    catch (std::bad_alloc&)
     {
         return ALLOCATION_ERROR;
     }
     try {
         players2 =new std::shared_ptr<Node<std::shared_ptr<Player> , int>> [n2];
     }
-    catch(std::bad_alloc) {
+    catch(std::bad_alloc&) {
         delete [] players1;
         return ALLOCATION_ERROR;
     }
     try {
         players3 =new std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> [n3];
     }
-    catch(std::bad_alloc) {
+    catch(std::bad_alloc&) {
         delete [] players1;
         delete[] players2;
         return ALLOCATION_ERROR;
@@ -206,7 +206,7 @@ StatusType initarrs(std::shared_ptr<NodePlayerId> players1 [], int n1,std::share
     try {
         players4 =new std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> [n4];
     }
-    catch(std::bad_alloc) {
+    catch(std::bad_alloc&) {
         delete [] players1;
         delete[] players2;
         return ALLOCATION_ERROR;
@@ -258,7 +258,7 @@ StatusType SquidSystem::ReplaceGroup(int GroupID, int ReplacementID) {
     try {
         players_to_move=new std::shared_ptr<Node<std::shared_ptr<Player> , int>>[num_pl_delete_group];
     }
-    catch (std::bad_alloc)
+    catch (std::bad_alloc&)
     {
         return ALLOCATION_ERROR;
     }
@@ -266,7 +266,7 @@ StatusType SquidSystem::ReplaceGroup(int GroupID, int ReplacementID) {
     try {
         players_stay=new std::shared_ptr<Node<std::shared_ptr<Player> , int>>[num_pl_new_group];
     }
-    catch (std::bad_alloc)
+    catch (std::bad_alloc&)
     {
         delete [] players_to_move;
         return ALLOCATION_ERROR;
@@ -275,7 +275,7 @@ StatusType SquidSystem::ReplaceGroup(int GroupID, int ReplacementID) {
     try {
         players_to_move_level=new std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>>[num_pl_delete_group];
     }
-    catch (std::bad_alloc)
+    catch (std::bad_alloc&)
     {
         delete [] players_to_move;
         delete [] players_stay;
@@ -286,7 +286,7 @@ StatusType SquidSystem::ReplaceGroup(int GroupID, int ReplacementID) {
     try {
         players_stay_level=new std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>>[num_pl_new_group];
     }
-    catch (std::bad_alloc)
+    catch (std::bad_alloc&)
     {
         delete [] players_to_move;
         delete [] players_stay;
@@ -308,7 +308,7 @@ StatusType SquidSystem::ReplaceGroup(int GroupID, int ReplacementID) {
     try {
         players_merge= new std::shared_ptr<Node<std::shared_ptr<Player> , int>> [num_pl_new_group+num_pl_delete_group];
     }
-    catch (std::bad_alloc)
+    catch (std::bad_alloc&)
     {
         delete [] players_to_move;
         delete [] players_stay;
@@ -321,7 +321,7 @@ StatusType SquidSystem::ReplaceGroup(int GroupID, int ReplacementID) {
     try {
         players_merge_level= new std::shared_ptr<Node<std::shared_ptr<Player> , LevelIdKey>> [num_pl_new_group+num_pl_delete_group];
     }
-    catch (std::bad_alloc)
+    catch (std::bad_alloc&)
     {
         delete [] players_to_move;
         delete [] players_stay;
@@ -516,13 +516,14 @@ StatusType SquidSystem::GetAllPlayersByLevel(int GroupID, int **Players, int *nu
         ret_arr = (int*)malloc(num_of_players_in_sys*sizeof(int));
         if (ret_arr == nullptr)
             return ALLOCATION_ERROR;
-        //helper array so can be statically allocated - try?
         std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> *players_arr;
         try {
             players_arr=new std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> [num_of_players_in_sys];
         }
-        catch (std::bad_alloc)
+        catch (std::bad_alloc&)
         {
+            Players==nullptr;
+            free(ret_arr);
             return ALLOCATION_ERROR;
         }
         pl_tree.inorder(pl_tree.getRoot(), players_arr, 0,num_of_players_in_sys);
@@ -555,7 +556,7 @@ StatusType SquidSystem::GetGroupsHighestLevel(int numOfGroups, int **Players)
     try {
         players_arr=new std::shared_ptr<Node<std::shared_ptr<Player>, int>> [numOfGroups];
     }
-    catch (std::bad_alloc)
+    catch (std::bad_alloc&)
     {
         return ALLOCATION_ERROR;
     }
@@ -584,7 +585,7 @@ StatusType SquidSystem::destroy() {
     try {
         players_arr=new std::shared_ptr<Node<std::shared_ptr<Player>, int>> [num_of_players_in_sys];
     }
-    catch (std::bad_alloc)
+    catch (std::bad_alloc&)
     {
         return ALLOCATION_ERROR;
     }
@@ -592,7 +593,7 @@ StatusType SquidSystem::destroy() {
     try {
         players_arr_level=new std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> [num_of_players_in_sys];
     }
-    catch (std::bad_alloc)
+    catch (std::bad_alloc&)
     {
         delete [] players_arr;
         return ALLOCATION_ERROR;
@@ -601,7 +602,7 @@ StatusType SquidSystem::destroy() {
     try {
         players_arr_2=new std::shared_ptr<Node<std::shared_ptr<Player>, int>> [num_of_no_empty_group];
     }
-    catch (std::bad_alloc)
+    catch (std::bad_alloc&)
     {
         delete [] players_arr;
         delete [] players_arr_level;
@@ -611,7 +612,7 @@ StatusType SquidSystem::destroy() {
     try {
         group_arr=new std::shared_ptr<Node<std::shared_ptr<Group>, int>> [num_of_groups];
     }
-    catch (std::bad_alloc)
+    catch (std::bad_alloc&)
     {
         delete [] players_arr;
         delete [] players_arr_level;

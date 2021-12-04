@@ -141,7 +141,6 @@ StatusType Group::GetAllPlayersByLevelInGroup(int **Players, int *numOfPlayers)
     ret_arr = (int*)malloc(num_of_players*sizeof(int));
     if (ret_arr == nullptr)
         return ALLOCATION_ERROR;
-    //helper array so can be statically allocated - try?
     std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> *players_arr;
     try{
         players_arr= new std::shared_ptr<Node<std::shared_ptr<Player>, LevelIdKey>> [num_of_players];
@@ -157,7 +156,7 @@ StatusType Group::GetAllPlayersByLevelInGroup(int **Players, int *numOfPlayers)
     }
     *numOfPlayers=num_of_players;
     *Players=ret_arr;
-    delete[] players_arr;
+    delete [] players_arr;
     return SUCCESS;
 }
 
