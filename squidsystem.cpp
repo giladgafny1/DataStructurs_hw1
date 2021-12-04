@@ -508,7 +508,7 @@ StatusType SquidSystem::GetAllPlayersByLevel(int GroupID, int **Players, int *nu
     {
         if(num_of_players_in_sys==0)
         {
-            Players = nullptr;
+            *Players = nullptr;
             *numOfPlayers=0;
             return SUCCESS;
         }
@@ -522,7 +522,7 @@ StatusType SquidSystem::GetAllPlayersByLevel(int GroupID, int **Players, int *nu
         }
         catch (std::bad_alloc&)
         {
-            Players==nullptr;
+            *Players=nullptr;
             free(ret_arr);
             return ALLOCATION_ERROR;
         }

@@ -133,7 +133,7 @@ StatusType Group::GetAllPlayersByLevelInGroup(int **Players, int *numOfPlayers)
 {
     if(num_of_players==0)
     {
-        Players = nullptr;
+        *Players = nullptr;
         *numOfPlayers=0;
         return SUCCESS;
     }
