@@ -76,32 +76,92 @@ include CMakeFiles/DataStructurs_hw1.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/DataStructurs_hw1.dir/flags.make
 
-CMakeFiles/DataStructurs_hw1.dir/main1.cpp.obj: CMakeFiles/DataStructurs_hw1.dir/flags.make
-CMakeFiles/DataStructurs_hw1.dir/main1.cpp.obj: ../main1.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Gilad\CLionProjects\DataStructurs_hw1\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/DataStructurs_hw1.dir/main1.cpp.obj"
-	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\DataStructurs_hw1.dir\main1.cpp.obj -c C:\Users\Gilad\CLionProjects\DataStructurs_hw1\main1.cpp
+CMakeFiles/DataStructurs_hw1.dir/main.cpp.obj: CMakeFiles/DataStructurs_hw1.dir/flags.make
+CMakeFiles/DataStructurs_hw1.dir/main.cpp.obj: ../main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Gilad\CLionProjects\DataStructurs_hw1\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/DataStructurs_hw1.dir/main.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\DataStructurs_hw1.dir\main.cpp.obj -c C:\Users\Gilad\CLionProjects\DataStructurs_hw1\main.cpp
 
-CMakeFiles/DataStructurs_hw1.dir/main1.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DataStructurs_hw1.dir/main1.cpp.i"
-	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Gilad\CLionProjects\DataStructurs_hw1\main1.cpp > CMakeFiles\DataStructurs_hw1.dir\main1.cpp.i
+CMakeFiles/DataStructurs_hw1.dir/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DataStructurs_hw1.dir/main.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Gilad\CLionProjects\DataStructurs_hw1\main.cpp > CMakeFiles\DataStructurs_hw1.dir\main.cpp.i
 
-CMakeFiles/DataStructurs_hw1.dir/main1.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DataStructurs_hw1.dir/main1.cpp.s"
-	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Gilad\CLionProjects\DataStructurs_hw1\main1.cpp -o CMakeFiles\DataStructurs_hw1.dir\main1.cpp.s
+CMakeFiles/DataStructurs_hw1.dir/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DataStructurs_hw1.dir/main.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Gilad\CLionProjects\DataStructurs_hw1\main.cpp -o CMakeFiles\DataStructurs_hw1.dir\main.cpp.s
+
+CMakeFiles/DataStructurs_hw1.dir/squidsystem.cpp.obj: CMakeFiles/DataStructurs_hw1.dir/flags.make
+CMakeFiles/DataStructurs_hw1.dir/squidsystem.cpp.obj: ../squidsystem.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Gilad\CLionProjects\DataStructurs_hw1\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/DataStructurs_hw1.dir/squidsystem.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\DataStructurs_hw1.dir\squidsystem.cpp.obj -c C:\Users\Gilad\CLionProjects\DataStructurs_hw1\squidsystem.cpp
+
+CMakeFiles/DataStructurs_hw1.dir/squidsystem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DataStructurs_hw1.dir/squidsystem.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Gilad\CLionProjects\DataStructurs_hw1\squidsystem.cpp > CMakeFiles\DataStructurs_hw1.dir\squidsystem.cpp.i
+
+CMakeFiles/DataStructurs_hw1.dir/squidsystem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DataStructurs_hw1.dir/squidsystem.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Gilad\CLionProjects\DataStructurs_hw1\squidsystem.cpp -o CMakeFiles\DataStructurs_hw1.dir\squidsystem.cpp.s
+
+CMakeFiles/DataStructurs_hw1.dir/player.cpp.obj: CMakeFiles/DataStructurs_hw1.dir/flags.make
+CMakeFiles/DataStructurs_hw1.dir/player.cpp.obj: ../player.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Gilad\CLionProjects\DataStructurs_hw1\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/DataStructurs_hw1.dir/player.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\DataStructurs_hw1.dir\player.cpp.obj -c C:\Users\Gilad\CLionProjects\DataStructurs_hw1\player.cpp
+
+CMakeFiles/DataStructurs_hw1.dir/player.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DataStructurs_hw1.dir/player.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Gilad\CLionProjects\DataStructurs_hw1\player.cpp > CMakeFiles\DataStructurs_hw1.dir\player.cpp.i
+
+CMakeFiles/DataStructurs_hw1.dir/player.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DataStructurs_hw1.dir/player.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Gilad\CLionProjects\DataStructurs_hw1\player.cpp -o CMakeFiles\DataStructurs_hw1.dir\player.cpp.s
+
+CMakeFiles/DataStructurs_hw1.dir/group.cpp.obj: CMakeFiles/DataStructurs_hw1.dir/flags.make
+CMakeFiles/DataStructurs_hw1.dir/group.cpp.obj: ../group.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Gilad\CLionProjects\DataStructurs_hw1\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/DataStructurs_hw1.dir/group.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\DataStructurs_hw1.dir\group.cpp.obj -c C:\Users\Gilad\CLionProjects\DataStructurs_hw1\group.cpp
+
+CMakeFiles/DataStructurs_hw1.dir/group.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DataStructurs_hw1.dir/group.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Gilad\CLionProjects\DataStructurs_hw1\group.cpp > CMakeFiles\DataStructurs_hw1.dir\group.cpp.i
+
+CMakeFiles/DataStructurs_hw1.dir/group.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DataStructurs_hw1.dir/group.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Gilad\CLionProjects\DataStructurs_hw1\group.cpp -o CMakeFiles\DataStructurs_hw1.dir\group.cpp.s
+
+CMakeFiles/DataStructurs_hw1.dir/library1.cpp.obj: CMakeFiles/DataStructurs_hw1.dir/flags.make
+CMakeFiles/DataStructurs_hw1.dir/library1.cpp.obj: ../library1.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Gilad\CLionProjects\DataStructurs_hw1\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/DataStructurs_hw1.dir/library1.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\DataStructurs_hw1.dir\library1.cpp.obj -c C:\Users\Gilad\CLionProjects\DataStructurs_hw1\library1.cpp
+
+CMakeFiles/DataStructurs_hw1.dir/library1.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DataStructurs_hw1.dir/library1.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Gilad\CLionProjects\DataStructurs_hw1\library1.cpp > CMakeFiles\DataStructurs_hw1.dir\library1.cpp.i
+
+CMakeFiles/DataStructurs_hw1.dir/library1.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DataStructurs_hw1.dir/library1.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Gilad\CLionProjects\DataStructurs_hw1\library1.cpp -o CMakeFiles\DataStructurs_hw1.dir\library1.cpp.s
 
 # Object files for target DataStructurs_hw1
 DataStructurs_hw1_OBJECTS = \
-"CMakeFiles/DataStructurs_hw1.dir/main1.cpp.obj"
+"CMakeFiles/DataStructurs_hw1.dir/main.cpp.obj" \
+"CMakeFiles/DataStructurs_hw1.dir/squidsystem.cpp.obj" \
+"CMakeFiles/DataStructurs_hw1.dir/player.cpp.obj" \
+"CMakeFiles/DataStructurs_hw1.dir/group.cpp.obj" \
+"CMakeFiles/DataStructurs_hw1.dir/library1.cpp.obj"
 
 # External object files for target DataStructurs_hw1
 DataStructurs_hw1_EXTERNAL_OBJECTS =
 
-DataStructurs_hw1.exe: CMakeFiles/DataStructurs_hw1.dir/main1.cpp.obj
+DataStructurs_hw1.exe: CMakeFiles/DataStructurs_hw1.dir/main.cpp.obj
+DataStructurs_hw1.exe: CMakeFiles/DataStructurs_hw1.dir/squidsystem.cpp.obj
+DataStructurs_hw1.exe: CMakeFiles/DataStructurs_hw1.dir/player.cpp.obj
+DataStructurs_hw1.exe: CMakeFiles/DataStructurs_hw1.dir/group.cpp.obj
+DataStructurs_hw1.exe: CMakeFiles/DataStructurs_hw1.dir/library1.cpp.obj
 DataStructurs_hw1.exe: CMakeFiles/DataStructurs_hw1.dir/build.make
 DataStructurs_hw1.exe: CMakeFiles/DataStructurs_hw1.dir/linklibs.rsp
 DataStructurs_hw1.exe: CMakeFiles/DataStructurs_hw1.dir/objects1.rsp
 DataStructurs_hw1.exe: CMakeFiles/DataStructurs_hw1.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\Gilad\CLionProjects\DataStructurs_hw1\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable DataStructurs_hw1.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\Gilad\CLionProjects\DataStructurs_hw1\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable DataStructurs_hw1.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\DataStructurs_hw1.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

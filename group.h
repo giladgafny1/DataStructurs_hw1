@@ -14,11 +14,9 @@ class Group {
 private:
     int id_group;
     int num_of_players;
-    //G removed the pointers from these (they caused bad creation of the tree (the root wasn't null))
     Avltree<std::shared_ptr<Player>,LevelIdKey> players_tree_levels;
     Avltree<std::shared_ptr<Player>,int> players_tree_id;
     int highest_level;
-    //added a pointer to higest level player cause should be O(1)
     std::weak_ptr<Player> highest_level_p;
 
 public:
@@ -26,7 +24,6 @@ public:
         num_of_players=0;
         highest_level_p.lock() = nullptr;
     };
-  //  Group& operator=(Group& group)=default;
     ~Group()= default;
     std::weak_ptr<Player> getHighestLevelPlayer();
     int getHighestLevel();
@@ -45,7 +42,6 @@ public:
     void resetHighPlayer();
     void resetTrees();
     StatusType updatePlayerToTree(std::weak_ptr<Group> group);
-
 
 };
 

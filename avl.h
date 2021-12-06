@@ -22,7 +22,6 @@ public:
 
     ~Node() = default;
 
-    //good?
     Node &operator=(const Node &node) = default;
 
 
@@ -178,7 +177,6 @@ class Avltree {
 public:
     typedef std::shared_ptr<Node<T, C>> Node_ptr;
     Node_ptr root;
-    //Node<T,C>* root;
 
     Avltree() : root(nullptr) {}
 
@@ -218,10 +216,6 @@ public:
 
     Node_ptr getRoot();
 };
-
-// destructor - not sure if needed cause were using shared_ptr:
-
-
 
 template<class T, class C>
 void Avltree<T, C>::deleteAvlNode(Node_ptr node)
