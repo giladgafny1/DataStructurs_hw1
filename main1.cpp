@@ -139,7 +139,7 @@ int main(int argc, const char **argv) {
     }
     */
     //constructor
-    /*
+
     cout << "!!!!" << endl;
     SquidSystem sys = SquidSystem();
     //adds a group
@@ -236,28 +236,5 @@ int main(int argc, const char **argv) {
         cout << "and there are no more players!" << endl;
         free (playerIDs);
         cout<<"test";
-*/
-    SquidSystem sys = SquidSystem();
-    sys.AddGroup(3);
-    sys.AddGroup(2);
-    sys.AddGroup(4);
-    sys.AddGroup(5);
-    sys.ReplaceGroup(3,5);
-    /*
-    int x = 8;
-    int* num;
-    int* highest_lvl_id = &x;
-    int* playerIDs;
 
-    sys.AddGroup(1);
-    sys.GetAllPlayersByLevel(1,&playerIDs,num);
-    sys.AddGroup (2);
-    sys.GetHighestLevel(1,highest_lvl_id) ;
-    sys.AddPlayer (10 ,2 ,6);
-    //sys.ReplaceGroup (1 ,2);
-    sys.AddGroup(3);
-    sys.AddPlayer(11, 3,0);
-    sys.ReplaceGroup (2 ,3);
-     */
-    cout<<"test";
 }

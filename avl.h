@@ -182,11 +182,11 @@ public:
 
     Avltree() : root(nullptr) {}
 
-    ~Avltree();
+    ~Avltree()=default;
 
     void deleteAvlNode(Node_ptr node);
 
-    void deleteAvlNodeaux();
+    void destroy();
 
     int insert(Node_ptr node);
 
@@ -203,11 +203,6 @@ public:
     int preorder(Node_ptr root, Node_ptr order[], int count);
 
     int inorderKeys(Node_ptr root, C** order, int count);
-
-
-    void preorder(Node<T, C> *root);
-
-    //void postorder(Node<T, C> *root);
 
     void roll(Node_ptr node, int bf);
 
@@ -226,12 +221,6 @@ public:
 
 // destructor - not sure if needed cause were using shared_ptr:
 
-template<class T, class C>
-Avltree<T, C>::~Avltree<T,C>()
-{
-    deleteAvlNodeaux();
-
-}
 
 
 template<class T, class C>
@@ -248,13 +237,14 @@ void Avltree<T, C>::deleteAvlNode(Node_ptr node)
             else
                 node->getParent()->getRight().reset();
         }
+        node->removeTies();
         node.reset();
     }
 }
 
 template<class T, class C>
-void Avltree<T, C>::deleteAvlNodeaux() {
-
+void Avltree<T, C>::destroy() {
+    deleteAvlNode(root);
 }
 
 

@@ -133,7 +133,7 @@ StatusType Group::GetAllPlayersByLevelInGroup(int **Players, int *numOfPlayers)
 {
     if(num_of_players==0)
     {
-        Players = nullptr;
+        *Players = nullptr;
         *numOfPlayers=0;
         return SUCCESS;
     }
@@ -172,32 +172,10 @@ void Group::resetTrees() {
     for (int i = 0; i < num_of_players; ++i) {
         players_arr[i]->getData()->resetGroup();
         players_arr[i]->getData().reset();
-        if(players_arr[i]->getParent()!= nullptr)
-        {
-            if(players_arr[i]->isLeft())
-                players_arr[i]->getParent()->setLeft(nullptr);
-            else
-                players_arr[i]->getParent()->setRight(nullptr);
-        }
-        players_arr[i]->setParent(nullptr);
-        players_arr[i]->setLeft(nullptr);
-        players_arr[i]->setRight(nullptr);
-        players_arr[i].reset();
-
-
         players_arr_level[i]->getData().reset();
-        if(players_arr_level[i]->getParent()!= nullptr)
-        {
-            if(players_arr_level[i]->isLeft())
-                players_arr_level[i]->getParent()->setLeft(nullptr);
-            else
-                players_arr_level[i]->getParent()->setRight(nullptr);
-        }
-        players_arr_level[i]->setParent(nullptr);
-        players_arr_level[i]->setLeft(nullptr);
-        players_arr_level[i]->setRight(nullptr);
-        players_arr_level[i].reset();
     }
+    players_tree_levels.destroy();
+    players_tree_id.destroy();
     delete [] players_arr;
     delete [] players_arr_level;
 }
